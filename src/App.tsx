@@ -41,10 +41,12 @@ import Landing from './components/Landing';
 setupIonicReact();
 
 const App: React.FC = () => {
+
+  const loggedIn = true;
   return (
     <IonApp>
       <IonReactRouter>
-        <IonSplitPane contentId="main">
+        {loggedIn ? <IonSplitPane contentId="main">
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
@@ -63,7 +65,7 @@ const App: React.FC = () => {
               <Calendar />
             </Route>
           </IonRouterOutlet>
-        </IonSplitPane>
+        </IonSplitPane> : <Landing />}
       </IonReactRouter>
     </IonApp>
   );
