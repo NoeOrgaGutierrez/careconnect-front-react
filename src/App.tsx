@@ -36,6 +36,7 @@ import Associations from './components/associations/Associations';
 import Communities from './components/communities/Communities';
 import Calendar from './components/calendar/Calendar';
 import Home from './components/home/Home';
+import Landing from './components/Landing';
 
 setupIonicReact();
 
@@ -47,7 +48,7 @@ const App: React.FC = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/" exact={true}>
-              <Redirect to="/home" />
+              <Landing />
             </Route>
             <Route path="/home" exact={true}>
               <Home />

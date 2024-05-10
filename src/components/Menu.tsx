@@ -11,7 +11,7 @@ import {
 } from '@ionic/react';
 
 import { useLocation } from 'react-router-dom';
-import { archiveOutline, archiveSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp } from 'ionicons/icons';
+import { calendarOutline, chatbubbleOutline, heartOutline, heartSharp, homeOutline } from 'ionicons/icons';
 import './Menu.css';
 
 interface AppPage {
@@ -25,14 +25,14 @@ const appPages: AppPage[] = [
   {
     title: 'Home',
     url: '/home',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp
+    iosIcon: homeOutline,
+    mdIcon: homeOutline
   },
   {
     title: 'Communities',
     url: '/communities',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp
+    iosIcon: chatbubbleOutline,
+    mdIcon: chatbubbleOutline
   },
   {
     title: 'Associations',
@@ -43,8 +43,8 @@ const appPages: AppPage[] = [
   {
     title: 'Calendar',
     url: '/calendar',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp
+    iosIcon: calendarOutline,
+    mdIcon: calendarOutline
   }
 ];
 
@@ -55,8 +55,9 @@ const Menu: React.FC = () => {
     <IonMenu contentId="main" type="overlay">
       <IonContent>
         <IonList id="inbox-list">
+
           <IonListHeader>CareConnect</IonListHeader>
-          <IonNote>hi@ionicframework.com</IonNote>
+          <IonNote>Connect with others like you</IonNote>
           {appPages.map((appPage, index) => {
             return (
               <IonMenuToggle key={index} autoHide={false}>
