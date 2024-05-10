@@ -1,0 +1,8 @@
+{
+  "name": "careconnect-front-react",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite",
+  "id": "dd1e47c4"
+}
