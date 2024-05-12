@@ -1,54 +1,75 @@
-.login-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-top: 5%; /* Espacio superior reducido para un mejor encuadre */
-  background-color: #121212; /* Fondo oscuro para todo el contenido */
+:root {
+  --ion-color-primary: #007aff;
+  --ion-color-primary-contrast: #ffffff; 
 }
 
-.login-container {
-  background-color: #262626; /* Fondo más oscuro para el contenedor */
-  max-width: 400px; /* Tamaño más adecuado para el contenedor */
-  width: 90%;
-  margin: 2rem auto; /* Centrado y espacio superior e inferior */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem; /* Espacio interno más generoso */
-  border-radius: 12px; /* Bordes suavemente redondeados */
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Sombra más marcada para efecto elevado */
-  border: 1px solid #333333; /* Borde más oscuro para definición */
-}
-
-.login-container ion-img {
-  max-width: 100px; /* Logo más pequeño para equilibrio */
-  margin-bottom: 2rem; /* Espacio separador */
+ion-avatar {
+  --border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: block;
+  margin: 0 auto;
+  margin-bottom: 1rem;
 }
 
 ion-item {
-  --border-radius: 12px; /* Bordes redondeados consistentes */
-  --background: #333333; /* Fondo oscuro para los ítems */
-  --padding-start: 1rem; /* Padding para el inicio del input */
-  --padding-end: 1rem; /* Padding para el final del input */
-  margin-bottom: 1rem; /* Margen entre items */
-  --color: #ddd; /* Color del texto claro para contraste */
-  --placeholder-color: #ccc; /* Color para los placeholders */
-}
-
-ion-label {
-  --color: #ccc; /* Color de texto claro para mejor visibilidad */
+  --background: #262626;
+  --color: #ddd;
+  --placeholder-color: #ccc;
+  --padding-start: 1rem;
+  --padding-end: 1rem;
+  --border-radius: 12px;
+  margin-bottom: 1rem;
 }
 
 ion-button {
-  margin-top: 1rem; /*
-     Margen superior para botones */
-  --background: #007aff; /* Color azul para botones */
-  --color: #fff; /* Texto blanco para botones */
-
-  --border-radius: 20%;
+  --background: var(--ion-color-primary);
+  --border-radius: 8px;
+  width: 100%;
 }
 
-ion-button[fill="clear"] {
-  border-radius: 20%;
-  --color: #bbb; /* Botones secundarios más sutiles */
+.ion-padding {
+  padding: 2rem;
+}
+
+@media (max-width: 768px) {
+  ion-avatar {
+    width: 80px;
+    height: 80px;
+  }
+
+  ion-item {
+    --padding-start: 0.5rem;
+    --padding-end: 0.5rem;
+  }
+
+  .ion-padding {
+    padding: 1rem;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  ion-avatar {
+    width: 90px;
+    height: 90px;
+  }
+
+  .ion-padding {
+    padding: 1.5rem;
+  }
+}
+
+@media (min-width: 1025px) {
+  ion-avatar {
+    width: 100px;
+    height: 100px;
+  }
+
+  ion-item {
+    margin-bottom: 2rem;
+  }
+
+  .ion-padding {
+    padding: 2rem;
+  }
 }

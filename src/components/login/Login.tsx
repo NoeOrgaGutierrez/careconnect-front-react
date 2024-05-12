@@ -5,17 +5,14 @@ import {
   IonHeader,
   IonToolbar,
   IonTitle,
-  IonButtons,
-  IonMenuButton,
   IonButton,
   IonInput,
   IonItem,
   IonLabel,
-  IonList,
+  IonAvatar,
   IonImg,
 } from "@ionic/react";
 import axios from "axios";
-import "./Login.css";
 
 const Login: React.FC<{ name: string }> = ({ name }) => {
   const [email, setEmail] = useState("");
@@ -27,11 +24,10 @@ const Login: React.FC<{ name: string }> = ({ name }) => {
 
     try {
       const response = await axios.post(corsProxy + apiUrl, {
-        email: email, // Asegúrate de que estas variables están definidas en tu componente o contexto
+        email: email,
         password: password,
       });
 
-      // Suponiendo que la API retorna datos del usuario en caso de éxito
       console.log("Login successful:", response.data);
     } catch (error) {
       console.error("Login failed:", error);
@@ -42,43 +38,22 @@ const Login: React.FC<{ name: string }> = ({ name }) => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start">
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>Sign In to {name}</IonTitle>
+          <IonTitle>Iniciar Sesión</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen className="login-content">
-        <div className="login-container">
-          <IonImg src="../../../resources/Logo.png" />
-          <IonList>
-            <IonItem>
-              <IonLabel position="floating">Username or email address</IonLabel>
-              <IonInput
-                type="text"
-                value={email}
-                onIonChange={(e) => setEmail(e.detail.value!)}
-              />
-            </IonItem>
-            <IonItem>
-              <IonLabel position="floating">Password</IonLabel>
-              <IonInput
-                type="password"
-                value={password}
-                onIonChange={(e) => setPassword(e.detail.value!)}
-              />
-            </IonItem>
-          </IonList>
-          <IonButton expand="block" onClick={handleLogin}>
-            Sign In
-          </IonButton>
-          <IonButton fill="clear" expand="full">
-            Create an Account
-          </IonButton>
-          <IonButton fill="clear" expand="full">
-            Association Sign In
-          </IonButton>
-        </div>
+      <IonContent className="ion-padding">
+        <IonAvatar style={{ margin: 'auto', marginBottom: '1rem' }}> {/* Centrado automáticamente */}
+          <IonImg src="../../../resources/logo.png"  /> {/* Incluir la imagen del perfil */}
+        </IonAvatar>
+        <IonItem>
+          <IonLabel position="floating">Correo electrónico</IonLabel>
+          <IonInput type="email" value={email} onIonChange={(e) => setEmail(e.detail.value!)} />
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating">Contraseña</IonLabel>
+          <IonInput type="password" value={password} onIonChange={(e) => setPassword(e.detail.value!)} />
+        </IonItem>
+        <IonButton expand="block" onClick={handleLogin}>Iniciar Sesión</IonButton>
       </IonContent>
     </IonPage>
   );
