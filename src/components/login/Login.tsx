@@ -12,38 +12,46 @@ import {
   IonLabel,
   IonAvatar,
   IonImg,
+  IonLoading,
 } from "@ionic/react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 
 interface LoginProps {
   name: string;
-  handleLogin: (status: boolean) => void; 
+  handleLogin: (status: boolean) => void;
 }
 
 const Login: React.FC<LoginProps> = ({ name, handleLogin }) => {
   const history = useHistory();
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function attemptLogin(event: any, form: any) {
+    setLoading(true);
     event.preventDefault();
     const email = form.email.value;
     const password = form.password.value;
-    const response = await axios.post(
-      "http://localhost:3000/user/login",
-      { email, password },
-      { validateStatus: () => true }
-    );
-    const success = response.data && response.data.id;
-    handleLogin(success);
-    if (success) history.push("/");
-    else {
-      setAlertMessage(
-        "Datos de usuario inválidos. Por favor, verifique sus credenciales."
-      );
-      setShowAlert(true);
-    }
+    axios
+      .post("http://localhost:3000/user/login", { email, password }, { validateStatus: () => true })
+      .then((response) => {
+        setLoading(false);
+        const success = response.data && response.data.id;
+        handleLogin(success);
+        if (success) history.push("/");
+        else {
+          setAlertMessage(
+            "Datos de usuario inválidos. Por favor, verifique sus credenciales."
+          );
+          setShowAlert(true);
+        }
+      })
+      .catch(() => {
+        setLoading(false);
+        setAlertMessage("Error de conexión al servidor.");
+        setShowAlert(true);
+      });
   }
 
   return (
@@ -73,6 +81,7 @@ const Login: React.FC<LoginProps> = ({ name, handleLogin }) => {
           <IonButton type="submit" expand="block">
             Iniciar Sesión
           </IonButton>
+          {loading && <IonLoading isOpen={loading} message="chuapala prematuro" />}
         </form>
         <IonAlert
           isOpen={showAlert}
@@ -87,3 +96,4 @@ const Login: React.FC<LoginProps> = ({ name, handleLogin }) => {
 };
 
 export default Login;
+
