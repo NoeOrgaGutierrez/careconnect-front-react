@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   IonPage,
   IonContent,
@@ -12,32 +12,31 @@ import {
   IonItem,
   IonLabel,
   IonList,
-  IonImg
-} from '@ionic/react';
-import axios from 'axios';
-import './Login.css';
+  IonImg,
+} from "@ionic/react";
+import axios from "axios";
+import "./Login.css";
 
 const Login: React.FC<{ name: string }> = ({ name }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
-    const corsProxy = 'https://cors-anywhere.herokuapp.com/';
-    const apiUrl = 'http://localhost:3000/user/login'; // La URL del endpoint de tu API
-    
+    const corsProxy = "https://cors-anywhere.herokuapp.com/";
+    const apiUrl = "http://localhost:3000/user/login"; // La URL del endpoint de tu API
+
     try {
       const response = await axios.post(corsProxy + apiUrl, {
         email: email, // Asegúrate de que estas variables están definidas en tu componente o contexto
-        password: password
+        password: password,
       });
 
       // Suponiendo que la API retorna datos del usuario en caso de éxito
-      console.log('Login successful:', response.data);
+      console.log("Login successful:", response.data);
     } catch (error) {
-      console.error('Login failed:', error);
+      console.error("Login failed:", error);
     }
-};
-
+  };
 
   return (
     <IonPage>
@@ -55,16 +54,30 @@ const Login: React.FC<{ name: string }> = ({ name }) => {
           <IonList>
             <IonItem>
               <IonLabel position="floating">Username or email address</IonLabel>
-              <IonInput type="text" value={email} onIonChange={e => setEmail(e.detail.value!)} />
+              <IonInput
+                type="text"
+                value={email}
+                onIonChange={(e) => setEmail(e.detail.value!)}
+              />
             </IonItem>
             <IonItem>
               <IonLabel position="floating">Password</IonLabel>
-              <IonInput type="password" value={password} onIonChange={e => setPassword(e.detail.value!)} />
+              <IonInput
+                type="password"
+                value={password}
+                onIonChange={(e) => setPassword(e.detail.value!)}
+              />
             </IonItem>
           </IonList>
-          <IonButton expand="block" onClick={handleLogin}>Sign In</IonButton>
-          <IonButton fill="clear" expand="full">Create an Account</IonButton>
-          <IonButton fill="clear" expand="full">Association Sign In</IonButton>
+          <IonButton expand="block" onClick={handleLogin}>
+            Sign In
+          </IonButton>
+          <IonButton fill="clear" expand="full">
+            Create an Account
+          </IonButton>
+          <IonButton fill="clear" expand="full">
+            Association Sign In
+          </IonButton>
         </div>
       </IonContent>
     </IonPage>
