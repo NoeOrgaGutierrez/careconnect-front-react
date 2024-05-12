@@ -81,7 +81,7 @@ const Login: React.FC<LoginProps> = ({ name, handleLogin }) => {
           <IonButton type="submit" expand="block">
             Iniciar Sesión
           </IonButton>
-          {loading && <IonLoading isOpen={loading} message="chuapala prematuro" />}
+          {loading && <IonLoading isOpen={loading} message="Loading" />}
         </form>
         <IonAlert
           isOpen={showAlert}
