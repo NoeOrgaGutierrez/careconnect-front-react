@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+  IonAlert,
   IonPage,
   IonContent,
   IonHeader,
@@ -12,27 +13,38 @@ import {
   IonAvatar,
   IonImg,
 } from "@ionic/react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 
-const Login: React.FC<{ name: string }> = ({ name }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+interface LoginProps {
+  name: string;
+  handleLogin: (status: boolean) => void; 
+}
 
-  const handleLogin = async () => {
-    const corsProxy = "https://cors-anywhere.herokuapp.com/";
-    const apiUrl = "http://localhost:3000/user/login"; // La URL del endpoint de tu API
+const Login: React.FC<LoginProps> = ({ name, handleLogin }) => {
+  const history = useHistory();
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
 
-    try {
-      const response = await axios.post(corsProxy + apiUrl, {
-        email: email,
-        password: password,
-      });
-
-      console.log("Login successful:", response.data);
-    } catch (error) {
-      console.error("Login failed:", error);
+  async function attemptLogin(event: any, form: any) {
+    event.preventDefault();
+    const email = form.email.value;
+    const password = form.password.value;
+    const response = await axios.post(
+      "http://localhost:3000/user/login",
+      { email, password },
+      { validateStatus: () => true }
+    );
+    const success = response.data && response.data.id;
+    handleLogin(success);
+    if (success) history.push("/");
+    else {
+      setAlertMessage(
+        "Datos de usuario inválidos. Por favor, verifique sus credenciales."
+      );
+      setShowAlert(true);
     }
-  };
+  }
 
   return (
     <IonPage>
@@ -42,18 +54,33 @@ const Login: React.FC<{ name: string }> = ({ name }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <IonAvatar style={{ margin: 'auto', marginBottom: '1rem' }}> {/* Centrado automáticamente */}
-          <IonImg src="../../../resources/logo.png"  /> {/* Incluir la imagen del perfil */}
-        </IonAvatar>
-        <IonItem>
-          <IonLabel position="floating">Correo electrónico</IonLabel>
-          <IonInput type="email" value={email} onIonChange={(e) => setEmail(e.detail.value!)} />
-        </IonItem>
-        <IonItem>
-          <IonLabel position="floating">Contraseña</IonLabel>
-          <IonInput type="password" value={password} onIonChange={(e) => setPassword(e.detail.value!)} />
-        </IonItem>
-        <IonButton expand="block" onClick={handleLogin}>Iniciar Sesión</IonButton>
+        <form onSubmit={(event) => attemptLogin(event, event.target)}>
+          <IonAvatar style={{ margin: "auto", marginBottom: "1rem" }}>
+            <IonImg src="../../../resources/logo.png" />
+          </IonAvatar>
+          <IonItem>
+            <IonLabel position="stacked">
+              <h1>Correo electrónico</h1>
+            </IonLabel>
+            <IonInput required type="text" name="email" />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="stacked">
+              <h1>Contraseña</h1>
+            </IonLabel>
+            <IonInput required type="password" name="password" />
+          </IonItem>
+          <IonButton type="submit" expand="block">
+            Iniciar Sesión
+          </IonButton>
+        </form>
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header={"Error de Autenticación"}
+          message={alertMessage}
+          buttons={["OK"]}
+        />
       </IonContent>
     </IonPage>
   );

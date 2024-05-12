@@ -5,7 +5,7 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { Route } from "react-router-dom";
+import { Redirect, Route } from "react-router-dom";
 import Menu from "./components/Menu";
 import Associations from "./components/associations/Associations";
 import Communities from "./components/communities/Communities";
@@ -43,11 +43,23 @@ import "@ionic/react/css/palettes/dark.system.css";
 
 /* Theme variables */
 import "./theme/variables.css";
+import { useEffect, useState } from "react";
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const loggedIn = false;
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+
+  useEffect(() => {
+    const sessionLoggedIn = sessionStorage.getItem("loggedIn") === "true";
+    setLoggedIn(sessionLoggedIn);
+  }, []);
+
+  const handleLogin = (status: boolean) => {
+    sessionStorage.setItem("loggedIn", String(status));
+    setLoggedIn(status);
+  };
+  
   return (
     <IonApp>
       <IonReactRouter>
@@ -72,11 +84,12 @@ const App: React.FC = () => {
         ) : (
           <IonRouterOutlet>
             <Route path="/login" exact={true}>
-              <Login name="Login" />
+              <Login name="Login" handleLogin={handleLogin} />
             </Route>
             <Route path="/" exact={true}>
               <Landing />
             </Route>
+            <Redirect to="/login" />
           </IonRouterOutlet>
         )}
       </IonReactRouter>

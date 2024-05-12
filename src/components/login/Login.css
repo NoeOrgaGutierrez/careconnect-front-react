@@ -1,6 +1,6 @@
 :root {
   --ion-color-primary: #007aff;
-  --ion-color-primary-contrast: #ffffff; 
+  --ion-color-primary-contrast: #ffffff;
 }
 
 ion-avatar {
@@ -13,19 +13,26 @@ ion-avatar {
 }
 
 ion-item {
-  --background: #262626;
-  --color: #ddd;
-  --placeholder-color: #ccc;
+  --background: rgba(255, 255, 255, 0.3); /* Fondo estilo burbuja */
+  --color: #ddd; /* Color del texto */
+  --placeholder-color: rgba(204, 204, 204, 0.7); /* Color inicial del placeholder */
   --padding-start: 1rem;
   --padding-end: 1rem;
-  --border-radius: 12px;
+  --border-radius: 5px; /* Bordes más redondeados */
   margin-bottom: 1rem;
+  transition: all 0.3s ease; /* Transición suave para efectos de hover */
 }
 
-ion-button {
-  --background: var(--ion-color-primary);
-  --border-radius: 8px;
-  width: 100%;
+ion-item:hover {
+  --placeholder-color: transparent; /* Oculta el placeholder al hacer hover */
+}
+
+ion-input::placeholder {
+  opacity: 1; /* Asegura que el placeholder es totalmente visible inicialmente */
+}
+
+ion-input:hover::placeholder {
+  opacity: 0; /* Hace que el placeholder desaparezca al hacer hover */
 }
 
 .ion-padding {
