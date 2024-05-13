@@ -36,7 +36,7 @@ const Login: React.FC = () => {
 				if (userId) {
 					localStorage.setItem('memberId', userId)
 					console.log('correcto')
-					history.push('/home')
+					history.push('/')
 					window.location.reload()
 				} else {
 					setAlertMessage(
