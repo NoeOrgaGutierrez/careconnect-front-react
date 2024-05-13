@@ -10,11 +10,11 @@ import {
 } from '@ionic/react'
 import { personCircleOutline } from 'ionicons/icons'
 import React from 'react'
-import { Grid } from '@mui/material'
+import { Button, Grid } from '@mui/material'
 const Communities: React.FC = () => {
 	return (
 		<>
-			<Grid></Grid>
+			<Button variant='contained'>Contained</Button>
 			<IonHeader>
 				<IonToolbar>
 					<IonTitle slot='start'>Landing</IonTitle>
