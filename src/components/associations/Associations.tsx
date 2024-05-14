@@ -69,7 +69,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Learn More</Button>
+              <Button size="small">Saber más</Button>
             </CardActions>
           </Card>
         ))}
