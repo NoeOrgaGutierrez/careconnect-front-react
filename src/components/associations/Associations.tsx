@@ -28,7 +28,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
     const fetchAssociations = async () => {
       try {
         const response = await axios.get("http://localhost:3000/association");
-        console.log("Associations data:", response.data);  // Ver qué datos llegan exactamente
+        console.log("Associations data:", response.data);
         setAssociations(response.data);
       } catch (error) {
         console.error("Error fetching associations", error);
@@ -50,26 +50,26 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
       </IonHeader>
       <IonContent class="ion-padding">
         {associations.map((association) => (
-          <Card key={association.id} style={{ marginBottom: '20px' }}>
+          <Card key={association.id} style={{ marginBottom: '20px', backgroundColor: '#1e1e1e', color: '#ffffff' }}>
             <CardMedia
               component="img"
-              style={{ height: '140px', objectFit: 'contain' }} // Establecer altura y ajuste de objeto
+              style={{ height: '100px', objectFit: 'contain', backgroundColor: '#e0e0e0' }} // Ajustado para ser más pequeño y mostrar toda la imagen
               image={association.logo}
-              alt={`Logo of ${association.logo}`}
+              alt={`Logo of ${association.name}`}
             />
             <CardContent>
               <Typography variant="h5" component="div">
                 {association.name}
               </Typography>
-              <Typography variant="body2">
+              <Typography variant="body2" color="textSecondary">
                 {association.miniDescription}
               </Typography>
-              <Typography color="textSecondary">
+              <Typography style={{ color: '#e0e0e0' }}>
                 {association.description}
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small">Saber más</Button>
+              <Button size="small" style={{ color: '#bb86fc' }}>Learn More</Button>
             </CardActions>
           </Card>
         ))}
