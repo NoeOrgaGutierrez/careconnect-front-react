@@ -51,7 +51,7 @@ const appPages: AppPage[] = [
     url: "/calendar",
     iosIcon: calendarOutline,
     mdIcon: calendarOutline,
-  },
+  }
 ];
 
 const Menu: React.FC = () => {

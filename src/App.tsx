@@ -13,6 +13,7 @@ import Calendar from './components/calendar/Calendar'
 import Home from './components/home/Home'
 import Landing from './components/Landing'
 import Login from './components/login/Login'
+import UserInformation from './components/user/UserInformation'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -78,6 +79,9 @@ const App: React.FC = () => {
 							</Route>
 							<Route path='/calendar' exact={true}>
 								<Calendar name='Calendar' />
+							</Route>
+							<Route path='/user' exact={true}>
+								<UserInformation name='UserInformation' />
 							</Route>
 						</IonRouterOutlet>
 					</IonSplitPane>

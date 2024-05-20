@@ -1,82 +1,68 @@
-:root {
-  --ion-color-primary: #007aff;
-  --ion-color-primary-contrast: #ffffff;
+.login-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Usa todo el alto de la vista para centrar el contenido */
+  background-color: #121212; /* Ajusta al color deseado */
 }
+
+.login-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-card {
+  width: 100%;
+  max-width: 360px; /* Ajusta según la anchura deseada para el formulario */
+  background-color: #242424; /* Fondo del formulario */
+  color: #ffffff; /* Color de texto */
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2); /* Sombra para el formulario */
+  border-radius: 8px; /* Bordes redondeados */
+  padding: 20px; /* Padding interno para espacio alrededor de los elementos del formulario */
+}
+
+/* Resto de estilos */
+
 
 ion-avatar {
   --border-radius: 50%;
-  width: 100px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   display: block;
-  margin: 0 auto;
-  margin-bottom: 1rem;
+  margin: 0 auto 20px; /* Asegura que el avatar está centrado y tiene margen */
 }
 
 ion-item {
-  --background: rgba(255, 255, 255, 0.3); /* Fondo estilo burbuja */
-  --color: #ddd; /* Color del texto */
-  --placeholder-color: rgba(204, 204, 204, 0.7); /* Color inicial del placeholder */
-  --padding-start: 1rem;
-  --padding-end: 1rem;
-  --border-radius: 5px; /* Bordes más redondeados */
-  margin-bottom: 1rem;
-  transition: all 0.3s ease; /* Transición suave para efectos de hover */
+  --background: #333333; /* Fondo de los campos de entrada */
+  --color: #ffffff; /* Color del texto */
+  --placeholder-color: #bbbbbb; /* Color de los placeholders */
+  --border-radius: 8px; /* Bordes redondeados para los campos de entrada */
+  margin-bottom: 16px; /* Espacio entre campos de entrada */
 }
 
-ion-item:hover {
-  --placeholder-color: transparent; /* Oculta el placeholder al hacer hover */
+ion-label {
+  color: #ffffff; /* Color de las etiquetas */
 }
 
-ion-input::placeholder {
-  opacity: 1; /* Asegura que el placeholder es totalmente visible inicialmente */
+ion-input {
+  color: #ffffff; /* Color del texto de entrada */
 }
 
-ion-input:hover::placeholder {
-  opacity: 0; /* Hace que el placeholder desaparezca al hacer hover */
+ion-button {
+  display: block; /* Asegura que el botón ocupe todo el ancho disponible */
+  width: 100%; /* Ancho completo dentro del formulario */
+  margin-top: 20px; /* Espacio antes del botón */
+  --background: var(--ion-color-primary); /* Color del botón */
+  --color: #ffffff; /* Texto del botón */
 }
 
-.ion-padding {
-  padding: 2rem;
+ion-footer {
+  background: none; /* Sin fondo para el pie */
 }
 
-@media (max-width: 768px) {
-  ion-avatar {
-    width: 80px;
-    height: 80px;
-  }
-
-  ion-item {
-    --padding-start: 0.5rem;
-    --padding-end: 0.5rem;
-  }
-
-  .ion-padding {
-    padding: 1rem;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1024px) {
-  ion-avatar {
-    width: 90px;
-    height: 90px;
-  }
-
-  .ion-padding {
-    padding: 1.5rem;
-  }
-}
-
-@media (min-width: 1025px) {
-  ion-avatar {
-    width: 100px;
-    height: 100px;
-  }
-
-  ion-item {
-    margin-bottom: 2rem;
-  }
-
-  .ion-padding {
-    padding: 2rem;
-  }
+ion-button[fill="clear"] {
+  color: #bbbbbb; /* Color para los botones secundarios */
+  font-weight: bold; /* Negrita para los botones secundarios */
 }

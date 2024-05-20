@@ -1,0 +1,9 @@
+.association-card {
+    margin-bottom: 20px;
+  }
+  
+  .association-card img {
+    max-height: 150px;
+    object-fit: contain;
+  }
+  

@@ -14,7 +14,6 @@ import { Button, Grid } from '@mui/material'
 const Communities: React.FC = () => {
 	return (
 		<>
-			<Button variant='contained'>Contained</Button>
 			<IonHeader>
 				<IonToolbar>
 					<IonTitle slot='start'>Landing</IonTitle>
