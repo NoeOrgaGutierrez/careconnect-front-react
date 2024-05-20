@@ -15,7 +15,9 @@ import {
   IonAlert,
   IonCard,
   IonCardContent,
+  IonIcon
 } from '@ionic/react';
+import { eye, eyeOff } from 'ionicons/icons';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
@@ -24,6 +26,7 @@ import './Login.css';  // Asegúrate de que el archivo CSS esté en la ruta corr
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
   const [loading, setLoading] = useState(false);
@@ -67,26 +70,34 @@ const Login: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="login-content">
-        <div className="login-container">  {/* Nuevo contenedor para asegurar centrado */}
+      <div style={{ height: '50px' }}></div>
+        <div className="login-container">  
           <IonCard className="login-card">
             <IonCardContent>
-              <IonAvatar style={{ margin: 'auto', marginBottom: '1rem' }}>
+              <IonAvatar className="login-avatar">
                 <IonImg src="../../../resources/logo.png" />
               </IonAvatar>
               <form onSubmit={handleLogin}>
-                <IonItem>
-                  <IonLabel position="stacked">Email address</IonLabel>
-                  <IonInput type="email" value={email} onIonChange={e => setEmail(e.detail.value!)} />
+                <IonItem className="login-item">
+                  <IonLabel className="login-label" position="stacked">Email address</IonLabel>
+                  <IonInput className="login-input" type="email" value={email} onIonChange={e => setEmail(e.detail.value!)} />
                 </IonItem>
-                <IonItem>
-                  <IonLabel position="stacked">Password</IonLabel>
-                  <IonInput type="password" value={password} onIonChange={e => setPassword(e.detail.value!)} />
+                <IonItem className="login-item" lines="none">
+                  <IonLabel className="login-label" position="stacked">Password</IonLabel>
+                  <IonInput className="login-input" type={showPassword ? 'text' : 'password'} value={password} onIonChange={e => setPassword(e.detail.value!)} />
+                  <IonButton slot="end" fill="clear" className="password-toggle-button" onClick={() => setShowPassword(!showPassword)}>
+                    <IonIcon icon={showPassword ? eyeOff : eye} />
+                  </IonButton>
                 </IonItem>
                 <IonButton type="submit" expand="block" className="login-button">Sign In</IonButton>
               </form>
             </IonCardContent>
-            <IonButton expand="block" fill="clear">Register</IonButton>
-            <IonButton expand="block" fill="clear">Association Login</IonButton>
+            <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/user-register')}>
+              Register
+            </IonButton>
+            <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/association-login')}>
+              Association Login
+            </IonButton>
           </IonCard>
         </div>
         {loading && <IonLoading isOpen={loading} message="Please wait..." />}

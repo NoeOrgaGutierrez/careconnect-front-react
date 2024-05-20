@@ -45,6 +45,7 @@ import '@ionic/react/css/palettes/dark.system.css'
 /* Theme variables */
 import './theme/variables.css'
 import { useEffect, useState } from 'react'
+import UserRegister from './components/user-register/UserRegister'
 
 setupIonicReact()
 
@@ -92,6 +93,9 @@ const App: React.FC = () => {
 						</Route>
 						<Route path='/' exact={true}>
 							<Landing />
+						</Route>
+						<Route path='/user-register' exact={true}>
+							<UserRegister />
 						</Route>
 					</IonRouterOutlet>
 				)}

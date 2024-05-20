@@ -71,7 +71,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
     if (memberId) {
       if (isUserInAssociation(associationId)) {
         try {
-          // Implement the logic to leave the association
+          // Implement the logic to leave the association using the new URL format
           await axios.delete(`http://localhost:3000/user-association/user/${memberId}/association/${associationId}`);
           setUserAssociations(userAssociations.filter(userAssociation => userAssociation.association.id !== associationId));
         } catch (error) {
@@ -79,11 +79,18 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
         }
       } else {
         try {
-          // Implement the logic to join the association
-          await axios.post(`http://localhost:3000/user-association/user/${memberId}/association/${associationId}`);
+          // Implement the logic to join the association using the new URL format
+          const response = await axios.post('http://localhost:3000/user-association', {
+            user: {
+              id: parseInt(memberId, 10)
+            },
+            association: {
+              id: associationId
+            }
+          });
           const newAssociation = associations.find(association => association.id === associationId);
           if (newAssociation) {
-            setUserAssociations([...userAssociations, { id: Date.now(), association: newAssociation }]);
+            setUserAssociations([...userAssociations, { id: response.data.id, association: newAssociation }]);
           }
         } catch (error) {
           console.error("Error joining association", error);

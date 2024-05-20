@@ -26,6 +26,7 @@ import axios from 'axios';
 import { pencilOutline, arrowUndoOutline, star } from 'ionicons/icons';
 
 import './UserInformation.css';
+
 interface User {
   id: number;
   name: string;
@@ -76,13 +77,23 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
   const handleAssociationClick = () => {
     const memberId = localStorage.getItem('memberId');
     if (memberId) {
-      console.log(`http://localhost:3000/user-association/user/${memberId}`);
       axios.get(`http://localhost:3000/user-association/user/${memberId}`)
         .then(response => {
-          console.log('Association successful:', response.data);
-          setAssociations(response.data); // Guardar las asociaciones en el estado
+          setAssociations(response.data);
         })
         .catch(error => console.error('Error associating user:', error));
+    }
+  };
+
+  const handleLeaveAssociation = async (associationId: number) => {
+    const memberId = localStorage.getItem('memberId');
+    if (memberId) {
+      try {
+        await axios.delete(`http://localhost:3000/user-association/user/${memberId}/association/${associationId}`);
+        setAssociations(associations.filter(assoc => assoc.association.id !== associationId));
+      } catch (error) {
+        console.error('Error leaving association:', error);
+      }
     }
   };
 
@@ -207,7 +218,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                                 <IonCardContent>
                                   <img src={assoc.association.logo} alt={assoc.association.name} style={{ width: '100%', height: 'auto', backgroundColor: 'white' }} />
                                   <p>{assoc.association.description}</p>
-                                  <IonButton color="danger" size="small">Leave</IonButton>
+                                  <IonButton color="danger" size="small" onClick={() => handleLeaveAssociation(assoc.association.id)}>Leave</IonButton>
                                   <IonButton fill="outline" size="small">Know more</IonButton>
                                 </IonCardContent>
                               </IonCard>
@@ -230,4 +241,3 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 };
 
 export default UserInformation;
-
