@@ -24,7 +24,7 @@ import { useHistory } from 'react-router-dom';
 import './AssociationsLogin.css';  // Asegúrate de que el archivo CSS esté en la ruta correcta
 
 const AssociationLogin: React.FC = () => {
-  const [email, setEmail] = useState('');
+  const [loginCode, setLoginCode] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -37,18 +37,26 @@ const AssociationLogin: React.FC = () => {
     setLoading(true);
 
     try {
+      console.log('Sending login request:', {
+        method: 'POST',
+        url: 'http://localhost:3000/association/login',
+        data: {
+          loginCode,
+          password,
+        },
+      });
       const response = await axios.post('http://localhost:3000/association/login', {
-        email: email,
+        loginCode: loginCode,
         password: password
       });
-
+  
       setLoading(false); // Update loading state
       const associationId = response.data && response.data.id;
 
       if (associationId) {
-        localStorage.setItem('associationId', associationId); // Save the association ID to local storage
+        localStorage.setItem('associationId', associationId.toString()); // Save the association ID to local storage
         console.log('Login successful:', response.data);
-        history.push('/association-dashboard'); // Redirect to association dashboard
+        history.push('/associations-profile'); // Redirect to association profile
         window.location.reload(); // Reload the page to apply the login state
       } else {
         setAlertMessage('Invalid login credentials. Please check and try again.');
@@ -70,7 +78,7 @@ const AssociationLogin: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="login-content">
-      <div style={{ height: '50px' }}></div>
+        <div style={{ height: '50px' }}></div>
         <div className="login-container">  
           <IonCard className="login-card">
             <IonCardContent>
@@ -79,8 +87,8 @@ const AssociationLogin: React.FC = () => {
               </IonAvatar>
               <form onSubmit={handleLogin}>
                 <IonItem className="login-item">
-                  <IonLabel className="login-label" position="stacked">Email address</IonLabel>
-                  <IonInput className="login-input" type="email" value={email} onIonChange={e => setEmail(e.detail.value!)} />
+                  <IonLabel className="login-label" position="stacked">Login Code</IonLabel>
+                  <IonInput className="login-input" type="text" value={loginCode} onIonChange={e => setLoginCode(e.detail.value!)} />
                 </IonItem>
                 <IonItem className="login-item" lines="none">
                   <IonLabel className="login-label" position="stacked">Password</IonLabel>
@@ -95,8 +103,8 @@ const AssociationLogin: React.FC = () => {
             <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/user-register')}>
               Register as User
             </IonButton>
-            <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/association-register')}>
-              Register as Association
+            <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/login')}>
+              User Login
             </IonButton>
           </IonCard>
         </div>

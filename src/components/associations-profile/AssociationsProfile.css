@@ -1,0 +1,81 @@
+.association-profile-content {
+    --background: #1e1e1e; /* Fondo oscuro para el contenido */
+    color: #ffffff; /* Color del texto */
+  }
+  
+  .banner-container {
+    background-color: #ffffff; /* Fondo blanco para el contenedor del banner */
+  }
+  
+  .association-banner {
+    width: 100%;
+    height: auto;
+    background-color: #ffffff; /* Fondo blanco para el banner */
+  }
+  
+  .association-avatar-container {
+    background-color: #ffffff; /* Fondo blanco para el contenedor del avatar */
+    display: inline-block;
+    padding: 10px;
+    border-radius: 50%; /* Bordes redondeados */
+    margin-top: -50px; /* Para superponer ligeramente el avatar con el banner */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto flotante */
+    overflow: hidden; /* Recorta cualquier contenido que sobresalga */
+  }
+  
+  .association-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%; /* Bordes redondeados para la imagen del avatar */
+    object-fit: cover; /* Asegura que la imagen cubra completamente el área del contenedor */
+  }
+  
+  .association-name {
+    display: block;
+    font-size: 24px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 10px; /* Espacio entre el nombre y los detalles */
+    color: #ffffff; /* Color del texto del nombre */
+  }
+  
+  .association-meta {
+    display: block;
+    font-size: 14px;
+    color: #bbbbbb;
+    margin-top: 5px;
+  }
+  
+  .ion-text-center {
+    text-align: center;
+  }
+  
+  .association-section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    color: #ffffff;
+  }
+  
+  .association-description {
+    font-size: 16px;
+    text-align: justify;
+    color: #ffffff; /* Color del texto */
+    margin-top: 10px;
+    padding: 0 10px;
+  }
+  
+  .ion-segment {
+    background-color: #333333; /* Fondo oscuro para el segmento */
+  }
+  
+  .ion-segment-button {
+    --background: #444444; /* Fondo para el botón de segmento */
+    --color-checked: #ffffff; /* Color del texto cuando está seleccionado */
+  }
+  
+  .ion-segment-button.ion-segment-button-checked {
+    background-color: #6200ea; /* Fondo para el botón de segmento seleccionado */
+    color: #ffffff; /* Color del texto cuando está seleccionado */
+  }
+  

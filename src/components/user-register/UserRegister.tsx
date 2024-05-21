@@ -96,6 +96,7 @@ const UserRegister: React.FC = () => {
           <IonTitle>User Register</IonTitle>
         </IonToolbar>
       </IonHeader>
+      <div style={{ height: '10px' }}></div>
       <IonContent className="register-content">
         <div className="register-container">
           <IonCard className="register-card">
@@ -131,6 +132,12 @@ const UserRegister: React.FC = () => {
                 <IonButton type="submit" expand="block" className="register-button">Register</IonButton>
               </form>
             </IonCardContent>
+            <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/login')}>
+              User Login
+            </IonButton>
+            <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/associations-login')}>
+              Association Login
+            </IonButton>
           </IonCard>
         </div>
         {loading && <IonLoading isOpen={loading} message="Please wait..." />}
@@ -141,8 +148,10 @@ const UserRegister: React.FC = () => {
           message={alertMessage}
           buttons={['OK']}
         />
+        <div style={{ height: '10px' }}></div>
       </IonContent>
     </IonPage>
+    
   );
 };
 

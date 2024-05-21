@@ -95,7 +95,7 @@ const Login: React.FC = () => {
             <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/user-register')}>
               Register
             </IonButton>
-            <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/association-login')}>
+            <IonButton expand="block" fill="clear" className="login-button-clear" onClick={() => history.push('/associations-login')}>
               Association Login
             </IonButton>
           </IonCard>
