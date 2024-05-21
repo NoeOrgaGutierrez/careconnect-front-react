@@ -14,6 +14,7 @@ import Home from './components/home/Home'
 import Landing from './components/Landing'
 import Login from './components/login/Login'
 import UserInformation from './components/user/UserInformation'
+import AssociationsLogin from './components/associations-login/AssociationsLogin'
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css'
@@ -83,6 +84,9 @@ const App: React.FC = () => {
 							</Route>
 							<Route path='/user' exact={true}>
 								<UserInformation name='UserInformation' />
+							</Route>
+							<Route path='/associations-login' exact={true}>
+								<AssociationsLogin	/>
 							</Route>
 						</IonRouterOutlet>
 					</IonSplitPane>
