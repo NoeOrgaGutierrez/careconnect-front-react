@@ -86,7 +86,7 @@ const Login: React.FC = () => {
                   <IonLabel className="login-label" position="stacked">Password</IonLabel>
                   <IonInput className="login-input" type={showPassword ? 'text' : 'password'} value={password} onIonChange={e => setPassword(e.detail.value!)} />
                   <IonButton slot="end" fill="clear" className="password-toggle-button" onClick={() => setShowPassword(!showPassword)}>
-                    <IonIcon icon={showPassword ? eyeOff : eye} />
+                    <IonIcon slot='end' icon={showPassword ? eyeOff : eye} />
                   </IonButton>
                 </IonItem>
                 <IonButton type="submit" expand="block" className="login-button">Sign In</IonButton>

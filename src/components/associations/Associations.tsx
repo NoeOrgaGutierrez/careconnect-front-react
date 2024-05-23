@@ -9,6 +9,9 @@ import {
   IonMenuButton,
   IonTitle,
   IonToolbar,
+  IonItem,
+  IonInput,
+  IonButton
 } from "@ionic/react";
 import { Card, CardContent, CardActions, Button, Typography, CardMedia, Grid } from "@mui/material";
 
@@ -31,17 +34,21 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
   const [associations, setAssociations] = useState<Association[]>([]);
   const [userAssociations, setUserAssociations] = useState<UserAssociation[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [associationName, setAssociationName] = useState<string>('');
+  const [memberCount, setMemberCount] = useState<number | undefined>(undefined);
 
   useEffect(() => {
+    // Carga inicial de todas las asociaciones y asociaciones del usuario
     const fetchAssociations = async () => {
+      setLoading(true);
       try {
         const response = await axios.get("http://localhost:3000/association");
         console.log("Associations data:", response.data);
         setAssociations(response.data);
-        setLoading(false); // Set loading to false once data is received
       } catch (error) {
         console.error("Error fetching associations", error);
-        setLoading(false); // Ensure loading is false in case of error too
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -62,6 +69,24 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
     fetchUserAssociations();
   }, []);
 
+  const fetchFilteredAssociations = async (name?: string, count?: number) => {
+    setLoading(true);
+    try {
+      const response = await axios.get("http://localhost:3000/association/filter", {
+        params: {
+          associationName: name,
+          memberCount: count
+        }
+      });
+      console.log("Filtered Associations data:", response.data);
+      setAssociations(response.data);
+    } catch (error) {
+      console.error("Error fetching filtered associations", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const isUserInAssociation = (associationId: number) => {
     return userAssociations.some(userAssociation => userAssociation.association.id === associationId);
   };
@@ -71,7 +96,6 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
     if (memberId) {
       if (isUserInAssociation(associationId)) {
         try {
-          // Implement the logic to leave the association using the new URL format
           await axios.delete(`http://localhost:3000/user-association/user/${memberId}/association/${associationId}`);
           setUserAssociations(userAssociations.filter(userAssociation => userAssociation.association.id !== associationId));
         } catch (error) {
@@ -79,7 +103,6 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
         }
       } else {
         try {
-          // Implement the logic to join the association using the new URL format
           const response = await axios.post('http://localhost:3000/user-association', {
             user: {
               id: parseInt(memberId, 10)
@@ -99,6 +122,10 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
     }
   };
 
+  const handleFilterChange = () => {
+    fetchFilteredAssociations(associationName, memberCount);
+  };
+
   return (
     <>
       <IonHeader>
@@ -110,6 +137,15 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding" style={{ overflowY: "auto" }}>
+        <IonItem>
+          <IonLabel position="floating">Association Name</IonLabel>
+          <IonInput value={associationName} onIonChange={e => setAssociationName(e.detail.value!)} />
+        </IonItem>
+        <IonItem>
+          <IonLabel position="floating">Member Count</IonLabel>
+          <IonInput type="number" value={memberCount} onIonChange={e => setMemberCount(parseInt(e.detail.value!, 10))} />
+        </IonItem>
+        <IonButton expand="block" onClick={handleFilterChange}>Filter</IonButton>
         {loading ? (
           <IonLabel>Loading...</IonLabel>
         ) : associations.length > 0 ? (

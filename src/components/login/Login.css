@@ -72,12 +72,3 @@
 .login-footer {
   background: none; /* Sin fondo para el pie */
 }
-
-/* Estilo para centrar el botón de mostrar/ocultar contraseña verticalmente */
-.password-toggle-button {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #bbbbbb; /* Color del ícono */
-}
