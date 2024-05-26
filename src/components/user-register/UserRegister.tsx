@@ -28,7 +28,7 @@ const UserRegister: React.FC = () => {
   const [surname, setSurname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [avatar, setAvatar] = useState<string | ArrayBuffer | null>(null);
+  const [avatar, setAvatar] = useState<File | null>(null);
   const [bio, setBio] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState('');
@@ -40,23 +40,39 @@ const UserRegister: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:3000/user', {
+      const userData = {
         name,
         surname,
         email,
         password,
-        avatar: avatar?.toString(), // Asegúrate de que avatar sea una URL válida o null
         bio
-      });
+      };
 
-      setLoading(false); // Update loading state
+      const response = await axios.post('http://localhost:3000/user', userData);
+
       if (response.status === 201) {
         const userId = response.data.id;
         localStorage.setItem('memberId', userId.toString()); // Save the user ID to local storage
         console.log('Registration successful:', response.data);
+
+        // Now upload the avatar
+        if (avatar) {
+          const formData = new FormData();
+          formData.append('file', avatar);
+
+          await axios.post(`http://localhost:3000/storage/upload/user/${userId}`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          });
+          console.log('Avatar upload successful');
+        }
+
+        setLoading(false); // Update loading state
         history.push('/'); // Redirect to home page
         window.location.reload(); // Reload the page to apply the login state
       } else {
+        setLoading(false); // Update loading state
         setAlertMessage('Registration failed. Please try again.');
         setShowAlert(true); // Show alert message
       }
@@ -78,11 +94,7 @@ const UserRegister: React.FC = () => {
           useWebWorker: true
         };
         const compressedFile = await imageCompression(file, options);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setAvatar(reader.result);
-        };
-        reader.readAsDataURL(compressedFile);
+        setAvatar(compressedFile);
       } catch (error) {
         console.error('Error compressing file:', error);
       }
@@ -96,13 +108,12 @@ const UserRegister: React.FC = () => {
           <IonTitle>User Register</IonTitle>
         </IonToolbar>
       </IonHeader>
-      <div style={{ height: '10px' }}></div>
       <IonContent className="register-content">
         <div className="register-container">
           <IonCard className="register-card">
             <IonCardContent>
               <IonAvatar className="register-avatar">
-                <IonImg src={avatar ? avatar.toString() : "../../../resources/default-avatar.png"} />
+                <IonImg src={avatar ? URL.createObjectURL(avatar) : "../../../resources/Logo.png"} />
               </IonAvatar>
               <form onSubmit={handleRegister}>
                 <IonItem className="register-item">
@@ -148,10 +159,8 @@ const UserRegister: React.FC = () => {
           message={alertMessage}
           buttons={['OK']}
         />
-        <div style={{ height: '10px' }}></div>
       </IonContent>
     </IonPage>
-    
   );
 };
 

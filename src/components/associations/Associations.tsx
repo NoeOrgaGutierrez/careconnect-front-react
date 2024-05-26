@@ -35,7 +35,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
   const [userAssociations, setUserAssociations] = useState<UserAssociation[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [associationName, setAssociationName] = useState<string>('');
-  const [memberCount, setMemberCount] = useState<number | undefined>(undefined);
+  const [memberCount, setMemberCount] = useState<string>('');
 
   useEffect(() => {
     // Carga inicial de todas las asociaciones y asociaciones del usuario
@@ -71,13 +71,13 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 
   const fetchFilteredAssociations = async (name?: string, count?: number) => {
     setLoading(true);
+    console.log("Fetching filtered associations:", count);
     try {
-      const response = await axios.get("http://localhost:3000/association/filter", {
-        params: {
-          associationName: name,
-          memberCount: count
-        }
-      });
+      const params: { [key: string]: any } = {};
+      if (name) params.associationName = name;
+      if (count) params.memberCount = count;
+
+      const response = await axios.get("http://localhost:3000/association/filter", { params });
       console.log("Filtered Associations data:", response.data);
       setAssociations(response.data);
     } catch (error) {
@@ -123,7 +123,8 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
   };
 
   const handleFilterChange = () => {
-    fetchFilteredAssociations(associationName, memberCount);
+    const count = parseInt(memberCount, 10);
+    fetchFilteredAssociations(associationName, isNaN(count) ? undefined : count);
   };
 
   return (
@@ -143,7 +144,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
         </IonItem>
         <IonItem>
           <IonLabel position="floating">Member Count</IonLabel>
-          <IonInput type="number" value={memberCount} onIonChange={e => setMemberCount(parseInt(e.detail.value!, 10))} />
+          <IonInput type="number" value={memberCount} onIonChange={e => setMemberCount(e.detail.value!)} />
         </IonItem>
         <IonButton expand="block" onClick={handleFilterChange}>Filter</IonButton>
         {loading ? (
