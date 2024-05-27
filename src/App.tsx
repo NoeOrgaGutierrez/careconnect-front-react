@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   IonApp,
   IonRouterOutlet,
@@ -14,7 +15,6 @@ import Home from "./components/home/Home";
 import Landing from "./components/Landing";
 import Login from "./components/login/Login";
 import UserInformation from "./components/user/UserInformation";
-import AssociationsLogin from "./components/associations-login/AssociationsLogin";
 import AssociationProfile from "./components/associations-profile/AssociationsProfile";
 
 /* Core CSS required for Ionic components to work properly */
@@ -33,26 +33,21 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 
-/**
- * Ionic Dark Mode
- * -----------------------------------------------------
- * For more info, please see:
- * https://ionicframework.com/docs/theming/dark-mode
- */
-
-/* import '@ionic/react/css/palettes/dark.always.css'; */
-/* import '@ionic/react/css/palettes/dark.class.css'; */
+/* Ionic Dark Mode */
 import "@ionic/react/css/palettes/dark.system.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { useEffect, useState } from "react";
+
 import UserRegister from "./components/user-register/UserRegister";
+import AssociationsDetails from "./components/associations-details/AssociationsDetails";
+import AssociationsLogin from "./components/associations-login/AssociationsLogin";
 
 setupIonicReact();
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  
   useEffect(() => {
     console.log("comprobando logeado");
     if (localStorage.getItem("memberId") !== null) {
@@ -61,6 +56,7 @@ const App: React.FC = () => {
       setLoggedIn(false);
     }
   }, [localStorage.getItem("memberId")]);
+
   return (
     <IonApp>
       <IonReactRouter>
@@ -86,8 +82,8 @@ const App: React.FC = () => {
               <Route path="/user" exact={true}>
                 <UserInformation name="UserInformation" />
               </Route>
-              <Route path="/associations-profile" exact={true}>
-                <AssociationProfile />
+              <Route path="/association/:id" exact={true}>
+                <AssociationsDetails />
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>

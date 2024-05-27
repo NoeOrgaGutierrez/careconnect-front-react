@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import {
   IonButtons,
@@ -30,7 +30,7 @@ interface UserAssociation {
 }
 
 const Associations: React.FC<{ name: string }> = ({ name }) => {
-  const location = useLocation();
+  const history = useHistory();
   const [associations, setAssociations] = useState<Association[]>([]);
   const [userAssociations, setUserAssociations] = useState<UserAssociation[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -127,6 +127,16 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
     fetchFilteredAssociations(associationName, isNaN(count) ? undefined : count);
   };
 
+  const handleMoreInfo = (associationId: number) => {
+    // Navegar a la pantalla de detalles de la asociación
+    history.push(`/association/${associationId}`);
+  };
+
+  const handleViewBlogs = (associationId: number) => {
+    // Implementa la lógica para manejar la navegación o mostrar los blogs de la asociación
+    console.log(`View blogs for association ${associationId}`);
+  };
+
   return (
     <>
       <IonHeader>
@@ -139,16 +149,16 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
       </IonHeader>
       <IonContent className="ion-padding" style={{ overflowY: "auto" }}>
         <IonItem>
-          <IonLabel position="floating">Association Name</IonLabel>
+          <IonLabel position="floating">Nombre de la asociación</IonLabel>
           <IonInput value={associationName} onIonChange={e => setAssociationName(e.detail.value!)} />
         </IonItem>
         <IonItem>
-          <IonLabel position="floating">Member Count</IonLabel>
+          <IonLabel position="floating">Número de miembros</IonLabel>
           <IonInput type="number" value={memberCount} onIonChange={e => setMemberCount(e.detail.value!)} />
         </IonItem>
-        <IonButton expand="block" onClick={handleFilterChange}>Filter</IonButton>
+        <IonButton expand="block" onClick={handleFilterChange}>Filtrar</IonButton>
         {loading ? (
-          <IonLabel>Loading...</IonLabel>
+          <IonLabel>Cargando...</IonLabel>
         ) : associations.length > 0 ? (
           <>
             <Grid container spacing={3}>
@@ -190,7 +200,21 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
                         style={{ color: '#bb86fc' }} 
                         onClick={() => handleAssociationToggle(association.id)}
                       >
-                        {isUserInAssociation(association.id) ? "Leave" : "Join"}
+                        {isUserInAssociation(association.id) ? "Salirse" : "Unirse"}
+                      </Button>
+                      <Button 
+                        size="small" 
+                        style={{ color: '#bb86fc' }} 
+                        onClick={() => handleMoreInfo(association.id)}
+                      >
+                        Saber más
+                      </Button>
+                      <Button 
+                        size="small" 
+                        style={{ color: '#bb86fc' }} 
+                        onClick={() => handleViewBlogs(association.id)}
+                      >
+                        Blogs
                       </Button>
                     </CardActions>
                   </Card>
@@ -201,7 +225,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
             <div style={{ height: '50px' }}></div>
           </>
         ) : (
-          <IonLabel>No associations found.</IonLabel>
+          <IonLabel>Ninguna asociación fue encontrada.</IonLabel>
         )}
       </IonContent>
     </>
