@@ -1,0 +1,31 @@
+/* Comments.css */
+.comment-container {
+    margin-top: 20px;
+  }
+  
+  .comment-paper {
+    padding: 20px;
+    margin-bottom: 10px;
+    background-color: #f5f5f5;
+  }
+  
+  .comment-avatar {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .comment-content {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .comment-actions {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+  
+  .reply-field {
+    margin-top: 10px;
+  }
+  
