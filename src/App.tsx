@@ -42,12 +42,13 @@ import "./theme/variables.css";
 import UserRegister from "./components/user-register/UserRegister";
 import AssociationsDetails from "./components/associations-details/AssociationsDetails";
 import AssociationsLogin from "./components/associations-login/AssociationsLogin";
+import BlogDetails from "./components/blog-details/BlogDetails";  // Importa el nuevo componente
 
 setupIonicReact();
 
 const App: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
-  
+
   useEffect(() => {
     console.log("comprobando logeado");
     if (localStorage.getItem("memberId") !== null) {
@@ -84,6 +85,9 @@ const App: React.FC = () => {
               </Route>
               <Route path="/association/:id" exact={true}>
                 <AssociationsDetails />
+              </Route>
+              <Route path="/blog-details/:id" exact={true}>
+                <BlogDetails />  
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>

@@ -21,10 +21,7 @@ import {
 import { arrowUndoOutline } from "ionicons/icons";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
-import Comments from "./../comments/Comments";
-
-import "./AssociationsDetails.css";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 
 interface Association {
   id: number;
@@ -37,11 +34,13 @@ interface Association {
   members: Array<{ id: number; user: { name: string; email: string } }>;
   blogs: Array<Blog>;
 }
+
 interface User {
   id: string;
   name: string;
   avatar: string | null;
 }
+
 interface Comment {
   id: string;
   content: string;
@@ -113,6 +112,10 @@ const AssociationsDetails: React.FC = () => {
         setLoading(false);
       }
     }
+  };
+
+  const handleViewBlog = (blogId: number) => {
+    history.push(`/blog-details/${blogId}`);
   };
 
   if (loading) {
@@ -201,17 +204,21 @@ const AssociationsDetails: React.FC = () => {
                     </IonText>
                   )}
                   {currentSegment === "blogs" && (
-                    // Renderizar los blogs y comentarios
                     association.blogs.map(blog => (
                       <div key={blog.id}>
                         <Typography variant="h6">{blog.name}</Typography>
                         <Typography variant="body1">{blog.description}</Typography>
-                        <Comments comments={blog.blogComments} />
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          onClick={() => handleViewBlog(blog.id)}
+                        >
+                          Ver Blog
+                        </Button>
                       </div>
                     ))
                   )}
                   {currentSegment === "faq" &&
-                    // Renderizar preguntas frecuentes
                     association.faq.map((faq) => (
                       <div key={faq.id}>
                         <p>
