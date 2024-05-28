@@ -129,7 +129,8 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 
   const handleMoreInfo = (associationId: number) => {
     // Navegar a la pantalla de detalles de la asociación
-    history.push(`/association/${associationId}`);
+    history.push(`/association-details/${associationId}`);
+    localStorage.setItem('association-details-id', associationId.toString());
   };
 
   const handleViewBlogs = (associationId: number) => {

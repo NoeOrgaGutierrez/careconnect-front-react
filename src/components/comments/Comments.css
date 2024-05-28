@@ -1,31 +1,62 @@
 /* Comments.css */
-.comment-container {
-    margin-top: 20px;
-  }
-  
-  .comment-paper {
-    padding: 20px;
-    margin-bottom: 10px;
-    background-color: #f5f5f5;
-  }
-  
-  .comment-avatar {
-    width: 40px;
-    height: 40px;
-  }
-  
-  .comment-content {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .comment-actions {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-  }
-  
-  .reply-field {
-    margin-top: 10px;
-  }
-  
+.comments-container {
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.comment-paper {
+  padding: 15px;
+  margin-top: 10px;
+  background-color: #fafafa;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.comment-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.comment-author {
+  font-weight: bold;
+  color: #333333;
+}
+
+.comment-content {
+  font-size: 1rem;
+  color: #555555;
+  margin-top: 5px;
+  line-height: 1.5;
+}
+
+.comment-actions {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.comment-actions .MuiIconButton-root {
+  padding: 5px;
+}
+
+.comment-actions .MuiTypography-root {
+  margin-left: 5px;
+}
+
+.comment-reply {
+  margin-top: 15px;
+}
+
+.comment-reply .MuiTextField-root {
+  width: 100%;
+}

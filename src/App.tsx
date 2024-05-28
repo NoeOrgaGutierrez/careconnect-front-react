@@ -83,7 +83,7 @@ const App: React.FC = () => {
               <Route path="/user" exact={true}>
                 <UserInformation name="UserInformation" />
               </Route>
-              <Route path="/association/:id" exact={true}>
+              <Route path="/association-details/:id" exact={true}>
                 <AssociationsDetails />
               </Route>
               <Route path="/blog-details/:id" exact={true}>

@@ -1,0 +1,28 @@
+/* BlogDetails.css */
+.blog-details-content {
+    padding: 20px;
+    background-color: #f9f9f9;
+  }
+  
+  .blog-details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #ffffff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .blog-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #333333;
+  }
+  
+  .blog-description {
+    font-size: 1rem;
+    color: #666666;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+  

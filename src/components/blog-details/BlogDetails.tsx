@@ -25,11 +25,14 @@ interface User {
 interface Comment {
   id: string;
   content: string;
-  user: User;
-  likes: number;
-  dislikes: number;
-  parentId?: string;
-  replies: Comment[];
+  created: string;
+  updated: string;
+  member: {
+    id: number;
+    user: User;
+  };
+  parentComment: Comment | null;
+  blogComments: Array<Comment>;
 }
 
 interface Blog {
@@ -51,8 +54,15 @@ const BlogDetails: React.FC = () => {
     const fetchBlog = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(`http://localhost:3000/blog/${id}`);
-        setBlog(response.data);
+        const blogResponse = await axios.get(`http://localhost:3000/blog/${id}`);
+        const commentsResponse = await axios.get(`http://localhost:3000/blog/comments/${id}`);
+        
+        const blogData: Blog = {
+          ...blogResponse.data,
+          blogComments: commentsResponse.data,
+        };
+        
+        setBlog(blogData);
       } catch (error) {
         setAlertMessage(
           "Error al obtener datos del blog. Por favor, inténtelo de nuevo más tarde."
@@ -105,7 +115,7 @@ const BlogDetails: React.FC = () => {
           <>
             <Typography variant="h4">{blog.name}</Typography>
             <Typography variant="body1">{blog.description}</Typography>
-            <Comments comments={blog.blogComments} />
+            <Comments blogId={id} />
           </>
         )}
       </IonContent>

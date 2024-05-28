@@ -21,7 +21,7 @@ import {
 import { arrowUndoOutline } from "ionicons/icons";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
-import { Button, Typography } from "@mui/material";
+import { Button, Typography, Card, CardContent, CardActions, Grid } from "@mui/material";
 
 interface Association {
   id: number;
@@ -116,6 +116,7 @@ const AssociationsDetails: React.FC = () => {
 
   const handleViewBlog = (blogId: number) => {
     history.push(`/blog-details/${blogId}`);
+    window.location.reload();
   };
 
   if (loading) {
@@ -171,8 +172,8 @@ const AssociationsDetails: React.FC = () => {
                     {association.name}
                   </IonText>
                   <IonText className="association-meta">
-                    {association.members.length} miembros |{" "}
-                    {association.faq.length} FAQ
+                    {association.blogs.length} blogs |{" "}
+                    {association.faq.length} FAQs
                   </IonText>
                 </IonCol>
               </IonRow>
@@ -204,19 +205,27 @@ const AssociationsDetails: React.FC = () => {
                     </IonText>
                   )}
                   {currentSegment === "blogs" && (
-                    association.blogs.map(blog => (
-                      <div key={blog.id}>
-                        <Typography variant="h6">{blog.name}</Typography>
-                        <Typography variant="body1">{blog.description}</Typography>
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handleViewBlog(blog.id)}
-                        >
-                          Ver Blog
-                        </Button>
-                      </div>
-                    ))
+                    <Grid container spacing={3}>
+                      {association.blogs.map(blog => (
+                        <Grid item xs={12} sm={6} md={4} key={blog.id}>
+                          <Card style={{ display: 'flex', flexDirection: 'column', height: '100%', backgroundColor: '#1e1e1e', color: '#fff', borderRadius: '15px', boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)' }}>
+                            <CardContent style={{ flexGrow: 1 }}>
+                              <Typography gutterBottom variant="h5" component="div" style={{ color: '#bb86fc' }}>
+                                {blog.name}
+                              </Typography>
+                              <Typography variant="body2" color="textSecondary" style={{ color: '#e0e0e0' }}>
+                                {blog.description}
+                              </Typography>
+                            </CardContent>
+                            <CardActions>
+                              <Button size="small" color="primary" onClick={() => handleViewBlog(blog.id)}>
+                                Ver Blog
+                              </Button>
+                            </CardActions>
+                          </Card>
+                        </Grid>
+                      ))}
+                    </Grid>
                   )}
                   {currentSegment === "faq" &&
                     association.faq.map((faq) => (
