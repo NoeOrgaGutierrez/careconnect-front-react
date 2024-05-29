@@ -15,6 +15,8 @@ import {
 } from '@mui/material';
 import { ThumbUp, ThumbDown } from '@mui/icons-material';
 
+import './Comments.css';
+
 interface User {
   id: string;
   name: string;
@@ -34,29 +36,13 @@ interface Comment {
   blogComments: Comment[];
 }
 
-const Comments: React.FC<{ blogId: string }> = ({ blogId }) => {
-  const [commentList, setCommentList] = useState<Comment[]>([]);
+const Comments: React.FC<{ blogId: string, initialComments: Comment[] }> = ({ blogId, initialComments }) => {
+  const [commentList, setCommentList] = useState<Comment[]>(initialComments);
   const [newComment, setNewComment] = useState<string>('');
   const [replyCommentId, setReplyCommentId] = useState<string | null>(null);
   const [replyContent, setReplyContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [showDialog, setShowDialog] = useState<boolean>(false);
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      setLoading(true);
-      try {
-        const response = await axios.get(`http://localhost:3000/blog/comments/${blogId}`);
-        setCommentList(response.data);
-      } catch (error) {
-        console.error('Error fetching comments:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchComments();
-  }, [blogId]);
 
   const getMemberIdForBlog = async (blogId: string) => {
     const memberId = localStorage.getItem('memberId');
@@ -90,7 +76,7 @@ const Comments: React.FC<{ blogId: string }> = ({ blogId }) => {
       console.log('memberId:', memberId);
       if (!memberId) {
         console.error('No valid memberId found');
-        setLoading(false);  // Asegúrate de detener la carga en caso de error
+        setLoading(false);
         return;
       }
       const newCommentData = {
@@ -98,11 +84,12 @@ const Comments: React.FC<{ blogId: string }> = ({ blogId }) => {
         member: { id: memberId },
         parentComment: null,
         content: newComment,
-        created: new Date(),
-        updated: new Date(),
+        created: new Date().toISOString(),
+        updated: new Date().toISOString(),
       };
       const response = await axios.post('http://localhost:3000/blog-comment', newCommentData);
-      setCommentList([...commentList, response.data]);
+      console.log(response.data);
+      setCommentList((prevComments) => [...prevComments, response.data]);
       setNewComment('');
       setShowDialog(false);
     } catch (error) {
@@ -119,7 +106,7 @@ const Comments: React.FC<{ blogId: string }> = ({ blogId }) => {
       const memberId = await getMemberIdForBlog(blogId);
       if (!memberId) {
         console.error('No valid memberId found');
-        setLoading(false);  // Asegúrate de detener la carga en caso de error
+        setLoading(false);
         return;
       }
       const replyData = {
@@ -127,11 +114,15 @@ const Comments: React.FC<{ blogId: string }> = ({ blogId }) => {
         member: { id: memberId },
         parentComment: { id: commentId },
         content: replyContent,
-        created: new Date(),
-        updated: new Date(),
+        created: new Date().toISOString(),
+        updated: new Date().toISOString(),
       };
       const response = await axios.post('http://localhost:3000/blog-comment', replyData);
-      setCommentList(commentList.map((c) => (c.id === commentId ? { ...c, blogComments: [...c.blogComments, response.data] } : c)));
+      setCommentList((prevComments) =>
+        prevComments.map((c) =>
+          c.id === commentId ? { ...c, blogComments: [...c.blogComments, response.data] } : c
+        )
+      );
       setReplyCommentId(null);
       setReplyContent('');
     } catch (error) {
@@ -143,12 +134,12 @@ const Comments: React.FC<{ blogId: string }> = ({ blogId }) => {
 
   const handleLike = async (commentId: string) => {
     try {
-      // Simulamos la respuesta del servidor
       const updatedComment: Comment = {
         ...commentList.find((c) => c.id === commentId)!,
-        // Aquí puedes agregar la lógica para incrementar el número de likes
       };
-      setCommentList(commentList.map((c) => (c.id === commentId ? updatedComment : c)));
+      setCommentList((prevComments) =>
+        prevComments.map((c) => (c.id === commentId ? updatedComment : c))
+      );
     } catch (error) {
       console.error('Error liking comment:', error);
     }
@@ -156,12 +147,12 @@ const Comments: React.FC<{ blogId: string }> = ({ blogId }) => {
 
   const handleDislike = async (commentId: string) => {
     try {
-      // Simulamos la respuesta del servidor
       const updatedComment: Comment = {
         ...commentList.find((c) => c.id === commentId)!,
-        // Aquí puedes agregar la lógica para incrementar el número de dislikes
       };
-      setCommentList(commentList.map((c) => (c.id === commentId ? updatedComment : c)));
+      setCommentList((prevComments) =>
+        prevComments.map((c) => (c.id === commentId ? updatedComment : c))
+      );
     } catch (error) {
       console.error('Error disliking comment:', error);
     }

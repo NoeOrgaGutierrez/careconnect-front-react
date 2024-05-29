@@ -11,7 +11,6 @@ import {
   IonList,
   IonIcon,
   IonButtons,
-  IonMenuButton,
   IonButton,
   IonGrid,
   IonRow,
@@ -24,7 +23,7 @@ import {
 } from '@ionic/react';
 import axios from 'axios';
 import { pencilOutline, arrowUndoOutline, star } from 'ionicons/icons';
-
+import { useHistory } from 'react-router-dom';
 import './UserInformation.css';
 
 interface User {
@@ -49,12 +48,25 @@ interface UserAssociation {
   association: Association;
 }
 
-import { useHistory, useLocation } from 'react-router-dom';
+interface RecentComment {
+  comment_id: number;
+  comment_content: string;
+  comment_created: string;
+  comment_updated: string;
+}
+
+interface PinnedBlog {
+  blog_id: number;
+  blog_name: string;
+  blog_description: string;
+}
 
 const UserInformation: React.FC<{ name: string }> = ({ name }) => {
   const [user, setUser] = useState<User | null>(null);
   const [associations, setAssociations] = useState<UserAssociation[]>([]);
-  const location = useLocation();
+  const [recentComments, setRecentComments] = useState<RecentComment[]>([]);
+  const [pinnedBlogs, setPinnedBlogs] = useState<PinnedBlog[]>([]);
+  const history = useHistory();
 
   useEffect(() => {
     const memberId = localStorage.getItem('memberId');
@@ -64,10 +76,20 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
           setUser(response.data);
         })
         .catch(error => console.error('Error fetching user data:', error));
+
+      axios.get(`http://localhost:3000/user/latest-comments/${memberId}`)
+        .then(response => {
+          setRecentComments(response.data.slice(0, 4));  // Limitar a los primeros 4 comentarios
+        })
+        .catch(error => console.error('Error fetching recent comments:', error));
+
+      axios.get(`http://localhost:3000/user/pinned-blogs/${memberId}`)
+        .then(response => {
+          setPinnedBlogs(response.data);
+        })
+        .catch(error => console.error('Error fetching pinned blogs:', error));
     }
   }, []);
-
-  const history = useHistory();
 
   const handleProfileClick = () => {
     history.replace('/');
@@ -134,22 +156,18 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
               <IonCol size="12" size-md="8">
                 <IonCard>
                   <IonCardHeader>
-                    <IonCardTitle>Pinned Topics</IonCardTitle>
+                    <IonCardTitle>Pinned Blogs</IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent>
                     <IonList lines="none">
-                      <IonItem>
-                        <IonLabel>
-                          <h3>How to connect with your disabled students as a teacher</h3>
-                          <p>5 new notifications</p>
-                        </IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel>
-                          <h3>Being the father of a child with cerebral palsy</h3>
-                          <p>No new activities detected</p>
-                        </IonLabel>
-                      </IonItem>
+                      {pinnedBlogs.map(blog => (
+                        <IonItem key={blog.blog_id}>
+                          <IonLabel>
+                            <h3>{blog.blog_name}</h3>
+                            <p>{blog.blog_description}</p>
+                          </IonLabel>
+                        </IonItem>
+                      ))}
                     </IonList>
                   </IonCardContent>
                 </IonCard>
@@ -159,27 +177,14 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                   </IonCardHeader>
                   <IonCardContent>
                     <IonList lines="none">
-                      <IonItem>
-                        <IonLabel>
-                          <h3>Sara has commented on your topic</h3>
-                          <p>I think it's a great way to start comm...</p>
-                        </IonLabel>
-                        <IonLabel slot="end">40m ago</IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel>
-                          <h3>Pablo upvoted your topic</h3>
-                          <p>How to treat children when they don’t...</p>
-                        </IonLabel>
-                        <IonLabel slot="end">2h ago</IonLabel>
-                      </IonItem>
-                      <IonItem>
-                        <IonLabel>
-                          <h3>Ernesto has joined your community</h3>
-                          <p>Physically disabled parents</p>
-                        </IonLabel>
-                        <IonLabel slot="end">Yesterday</IonLabel>
-                      </IonItem>
+                      {recentComments.map(comment => (
+                        <IonItem key={comment.comment_id}>
+                          <IonLabel>
+                            <h3>{comment.comment_content}</h3>
+                            <p>{new Date(comment.comment_created).toLocaleString()}</p>
+                          </IonLabel>
+                        </IonItem>
+                      ))}
                     </IonList>
                   </IonCardContent>
                 </IonCard>

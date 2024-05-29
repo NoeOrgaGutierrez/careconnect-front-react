@@ -15,6 +15,7 @@ import {
 import { arrowUndoOutline } from 'ionicons/icons';
 import Comments from './../comments/Comments';
 import { Typography } from '@mui/material';
+import './BlogDetails.css';
 
 interface User {
   id: string;
@@ -50,12 +51,43 @@ const BlogDetails: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
+  const getMemberIdForBlog = async (blogId: string) => {
+    const memberId = localStorage.getItem('memberId');
+    const associationDetailsId = localStorage.getItem('association-details-id');
+    if (!memberId) {
+      console.error('No memberId found in localStorage');
+      return null;
+    }
+    if (!associationDetailsId) {
+      console.error('No association-details-id found in localStorage');
+      return null;
+    }
+    try {
+      const response = await axios.get(`http://localhost:3000/user-association/user/${memberId}`);
+      console.log('User associations:', response.data);
+      const userAssociations = response.data;
+      const userAssociation = userAssociations.find((ua: any) => ua.association.id === parseInt(associationDetailsId, 10));
+      console.log('memberId encontrado:', userAssociation ? userAssociation.id : null);
+      return userAssociation ? userAssociation.id : null;
+    } catch (error) {
+      console.error('Error fetching user associations:', error);
+      return null;
+    }
+  };
+
   useEffect(() => {
     const fetchBlog = async () => {
       setLoading(true);
       try {
+        const memberId = await getMemberIdForBlog(id);
+        if (!memberId) {
+          setAlertMessage("No se pudo obtener el memberId. Por favor, inténtelo de nuevo más tarde.");
+          setShowAlert(true);
+          setLoading(false);
+          return;
+        }
         const blogResponse = await axios.get(`http://localhost:3000/blog/${id}`);
-        const commentsResponse = await axios.get(`http://localhost:3000/blog/comments/${id}`);
+        const commentsResponse = await axios.get(`http://localhost:3000/blog/comments/${id}/${memberId}`);
         
         const blogData: Blog = {
           ...blogResponse.data,
@@ -64,9 +96,7 @@ const BlogDetails: React.FC = () => {
         
         setBlog(blogData);
       } catch (error) {
-        setAlertMessage(
-          "Error al obtener datos del blog. Por favor, inténtelo de nuevo más tarde."
-        );
+        setAlertMessage("Error al obtener datos del blog. Por favor, inténtelo de nuevo más tarde.");
         setShowAlert(true);
         console.error("Error fetching blog data:", error);
       } finally {
@@ -78,7 +108,8 @@ const BlogDetails: React.FC = () => {
   }, [id]);
 
   const handleBackClick = () => {
-    history.goBack();
+    history.push('/');
+    window.location.reload();
   };
 
   if (loading) {
@@ -113,9 +144,9 @@ const BlogDetails: React.FC = () => {
       <IonContent className="blog-details-content">
         {blog && (
           <>
-            <Typography variant="h4">{blog.name}</Typography>
-            <Typography variant="body1">{blog.description}</Typography>
-            <Comments blogId={id} />
+            <Typography variant="h4" className="blog-title">{blog.name}</Typography>
+            <Typography variant="body1" className="blog-description">{blog.description}</Typography>
+            <Comments blogId={id} initialComments={blog.blogComments} />
           </>
         )}
       </IonContent>
