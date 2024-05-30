@@ -66,6 +66,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
   const [associations, setAssociations] = useState<UserAssociation[]>([]);
   const [recentComments, setRecentComments] = useState<RecentComment[]>([]);
   const [pinnedBlogs, setPinnedBlogs] = useState<PinnedBlog[]>([]);
+  const [userRating, setUserRating] = useState<number>(0);
   const history = useHistory();
 
   useEffect(() => {
@@ -88,6 +89,12 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
           setPinnedBlogs(response.data);
         })
         .catch(error => console.error('Error fetching pinned blogs:', error));
+      
+      axios.get(`http://localhost:3000/valoration/${memberId}`)
+        .then(response => {
+          setUserRating(response.data.rating);  // Suponiendo que el JSON tiene una propiedad 'rating'
+        })
+        .catch(error => console.error('Error fetching user rating:', error));
     }
   }, []);
 
@@ -149,14 +156,14 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                 <IonItem>
                   <IonLabel><strong>Rating:</strong></IonLabel>
                   {[...Array(5)].map((_, i) => (
-                    <IonIcon key={i} icon={star} style={{ color: i < 4 ? 'gold' : 'gray' }} />
+                    <IonIcon key={i} icon={star} style={{ color: i < userRating ? 'gold' : 'gray' }} />
                   ))}
                 </IonItem>
               </IonCol>
               <IonCol size="12" size-md="8">
                 <IonCard>
                   <IonCardHeader>
-                    <IonCardTitle>Pinned Blogs</IonCardTitle>
+                    <IonCardTitle>Pinned Topics</IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent>
                     <IonList lines="none">
