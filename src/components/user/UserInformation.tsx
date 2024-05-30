@@ -61,12 +61,18 @@ interface PinnedBlog {
   blog_description: string;
 }
 
+interface UserRating {
+  positiveCount: number;
+  negativeCount: number;
+  averageRating: number;
+}
+
 const UserInformation: React.FC<{ name: string }> = ({ name }) => {
   const [user, setUser] = useState<User | null>(null);
   const [associations, setAssociations] = useState<UserAssociation[]>([]);
   const [recentComments, setRecentComments] = useState<RecentComment[]>([]);
   const [pinnedBlogs, setPinnedBlogs] = useState<PinnedBlog[]>([]);
-  const [userRating, setUserRating] = useState<number>(0);
+  const [userRating, setUserRating] = useState<UserRating | null>(null);
   const history = useHistory();
 
   useEffect(() => {
@@ -90,9 +96,9 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
         })
         .catch(error => console.error('Error fetching pinned blogs:', error));
       
-      axios.get(`http://localhost:3000/valoration/${memberId}`)
+      axios.get(`http://localhost:3000/valoration/user/${memberId}`)
         .then(response => {
-          setUserRating(response.data.rating);  // Suponiendo que el JSON tiene una propiedad 'rating'
+          setUserRating(response.data);  // Suponiendo que el JSON tiene una propiedad 'averageRating'
         })
         .catch(error => console.error('Error fetching user rating:', error));
     }
@@ -153,12 +159,14 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                 <IonButton onClick={handleAssociationClick} expand="block" color="primary">
                   Associate User
                 </IonButton>
-                <IonItem>
-                  <IonLabel><strong>Rating:</strong></IonLabel>
-                  {[...Array(5)].map((_, i) => (
-                    <IonIcon key={i} icon={star} style={{ color: i < userRating ? 'gold' : 'gray' }} />
-                  ))}
-                </IonItem>
+                {userRating && (
+                  <IonItem>
+                    <IonLabel><strong>Rating:</strong></IonLabel>
+                    {[...Array(5)].map((_, i) => (
+                      <IonIcon key={i} icon={star} style={{ color: i < userRating.averageRating ? 'gold' : 'gray' }} />
+                    ))}
+                  </IonItem>
+                )}
               </IonCol>
               <IonCol size="12" size-md="8">
                 <IonCard>

@@ -14,7 +14,6 @@ import {
   DialogTitle,
 } from '@mui/material';
 import { ThumbUp, ThumbDown } from '@mui/icons-material';
-
 import './Comments.css';
 
 interface User {
@@ -34,9 +33,13 @@ interface Comment {
   };
   parentComment: Comment | null;
   blogComments: Comment[];
+  valoration: Array<{
+    id: number;
+    valoration: boolean;
+  }>;
 }
 
-const Comments: React.FC<{ blogId: string, initialComments: Comment[] }> = ({ blogId, initialComments }) => {
+const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ blogId, initialComments }) => {
   const [commentList, setCommentList] = useState<Comment[]>(initialComments);
   const [newComment, setNewComment] = useState<string>('');
   const [replyCommentId, setReplyCommentId] = useState<string | null>(null);
@@ -132,72 +135,85 @@ const Comments: React.FC<{ blogId: string, initialComments: Comment[] }> = ({ bl
     }
   };
 
-  const handleLike = async (commentId: string) => {
+  const handleValoration = async (commentId: string, valoration: boolean) => {
     try {
-      const updatedComment: Comment = {
-        ...commentList.find((c) => c.id === commentId)!,
-      };
-      setCommentList((prevComments) =>
-        prevComments.map((c) => (c.id === commentId ? updatedComment : c))
-      );
-    } catch (error) {
-      console.error('Error liking comment:', error);
-    }
-  };
+      const memberId = await getMemberIdForBlog(blogId);
+      if (!memberId) {
+        console.error('No valid memberId found');
+        return;
+      }
 
-  const handleDislike = async (commentId: string) => {
-    try {
-      const updatedComment: Comment = {
-        ...commentList.find((c) => c.id === commentId)!,
+      const valorationData = {
+        valoration: valoration,
+        userAssociation: memberId,
+        blogComment: commentId,
       };
+
+      await axios.post('http://localhost:3000/valoration', valorationData);
+
       setCommentList((prevComments) =>
-        prevComments.map((c) => (c.id === commentId ? updatedComment : c))
+        prevComments.map((c) =>
+          c.id === commentId
+            ? {
+                ...c,
+                valoration: [
+                  ...c.valoration.filter((v) => v.userAssociation !== memberId),
+                  { id: new Date().getTime(), valoration: valoration },
+                ],
+              }
+            : c
+        )
       );
     } catch (error) {
-      console.error('Error disliking comment:', error);
+      console.error('Error submitting valoration:', error);
     }
   };
 
   const renderComments = (commentList: Comment[], parentId?: string) => {
     return commentList
       .filter((comment) => (parentId ? comment.parentComment && comment.parentComment.id === parentId : !comment.parentComment))
-      .map((comment) => (
-        <Paper key={comment.id} style={{ padding: '10px', marginTop: '10px' }}>
-          <Grid container wrap="nowrap" spacing={2}>
-            <Grid item>
-              <Avatar src={comment.member.user.avatar || 'default-avatar.png'} />
-            </Grid>
-            <Grid justifyContent="left" item xs zeroMinWidth>
-              <Typography variant="h6" style={{ margin: 0, textAlign: 'left' }}>
-                {comment.member.user.name}
-              </Typography>
-              <Typography variant="body2" style={{ textAlign: 'left' }}>
-                {comment.content}
-              </Typography>
-              <Grid container direction="row" alignItems="center">
-                <IconButton onClick={() => handleLike(comment.id)}>
-                  <ThumbUp /> <Typography>{/* comment.likes */}</Typography>
-                </IconButton>
-                <IconButton onClick={() => handleDislike(comment.id)}>
-                  <ThumbDown /> <Typography>{/* comment.dislikes */}</Typography>
-                </IconButton>
-                <Button onClick={() => setReplyCommentId(comment.id)}>Responder</Button>
+      .map((comment) => {
+        const likes = comment.valoration.filter((v) => v.valoration).length;
+        const dislikes = comment.valoration.length - likes;
+
+        return (
+          <Paper key={comment.id} style={{ padding: '10px', marginTop: '10px' }}>
+            <Grid container wrap="nowrap" spacing={2}>
+              <Grid item>
+                <Avatar src={comment.member.user.avatar || 'default-avatar.png'} />
               </Grid>
-              {replyCommentId === comment.id && (
-                <TextField
-                  label="Responder"
-                  variant="outlined"
-                  fullWidth
-                  value={replyContent}
-                  onChange={(e) => setReplyContent(e.target.value)}
-                  onBlur={() => handleReply(comment.id)}
-                />
-              )}
-              {renderComments(comment.blogComments, comment.id)}
+              <Grid justifyContent="left" item xs zeroMinWidth>
+                <Typography variant="h6" style={{ margin: 0, textAlign: 'left' }}>
+                  {comment.member.user.name}
+                </Typography>
+                <Typography variant="body2" style={{ textAlign: 'left' }}>
+                  {comment.content}
+                </Typography>
+                <Grid container direction="row" alignItems="center">
+                  <IconButton onClick={() => handleValoration(comment.id, true)}>
+                    <ThumbUp /> <Typography>{likes}</Typography>
+                  </IconButton>
+                  <IconButton onClick={() => handleValoration(comment.id, false)}>
+                    <ThumbDown /> <Typography>{dislikes}</Typography>
+                  </IconButton>
+                  <Button onClick={() => setReplyCommentId(comment.id)}>Responder</Button>
+                </Grid>
+                {replyCommentId === comment.id && (
+                  <TextField
+                    label="Responder"
+                    variant="outlined"
+                    fullWidth
+                    value={replyContent}
+                    onChange={(e) => setReplyContent(e.target.value)}
+                    onBlur={() => handleReply(comment.id)}
+                  />
+                )}
+                {renderComments(comment.blogComments, comment.id)}
+              </Grid>
             </Grid>
-          </Grid>
-        </Paper>
-      ));
+          </Paper>
+        );
+      });
   };
 
   return (
