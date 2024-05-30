@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import {
   TextField,
@@ -22,6 +22,11 @@ interface User {
   avatar: string | null;
 }
 
+interface Valoration {
+  id: number;
+  valoration: boolean;
+}
+
 interface Comment {
   id: string;
   content: string;
@@ -33,10 +38,7 @@ interface Comment {
   };
   parentComment: Comment | null;
   blogComments: Comment[];
-  valoration: Array<{
-    id: number;
-    valoration: boolean;
-  }>;
+  valoration: Valoration[];
 }
 
 const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ blogId, initialComments }) => {
@@ -46,6 +48,7 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
   const [replyContent, setReplyContent] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(false);
   const [showDialog, setShowDialog] = useState<boolean>(false);
+  const [showReplyDialog, setShowReplyDialog] = useState<boolean>(false);
 
   const getMemberIdForBlog = async (blogId: string) => {
     const memberId = localStorage.getItem('memberId');
@@ -128,6 +131,7 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
       );
       setReplyCommentId(null);
       setReplyContent('');
+      setShowReplyDialog(false);
     } catch (error) {
       console.error('Error replying to comment:', error);
     } finally {
@@ -145,10 +149,11 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
 
       const valorationData = {
         valoration: valoration,
-        userAssociation: memberId,
-        blogComment: commentId,
+        userAssociation: { id: memberId },
+        blogComment: { id: commentId },
       };
 
+      console.log('Valoration data:', valorationData);
       await axios.post('http://localhost:3000/valoration', valorationData);
 
       setCommentList((prevComments) =>
@@ -157,7 +162,7 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
             ? {
                 ...c,
                 valoration: [
-                  ...c.valoration.filter((v) => v.userAssociation !== memberId),
+                  ...c.valoration.filter((v) => v.id !== memberId),
                   { id: new Date().getTime(), valoration: valoration },
                 ],
               }
@@ -191,23 +196,17 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
                 </Typography>
                 <Grid container direction="row" alignItems="center">
                   <IconButton onClick={() => handleValoration(comment.id, true)}>
-                    <ThumbUp /> <Typography>{likes}</Typography>
+                    <ThumbUp style={{ color: likes > 0 ? 'green' : 'inherit' }} /> <Typography>
+                      {/* {likes} */}
+                      </Typography>
                   </IconButton>
                   <IconButton onClick={() => handleValoration(comment.id, false)}>
-                    <ThumbDown /> <Typography>{dislikes}</Typography>
+                    <ThumbDown style={{ color: dislikes > 0 ? 'red' : 'inherit' }} /> <Typography>
+                      {/* {dislikes} */}
+                      </Typography>
                   </IconButton>
-                  <Button onClick={() => setReplyCommentId(comment.id)}>Responder</Button>
+                  <Button onClick={() => { setReplyCommentId(comment.id); setShowReplyDialog(true); }}>Responder</Button>
                 </Grid>
-                {replyCommentId === comment.id && (
-                  <TextField
-                    label="Responder"
-                    variant="outlined"
-                    fullWidth
-                    value={replyContent}
-                    onChange={(e) => setReplyContent(e.target.value)}
-                    onBlur={() => handleReply(comment.id)}
-                  />
-                )}
                 {renderComments(comment.blogComments, comment.id)}
               </Grid>
             </Grid>
@@ -219,7 +218,12 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
   return (
     <div>
       <Typography variant="h6">Comentarios</Typography>
-      <Button variant="contained" color="primary" onClick={() => setShowDialog(true)}>
+      {loading ? (
+        <Typography>Cargando...</Typography>
+      ) : (
+        renderComments(commentList)
+      )}
+      <Button variant="contained" color="primary" onClick={() => setShowDialog(true)} style={{ marginTop: '20px' }}>
         Añadir un comentario
       </Button>
       <Dialog open={showDialog} onClose={() => setShowDialog(false)}>
@@ -244,11 +248,29 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
           </Button>
         </DialogActions>
       </Dialog>
-      {loading ? (
-        <Typography>Cargando...</Typography>
-      ) : (
-        renderComments(commentList)
-      )}
+      <Dialog open={showReplyDialog} onClose={() => setShowReplyDialog(false)}>
+        <DialogTitle>Responder comentario</DialogTitle>
+        <DialogContent>
+          <TextField
+            autoFocus
+            margin="dense"
+            label="Respuesta"
+            type="text"
+            fullWidth
+            value={replyContent}
+            onChange={(e) => setReplyContent(e.target.value)}
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowReplyDialog(false)} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={() => replyCommentId && handleReply(replyCommentId)} color="primary">
+            Responder
+          </Button>
+        </DialogActions>
+      </Dialog>
+      <div style={{ height: '50px' }}></div>
     </div>
   );
 };

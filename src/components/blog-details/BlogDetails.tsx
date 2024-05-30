@@ -23,6 +23,11 @@ interface User {
   avatar: string | null;
 }
 
+interface Valoration {
+  id: number;
+  valoration: boolean;
+}
+
 interface Comment {
   id: string;
   content: string;
@@ -33,14 +38,15 @@ interface Comment {
     user: User;
   };
   parentComment: Comment | null;
-  blogComments: Array<Comment>;
+  blogComments: Comment[];
+  valoration: Valoration[];
 }
 
 interface Blog {
   id: number;
   name: string;
   description: string;
-  blogComments: Array<Comment>;
+  blogComments: Comment[];
 }
 
 const BlogDetails: React.FC = () => {

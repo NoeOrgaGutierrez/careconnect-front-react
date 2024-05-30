@@ -98,6 +98,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
       
       axios.get(`http://localhost:3000/valoration/user/${memberId}`)
         .then(response => {
+          console.log(response.data);
           setUserRating(response.data);  // Suponiendo que el JSON tiene una propiedad 'averageRating'
         })
         .catch(error => console.error('Error fetching user rating:', error));
