@@ -20,6 +20,7 @@ import {
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
+import { TextField, Box } from '@mui.material';
 
 import './UserRegister.css';  // Asegúrate de que el archivo CSS esté en la ruta correcta
 
@@ -116,30 +117,56 @@ const UserRegister: React.FC = () => {
                 <IonImg src={avatar ? URL.createObjectURL(avatar) : "../../../resources/Logo.png"} />
               </IonAvatar>
               <form onSubmit={handleRegister}>
-                <IonItem className="register-item">
-                  <IonLabel className="register-label" position="stacked">Name</IonLabel>
-                  <IonInput className="register-input" type="text" value={name} onIonChange={e => setName(e.detail.value!)} />
-                </IonItem>
-                <IonItem className="register-item">
-                  <IonLabel className="register-label" position="stacked">Surname</IonLabel>
-                  <IonInput className="register-input" type="text" value={surname} onIonChange={e => setSurname(e.detail.value!)} />
-                </IonItem>
-                <IonItem className="register-item">
-                  <IonLabel className="register-label" position="stacked">Email</IonLabel>
-                  <IonInput className="register-input" type="email" value={email} onIonChange={e => setEmail(e.detail.value!)} />
-                </IonItem>
-                <IonItem className="register-item">
-                  <IonLabel className="register-label" position="stacked">Password</IonLabel>
-                  <IonInput className="register-input" type="password" value={password} onIonChange={e => setPassword(e.detail.value!)} />
-                </IonItem>
+                <TextField 
+                  label="Name" 
+                  type="text" 
+                  value={name} 
+                  onChange={e => setName(e.target.value)} 
+                  variant="outlined" 
+                  fullWidth 
+                  margin="normal"
+                />
+                <TextField 
+                  label="Surname" 
+                  type="text" 
+                  value={surname} 
+                  onChange={e => setSurname(e.target.value)} 
+                  variant="outlined" 
+                  fullWidth 
+                  margin="normal"
+                />
+                <TextField 
+                  label="Email" 
+                  type="email" 
+                  value={email} 
+                  onChange={e => setEmail(e.target.value)} 
+                  variant="outlined" 
+                  fullWidth 
+                  margin="normal"
+                />
+                <TextField 
+                  label="Password" 
+                  type="password" 
+                  value={password} 
+                  onChange={e => setPassword(e.target.value)} 
+                  variant="outlined" 
+                  fullWidth 
+                  margin="normal"
+                />
                 <IonItem className="register-item">
                   <IonLabel className="register-label" position="stacked">Avatar</IonLabel>
                   <input type="file" accept="image/*" onChange={handleAvatarChange} />
                 </IonItem>
-                <IonItem className="register-item">
-                  <IonLabel className="register-label" position="stacked">Bio</IonLabel>
-                  <IonTextarea className="register-input" value={bio} onIonChange={e => setBio(e.detail.value!)} />
-                </IonItem>
+                <TextField 
+                  label="Bio" 
+                  value={bio} 
+                  onChange={e => setBio(e.target.value)} 
+                  variant="outlined" 
+                  fullWidth 
+                  margin="normal" 
+                  multiline 
+                  rows={4}
+                />
                 <IonButton type="submit" expand="block" className="register-button">Register</IonButton>
               </form>
             </IonCardContent>
@@ -165,3 +192,4 @@ const UserRegister: React.FC = () => {
 };
 
 export default UserRegister;
+
