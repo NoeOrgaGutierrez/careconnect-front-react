@@ -43,6 +43,7 @@ import UserRegister from "./components/user-register/UserRegister";
 import AssociationsDetails from "./components/associations-details/AssociationsDetails";
 import AssociationsLogin from "./components/associations-login/AssociationsLogin";
 import BlogDetails from "./components/blog-details/BlogDetails";  // Importa el nuevo componente
+import CommunitiesDetails from "./components/communities-details/CommunitiesDetails";
 
 setupIonicReact();
 
@@ -57,6 +58,11 @@ const App: React.FC = () => {
       setLoggedIn(false);
     }
   }, [localStorage.getItem("memberId")]);
+
+  // Forzar tema oscuro
+  useEffect(() => {
+    document.body.classList.toggle("dark", true);
+  }, []);
 
   return (
     <IonApp>
@@ -88,6 +94,9 @@ const App: React.FC = () => {
               </Route>
               <Route path="/blog-details/:id" exact={true}>
                 <BlogDetails />  
+              </Route>
+              <Route path="/communities-details/:id" exact={true}>
+                <CommunitiesDetails />
               </Route>
             </IonRouterOutlet>
           </IonSplitPane>

@@ -1,3 +1,5 @@
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   IonAvatar,
   IonButton,
@@ -12,18 +14,62 @@ import {
   IonHeader,
   IonLabel,
   IonMenuButton,
-  IonNote,
   IonTitle,
   IonToolbar,
+  IonInput,
+  IonItem,
+  IonList,
 } from "@ionic/react";
+import { useHistory } from 'react-router-dom';
+
+interface Publication {
+  id: number;
+  name: string;
+  description: string;
+  user: {
+    id: number;
+    name: string;
+    surname: string;
+    avatar: string | null;
+  };
+  topic: {
+    id: number;
+    name: string;
+    description: string;
+  };
+}
 
 const Communities: React.FC<{ name: string }> = ({ name }) => {
+  const [publications, setPublications] = useState<Publication[]>([]);
+  const [filterName, setFilterName] = useState<string>('');
+  const [filterNumber, setFilterNumber] = useState<string>('');
+  const history = useHistory();
+
+  useEffect(() => {
+    axios.get('http://localhost:3000/publication')
+      .then(response => {
+        setPublications(response.data);
+        console.log('Publications:', response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching publications:', error);
+      });
+  }, []);
+
+  const handleFilter = () => {
+    alert(`Filter Name: ${filterName}, Filter Number: ${filterNumber}`);
+  };
+
+  const handleViewPost = (id: number) => {
+    history.push(`/communities-details/${id}`);
+  };
+
   return (
     <>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot="start">
-            <IonMenuButton></IonMenuButton>
+            <IonMenuButton />
           </IonButtons>
           <IonTitle>{name}</IonTitle>
         </IonToolbar>
@@ -31,45 +77,62 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
       <IonContent class="ion-padding">
         <h1>Communities</h1>
         <p>Connect with people like you</p>
-        <IonNote color="medium">Latest posts</IonNote>
-        <IonCard>
-          <IonCardHeader>
-            <IonChip
+        <IonList>
+          <IonItem>
+            <IonLabel position="stacked">Filter by Name</IonLabel>
+            <IonInput
+              value={filterName}
+              placeholder="Enter Name"
+              onIonChange={(e) => setFilterName(e.detail.value!)}
+            />
+          </IonItem>
+          <IonItem>
+            <IonLabel position="stacked">Filter by Number</IonLabel>
+            <IonInput
+              value={filterNumber}
+              placeholder="Enter Number"
+              onIonChange={(e) => setFilterNumber(e.detail.value!)}
+            />
+          </IonItem>
+          <IonButton expand="full" onClick={handleFilter}>Apply Filter</IonButton>
+        </IonList>
+        {publications.map((publication) => (
+          <IonCard key={publication.id}>
+            <IonCardHeader>
+              <IonChip
+                style={{
+                  width: "fit-content",
+                  maxWidth: "100%",
+                  minWidth: 0,
+                }}
+              >
+                <IonAvatar>
+                  <img
+                    alt="User Avatar"
+                    src={publication.user.avatar || 'https://via.placeholder.com/150'}
+                  />
+                </IonAvatar>
+                <IonLabel>{publication.user.name} {publication.user.surname}</IonLabel>
+              </IonChip>
+              <IonCardTitle>{publication.name}</IonCardTitle>
+              <IonCardSubtitle>Topico/{publication.topic.name}</IonCardSubtitle>
+            </IonCardHeader>
+            <IonCardContent
               style={{
-                width: "fit-content",
-                maxWidth: "100%",
-                minWidth: 0,
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+                display: "-webkit-box",
+                WebkitLineClamp: 3,
+                WebkitBoxOrient: "vertical",
               }}
             >
-              <IonAvatar>
-                <img
-                  alt="Silhouette of a person's head"
-                  src="https://img.freepik.com/foto-gratis/primer-plano-joven-exitoso-sonriendo-camara-pie-traje-casual-contra-fondo-azul_1258-65479.jpg?size=626&ext=jpg&ga=GA1.1.1488620777.1712793600&semt=ais"
-                />
-              </IonAvatar>
-              <IonLabel>Noe Orga</IonLabel>
-            </IonChip>
-            <IonCardTitle>Don't know how to use Wheelchair</IonCardTitle>
-            <IonCardSubtitle>r/Wheelchair</IonCardSubtitle>
-          </IonCardHeader>
-          <IonCardContent
-            style={{
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              display: "-webkit-box",
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: "vertical",
-            }}
-          >
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed
-            consectetur tempus sapien, vitae semper lacus sollicitudin sit amet.
-            Fusce urna tortor, rhoncus ac est id, porttitor facilisis urna. In
-            ac.
-          </IonCardContent>
-          <IonButton fill="clear" style={{ float: "right", marginRight: "1" }}>
-            VIEW POST
-          </IonButton>
-        </IonCard>
+            Descripción: {publication.description}
+            </IonCardContent>
+            <IonButton fill="clear" style={{ float: "right" }} onClick={() => handleViewPost(publication.id)}>
+              VIEW POST
+            </IonButton>
+          </IonCard>
+        ))}
       </IonContent>
     </>
   );
