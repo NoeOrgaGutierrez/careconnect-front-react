@@ -20,9 +20,9 @@ import {
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
-import { TextField, Box } from '@mui.material';
 
 import './UserRegister.css';  // Asegúrate de que el archivo CSS esté en la ruta correcta
+import { TextField } from '@mui/material';
 
 const UserRegister: React.FC = () => {
   const [name, setName] = useState('');
@@ -121,7 +121,7 @@ const UserRegister: React.FC = () => {
                   label="Name" 
                   type="text" 
                   value={name} 
-                  onChange={e => setName(e.target.value)} 
+                  onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setName(e.target.value)} 
                   variant="outlined" 
                   fullWidth 
                   margin="normal"
@@ -130,7 +130,7 @@ const UserRegister: React.FC = () => {
                   label="Surname" 
                   type="text" 
                   value={surname} 
-                  onChange={e => setSurname(e.target.value)} 
+                  onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setSurname(e.target.value)} 
                   variant="outlined" 
                   fullWidth 
                   margin="normal"
@@ -139,7 +139,7 @@ const UserRegister: React.FC = () => {
                   label="Email" 
                   type="email" 
                   value={email} 
-                  onChange={e => setEmail(e.target.value)} 
+                  onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setEmail(e.target.value)} 
                   variant="outlined" 
                   fullWidth 
                   margin="normal"
@@ -148,7 +148,7 @@ const UserRegister: React.FC = () => {
                   label="Password" 
                   type="password" 
                   value={password} 
-                  onChange={e => setPassword(e.target.value)} 
+                  onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setPassword(e.target.value)} 
                   variant="outlined" 
                   fullWidth 
                   margin="normal"
@@ -160,7 +160,7 @@ const UserRegister: React.FC = () => {
                 <TextField 
                   label="Bio" 
                   value={bio} 
-                  onChange={e => setBio(e.target.value)} 
+                  onChange={(e: { target: { value: React.SetStateAction<string>; }; }) => setBio(e.target.value)} 
                   variant="outlined" 
                   fullWidth 
                   margin="normal" 

@@ -231,20 +231,6 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
       </IonContent>
     </>
   );
-              ))}
-            </Grid>
-            <div style={{ height: '50px' }}></div>
-          </>
-        ) : (
-          <IonLabel>Ninguna asociación fue encontrada.</IonLabel>
-        )}
-      </IonContent>
-    </>
-  );
-};
-
-export default Associations;
-
-};
+}
 
 export default Associations;
