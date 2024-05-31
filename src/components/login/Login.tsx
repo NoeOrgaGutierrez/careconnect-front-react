@@ -20,8 +20,9 @@ import {
 import { eye, eyeOff } from 'ionicons/icons';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { TextField, Box } from '@mui/material';
 
-import './Login.css';  // Asegúrate de que el archivo CSS esté en la ruta correcta
+import './Login.css';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -33,7 +34,7 @@ const Login: React.FC = () => {
   const history = useHistory();
 
   const handleLogin = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     setLoading(true);
 
     try {
@@ -42,22 +43,22 @@ const Login: React.FC = () => {
         password: password
       });
 
-      setLoading(false); // Update loading state
+      setLoading(false);
       const userId = response.data && response.data.id;
 
       if (userId) {
-        localStorage.setItem('memberId', userId); // Save the user ID to local storage
+        localStorage.setItem('memberId', userId);
         console.log('Login successful:', response.data);
-        history.push('/'); // Redirect to home page
-        window.location.reload(); // Reload the page to apply the login state
+        history.push('/');
+        window.location.reload();
       } else {
         setAlertMessage('Invalid login credentials. Please check and try again.');
-        setShowAlert(true); // Show alert message
+        setShowAlert(true);
       }
     } catch (error) {
-      setLoading(false); // Update loading state
+      setLoading(false);
       setAlertMessage('Connection error. Please try again later.');
-      setShowAlert(true); // Show alert message
+      setShowAlert(true);
       console.error('Login failed:', error);
     }
   };
@@ -78,17 +79,28 @@ const Login: React.FC = () => {
                 <IonImg src="../../../resources/logo.png" />
               </IonAvatar>
               <form onSubmit={handleLogin}>
-                <IonItem className="login-item">
-                  <IonLabel className="login-label" position="stacked">Email address</IonLabel>
-                  <IonInput className="login-input" type="email" value={email} onIonChange={e => setEmail(e.detail.value!)} />
-                </IonItem>
-                <IonItem className="login-item" lines="none">
-                  <IonLabel className="login-label" position="stacked">Password</IonLabel>
-                  <IonInput className="login-input" type={showPassword ? 'text' : 'password'} value={password} onIonChange={e => setPassword(e.detail.value!)} />
-                  <IonButton slot="end" fill="clear" className="password-toggle-button" onClick={() => setShowPassword(!showPassword)}>
+                <TextField 
+                  label="Email address" 
+                  type="email" 
+                  value={email} 
+                  onChange={e => setEmail(e.target.value)} 
+                  variant="outlined" 
+                  fullWidth 
+                  margin="normal"
+                />
+                <Box display="flex" alignItems="center" marginBottom={2}>
+                  <TextField 
+                    label="Password" 
+                    type={showPassword ? 'text' : 'password'} 
+                    value={password} 
+                    onChange={e => setPassword(e.target.value)} 
+                    variant="outlined" 
+                    fullWidth 
+                  />
+                  <IonButton fill="clear" onClick={() => setShowPassword(!showPassword)}>
                     <IonIcon slot='end' icon={showPassword ? eyeOff : eye} />
                   </IonButton>
-                </IonItem>
+                </Box>
                 <IonButton type="submit" expand="block" className="login-button">Sign In</IonButton>
               </form>
             </IonCardContent>
@@ -114,3 +126,4 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
