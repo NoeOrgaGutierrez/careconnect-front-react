@@ -19,4 +19,4 @@ COPY . .
 EXPOSE 8100
 
 # Comando por defecto para correr la aplicación
-CMD ["ionic", "serve", "--host", "0.0.0.0", "--port", "8100"]
+CMD ["npx", "vite", "--port=8100"]
