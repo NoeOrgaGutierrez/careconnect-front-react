@@ -6,7 +6,7 @@ import {
   IonToolbar,
   IonTitle,
   IonButton,
-  IonInput,
+  IonButtons,
   IonItem,
   IonLabel,
   IonAvatar,
@@ -14,8 +14,7 @@ import {
   IonLoading,
   IonAlert,
   IonCard,
-  IonCardContent,
-  IonTextarea
+  IonCardContent
 } from '@ionic/react';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -106,10 +105,16 @@ const UserRegister: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="end">
+            <IonButton onClick={() => history.goBack()}>
+              Back
+            </IonButton>
+          </IonButtons>
           <IonTitle>User Register</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent className="register-content">
+      <div style={{ height: '50px' }}></div>
         <div className="register-container">
           <IonCard className="register-card">
             <IonCardContent>
@@ -125,6 +130,7 @@ const UserRegister: React.FC = () => {
                   variant="outlined" 
                   fullWidth 
                   margin="normal"
+                  className="text-field"
                 />
                 <TextField 
                   label="Surname" 
@@ -134,6 +140,7 @@ const UserRegister: React.FC = () => {
                   variant="outlined" 
                   fullWidth 
                   margin="normal"
+                  className="text-field"
                 />
                 <TextField 
                   label="Email" 
@@ -143,6 +150,7 @@ const UserRegister: React.FC = () => {
                   variant="outlined" 
                   fullWidth 
                   margin="normal"
+                  className="text-field"
                 />
                 <TextField 
                   label="Password" 
@@ -152,6 +160,7 @@ const UserRegister: React.FC = () => {
                   variant="outlined" 
                   fullWidth 
                   margin="normal"
+                  className="text-field"
                 />
                 <IonItem className="register-item">
                   <IonLabel className="register-label" position="stacked">Avatar</IonLabel>
@@ -166,6 +175,7 @@ const UserRegister: React.FC = () => {
                   margin="normal" 
                   multiline 
                   rows={4}
+                  className="text-field"
                 />
                 <IonButton type="submit" expand="block" className="register-button">Register</IonButton>
               </form>
@@ -186,10 +196,10 @@ const UserRegister: React.FC = () => {
           message={alertMessage}
           buttons={['OK']}
         />
+        <div style={{ height: '50px' }}></div>
       </IonContent>
     </IonPage>
   );
 };
 
 export default UserRegister;
-

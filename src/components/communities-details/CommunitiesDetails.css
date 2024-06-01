@@ -1,35 +1,34 @@
 .publication-card {
-    margin-bottom: 20px;
-  }
-  
-  .comment-chip {
-    width: fit-content;
-    max-width: 100%;
-    min-width: 0;
-  }
-  
-  .comment-level-0 {
-    margin-left: 0;
-  }
-  
-  .comment-level-1 {
-    margin-left: 20px;
-  }
-  
-  .comment-level-2 {
-    margin-left: 40px;
-  }
-  
-  /* Añade más niveles si es necesario */
-  
-  .content-with-extra-padding {
-    display: flex;
-    flex-direction: column;
-    padding-bottom: 200px; /* Aumenta el valor para más espacio */
-  }
-  
-  .footer-space {
-    height: 200px; /* Aumenta el valor para más espacio */
-    background: transparent;
-  }
-  
+  margin-bottom: 20px;
+}
+
+.comment-chip {
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+}
+
+.comment-level-0 {
+  margin-left: 0;
+}
+
+.comment-level-1 {
+  margin-left: 20px;
+}
+
+.comment-level-2 {
+  margin-left: 40px;
+}
+
+/* Añade más niveles si es necesario */
+
+.content-with-extra-padding {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 200px; /* Aumenta el valor para más espacio */
+}
+
+.footer-space {
+  height: 200px; /* Aumenta el valor para más espacio */
+  background: transparent;
+}

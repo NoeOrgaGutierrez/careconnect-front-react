@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import {
   IonAvatar,
@@ -24,7 +24,7 @@ import {
   IonFooter,
   IonText,
 } from "@ionic/react";
-import { chatboxOutline } from 'ionicons/icons';
+import { chatboxOutline, arrowBackOutline } from 'ionicons/icons';
 import {
   Dialog,
   DialogActions,
@@ -71,6 +71,7 @@ interface PublicationDetails {
 
 const CommunitiesDetails: React.FC = () => {
   const { id } = useParams<{ id: string }>();
+  const history = useHistory();
   const [publication, setPublication] = useState<PublicationDetails | null>(null);
   const [newComment, setNewComment] = useState<string>('');
   const [comments, setComments] = useState<Comment[]>([]);
@@ -172,6 +173,11 @@ const CommunitiesDetails: React.FC = () => {
             <IonMenuButton />
           </IonButtons>
           <IonTitle>{publication?.name}</IonTitle>
+          <IonButtons slot="end">
+            <IonButton onClick={() => history.goBack()}>
+              <IonIcon icon={arrowBackOutline} slot="icon-only" />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent className="content-with-extra-padding">
@@ -192,13 +198,18 @@ const CommunitiesDetails: React.FC = () => {
             </IonCardHeader>
             <IonCardContent>
               {publication.description}
-              <IonButton onClick={() => setShowDialog(true)} color="primary">Add Comment</IonButton>
             </IonCardContent>
           </IonCard>
         )}
         <IonList>
           {renderComments(comments)}
         </IonList>
+        <div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
+          <IonButton onClick={() => setShowDialog(true)} color="primary">
+            Add Comment
+          </IonButton>
+        </div>
+        <div style={{ height: '60px' }}></div>
         <Dialog open={showDialog} onClose={() => { setShowDialog(false); setReplyToComment(null); }} fullWidth maxWidth="sm">
           <DialogTitle>{replyToComment ? 'Reply to Comment' : 'Add Comment'}</DialogTitle>
           <DialogContent>
@@ -224,7 +235,6 @@ const CommunitiesDetails: React.FC = () => {
           </DialogActions>
         </Dialog>
       </IonContent>
-      <IonText style={{ height: '200px', MarginTop: '200px' }}></IonText>
       <IonFooter className="footer-space"></IonFooter>
     </>
   );

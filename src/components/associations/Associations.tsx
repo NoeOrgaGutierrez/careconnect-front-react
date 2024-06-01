@@ -11,9 +11,11 @@ import {
   IonToolbar,
   IonItem,
   IonInput,
-  IonButton
+  IonButton,
+  IonIcon,
 } from "@ionic/react";
 import { Card, CardContent, CardActions, Button, Typography, CardMedia, Grid } from "@mui/material";
+import { arrowBackOutline } from 'ionicons/icons';
 
 interface Association {
   id: number;
@@ -146,6 +148,11 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
             <IonMenuButton />
           </IonButtons>
           <IonTitle>{name}</IonTitle>
+          <IonButtons slot="end">
+            <IonButton onClick={() => history.goBack()}>
+              <IonIcon icon={arrowBackOutline} slot="icon-only" />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding" style={{ overflowY: "auto" }}>

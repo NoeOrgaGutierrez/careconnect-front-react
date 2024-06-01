@@ -15,9 +15,10 @@ import {
   IonAlert,
   IonCard,
   IonCardContent,
-  IonIcon
+  IonIcon,
+  IonButtons
 } from '@ionic/react';
-import { eye, eyeOff } from 'ionicons/icons';
+import { eye, eyeOff, arrowBackOutline } from 'ionicons/icons';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 
@@ -75,6 +76,11 @@ const AssociationLogin: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>Association Login</IonTitle>
+          <IonButtons slot="end">
+            <IonButton onClick={() => history.goBack()}>
+              <IonIcon icon={arrowBackOutline} slot="icon-only" />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent className="login-content">

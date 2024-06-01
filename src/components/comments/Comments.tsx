@@ -63,10 +63,8 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
     }
     try {
       const response = await axios.get(`http://localhost:3000/user-association/user/${memberId}`);
-      console.log('User associations:', response.data);
       const userAssociations = response.data;
       const userAssociation = userAssociations.find((ua: any) => ua.association.id === parseInt(associationDetailsId, 10));
-      console.log('memberId encontrado:', userAssociation ? userAssociation.id : null);
       return userAssociation ? userAssociation.id : null;
     } catch (error) {
       console.error('Error fetching user associations:', error);
@@ -79,7 +77,6 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
     try {
       setLoading(true);
       const memberId = await getMemberIdForBlog(blogId);
-      console.log('memberId:', memberId);
       if (!memberId) {
         console.error('No valid memberId found');
         setLoading(false);
@@ -94,10 +91,10 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
         updated: new Date().toISOString(),
       };
       const response = await axios.post('http://localhost:3000/blog-comment', newCommentData);
-      console.log(response.data);
       setCommentList((prevComments) => [...prevComments, response.data]);
       setNewComment('');
       setShowDialog(false);
+      window.location.reload();
     } catch (error) {
       console.error('Error posting comment:', error);
     } finally {
@@ -132,6 +129,7 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
       setReplyCommentId(null);
       setReplyContent('');
       setShowReplyDialog(false);
+      window.location.reload();
     } catch (error) {
       console.error('Error replying to comment:', error);
     } finally {
@@ -153,7 +151,6 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
         blogComment: { id: commentId },
       };
 
-      console.log('Valoration data:', valorationData);
       await axios.post('http://localhost:3000/valoration', valorationData);
 
       setCommentList((prevComments) =>
@@ -196,14 +193,10 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
                 </Typography>
                 <Grid container direction="row" alignItems="center">
                   <IconButton onClick={() => handleValoration(comment.id, true)}>
-                    <ThumbUp style={{ color: likes > 0 ? 'green' : 'inherit' }} /> <Typography>
-                      {/* {likes} */}
-                      </Typography>
+                    <ThumbUp style={{ color: likes > 0 ? 'green' : 'inherit' }} /> <Typography>{likes}</Typography>
                   </IconButton>
                   <IconButton onClick={() => handleValoration(comment.id, false)}>
-                    <ThumbDown style={{ color: dislikes > 0 ? 'red' : 'inherit' }} /> <Typography>
-                      {/* {dislikes} */}
-                      </Typography>
+                    <ThumbDown style={{ color: dislikes > 0 ? 'red' : 'inherit' }} /> <Typography>{dislikes}</Typography>
                   </IconButton>
                   <Button onClick={() => { setReplyCommentId(comment.id); setShowReplyDialog(true); }}>Responder</Button>
                 </Grid>

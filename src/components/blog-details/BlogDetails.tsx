@@ -11,8 +11,9 @@ import {
   IonIcon,
   IonLoading,
   IonAlert,
+  IonButtons
 } from '@ionic/react';
-import { arrowUndoOutline } from 'ionicons/icons';
+import { arrowBackOutline } from 'ionicons/icons';
 import Comments from './../comments/Comments';
 import { Typography } from '@mui/material';
 import './BlogDetails.css';
@@ -114,8 +115,7 @@ const BlogDetails: React.FC = () => {
   }, [id]);
 
   const handleBackClick = () => {
-    history.push('/');
-    window.location.reload();
+    history.goBack(); // Navigate back without reloading
   };
 
   if (loading) {
@@ -141,10 +141,11 @@ const BlogDetails: React.FC = () => {
           <IonTitle>
             {blog ? blog.name : "Detalles del Blog"}
           </IonTitle>
-          <IonButton slot="end" onClick={handleBackClick}>
-            <IonIcon icon={arrowUndoOutline} />
-            Volver
-          </IonButton>
+          <IonButtons slot="end">
+            <IonButton onClick={handleBackClick}>
+              <IonIcon icon={arrowBackOutline} slot="icon-only" />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent className="blog-details-content">

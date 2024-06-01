@@ -17,8 +17,9 @@ import {
   IonAlert,
   IonButton,
   IonIcon,
+  IonButtons,
 } from "@ionic/react";
-import { arrowUndoOutline } from "ionicons/icons";
+import { arrowBackOutline } from "ionicons/icons";
 import axios from "axios";
 import { useParams, useHistory } from "react-router-dom";
 import { Button, Typography, Card, CardContent, CardActions, Grid } from "@mui/material";
@@ -89,11 +90,6 @@ const AssociationsDetails: React.FC = () => {
     fetchAssociation();
   }, [id]);
 
-  const deleteAssociation = () => {
-    localStorage.removeItem("associationId");
-    history.push("/");
-  };
-
   const handleSegmentChange = async (value: string) => {
     setCurrentSegment(value);
     if (value === "blogs") {
@@ -116,7 +112,10 @@ const AssociationsDetails: React.FC = () => {
 
   const handleViewBlog = (blogId: number) => {
     history.push(`/blog-details/${blogId}`);
-    window.location.reload();
+  };
+
+  const handleBackClick = () => {
+    history.goBack();
   };
 
   if (loading) {
@@ -135,11 +134,6 @@ const AssociationsDetails: React.FC = () => {
     );
   }
 
-  const handleAssociationClick = () => {
-    history.replace("/associations");
-    window.location.reload();
-  };
-
   return (
     <IonPage>
       <IonHeader>
@@ -147,10 +141,11 @@ const AssociationsDetails: React.FC = () => {
           <IonTitle>
             {association ? association.name : "Perfil de la Asociación"}
           </IonTitle>
-          <IonButton slot="end" onClick={handleAssociationClick}>
-            <IonIcon icon={arrowUndoOutline} />
-            Asociaciones
-          </IonButton>
+          <IonButtons slot="end">
+            <IonButton onClick={handleBackClick}>
+              <IonIcon icon={arrowBackOutline} slot="icon-only" />
+            </IonButton>
+          </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent className="association-profile-content">
