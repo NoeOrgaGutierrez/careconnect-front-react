@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 8100
 
-CMD ["ionic", "serve"]
+CMD ["npx", "vite", "--host=0.0.0.0", "--port=8100"]
