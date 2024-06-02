@@ -4,13 +4,13 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    react(),
-    legacy()
-  ],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
-  }
+	server: {
+		hmr: {
+			host: '34.118.16.66',
+			port: 80,
+			protocol: 'ws'
+		},
+		host: true
+	},
+	plugins: [react(), legacy()]
 })
