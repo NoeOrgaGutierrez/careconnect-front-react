@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import axios from 'axios'
 import {
 	TextField,
 	Button,
@@ -14,6 +13,8 @@ import {
 	DialogTitle
 } from '@mui/material'
 import { ThumbUp, ThumbDown } from '@mui/icons-material'
+import axiosInstance from '../../axiosconfig'
+import { AxiosError } from 'axios'
 import './Comments.css'
 
 interface User {
@@ -65,8 +66,8 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
 			return null
 		}
 		try {
-			const response = await axios.get(
-				`http://34.116.158.34/user-association/user/${memberId}`
+			const response = await axiosInstance.get(
+				`/user-association/user/${memberId}`
 			)
 			const userAssociations = response.data
 			const userAssociation = userAssociations.find(
@@ -74,7 +75,11 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
 			)
 			return userAssociation ? userAssociation.id : null
 		} catch (error) {
-			console.error('Error fetching user associations:', error)
+			if (error instanceof AxiosError) {
+				console.error('Error fetching user associations:', error.message)
+			} else {
+				console.error('Unexpected error:', error)
+			}
 			return null
 		}
 	}
@@ -97,16 +102,17 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
 				created: new Date().toISOString(),
 				updated: new Date().toISOString()
 			}
-			const response = await axios.post(
-				'http://34.116.158.34/blog-comment',
-				newCommentData
-			)
+			const response = await axiosInstance.post('/blog-comment', newCommentData)
 			setCommentList((prevComments) => [...prevComments, response.data])
 			setNewComment('')
 			setShowDialog(false)
 			window.location.reload()
 		} catch (error) {
-			console.error('Error posting comment:', error)
+			if (error instanceof AxiosError) {
+				console.error('Error posting comment:', error.message)
+			} else {
+				console.error('Unexpected error:', error)
+			}
 		} finally {
 			setLoading(false)
 		}
@@ -130,10 +136,7 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
 				created: new Date().toISOString(),
 				updated: new Date().toISOString()
 			}
-			const response = await axios.post(
-				'http://34.116.158.34/blog-comment',
-				replyData
-			)
+			const response = await axiosInstance.post('/blog-comment', replyData)
 			setCommentList((prevComments) =>
 				prevComments.map((c) =>
 					c.id === commentId
@@ -146,7 +149,11 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
 			setShowReplyDialog(false)
 			window.location.reload()
 		} catch (error) {
-			console.error('Error replying to comment:', error)
+			if (error instanceof AxiosError) {
+				console.error('Error replying to comment:', error.message)
+			} else {
+				console.error('Unexpected error:', error)
+			}
 		} finally {
 			setLoading(false)
 		}
@@ -166,7 +173,7 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
 				blogComment: { id: commentId }
 			}
 
-			await axios.post('http://34.116.158.34/valoration', valorationData)
+			await axiosInstance.post('/valoration', valorationData)
 
 			setCommentList((prevComments) =>
 				prevComments.map((c) =>
@@ -182,7 +189,11 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
 				)
 			)
 		} catch (error) {
-			console.error('Error submitting valoration:', error)
+			if (error instanceof AxiosError) {
+				console.error('Error submitting valoration:', error.message)
+			} else {
+				console.error('Unexpected error:', error)
+			}
 		}
 	}
 

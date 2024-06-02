@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import axios from 'axios'
 import {
 	IonButtons,
 	IonContent,
@@ -24,6 +23,8 @@ import {
 	Grid
 } from '@mui/material'
 import { arrowBackOutline } from 'ionicons/icons'
+import axiosInstance from '../../axiosconfig'
+import { AxiosError } from 'axios'
 
 interface Association {
 	id: number
@@ -52,11 +53,15 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 		const fetchAssociations = async () => {
 			setLoading(true)
 			try {
-				const response = await axios.get('http://34.116.158.34/association')
+				const response = await axiosInstance.get('/association')
 				console.log('Associations data:', response.data)
 				setAssociations(response.data)
 			} catch (error) {
-				console.error('Error fetching associations', error)
+				if (error instanceof AxiosError) {
+					console.error('Error fetching associations', error.message)
+				} else {
+					console.error('Unexpected error', error)
+				}
 			} finally {
 				setLoading(false)
 			}
@@ -66,14 +71,18 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 			try {
 				const memberId = localStorage.getItem('memberId')
 				if (memberId) {
-					const response = await axios.get(
-						`http://34.116.158.34//user-association/user/${memberId}`
+					const response = await axiosInstance.get(
+						`/user-association/user/${memberId}`
 					)
 					console.log('User Associations data:', response.data)
 					setUserAssociations(response.data)
 				}
 			} catch (error) {
-				console.error('Error fetching user associations', error)
+				if (error instanceof AxiosError) {
+					console.error('Error fetching user associations', error.message)
+				} else {
+					console.error('Unexpected error', error)
+				}
 			}
 		}
 
@@ -89,13 +98,17 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 			if (name) params.associationName = name
 			if (count) params.memberCount = count
 
-			const response = await axios.get('http://34.116.158.34/association/filter', {
+			const response = await axiosInstance.get('/association/filter', {
 				params
 			})
 			console.log('Filtered Associations data:', response.data)
 			setAssociations(response.data)
 		} catch (error) {
-			console.error('Error fetching filtered associations', error)
+			if (error instanceof AxiosError) {
+				console.error('Error fetching filtered associations', error.message)
+			} else {
+				console.error('Unexpected error', error)
+			}
 		} finally {
 			setLoading(false)
 		}
@@ -112,8 +125,8 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 		if (memberId) {
 			if (isUserInAssociation(associationId)) {
 				try {
-					await axios.delete(
-						`http://34.116.158.34/user-association/user/${memberId}/association/${associationId}`
+					await axiosInstance.delete(
+						`/user-association/user/${memberId}/association/${associationId}`
 					)
 					setUserAssociations(
 						userAssociations.filter(
@@ -121,21 +134,22 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 						)
 					)
 				} catch (error) {
-					console.error('Error leaving association', error)
+					if (error instanceof AxiosError) {
+						console.error('Error leaving association', error.message)
+					} else {
+						console.error('Unexpected error', error)
+					}
 				}
 			} else {
 				try {
-					const response = await axios.post(
-						'http://34.116.158.34/user-association',
-						{
-							user: {
-								id: parseInt(memberId, 10)
-							},
-							association: {
-								id: associationId
-							}
+					const response = await axiosInstance.post('/user-association', {
+						user: {
+							id: parseInt(memberId, 10)
+						},
+						association: {
+							id: associationId
 						}
-					)
+					})
 					const newAssociation = associations.find(
 						(association) => association.id === associationId
 					)
@@ -146,7 +160,11 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 						])
 					}
 				} catch (error) {
-					console.error('Error joining association', error)
+					if (error instanceof AxiosError) {
+						console.error('Error joining association', error.message)
+					} else {
+						console.error('Unexpected error', error)
+					}
 				}
 			}
 		}
@@ -177,7 +195,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 					</IonButtons>
 					<IonTitle>{name}</IonTitle>
 					<IonButtons slot='end'>
-						<IonButton onClick={() => history.goBack()}>
+					<IonButton onClick={() => history.goBack()}>
 							<IonIcon icon={arrowBackOutline} slot='icon-only' />
 						</IonButton>
 					</IonButtons>

@@ -19,7 +19,6 @@ import {
 	IonIcon
 } from '@ionic/react'
 import { arrowUndoOutline, trashOutline } from 'ionicons/icons'
-import axios from 'axios'
 import { useParams, useHistory } from 'react-router-dom'
 import {
 	Button,
@@ -34,6 +33,8 @@ import {
 	DialogActions,
 	TextField
 } from '@mui/material'
+import axiosInstance from '../../axiosconfig'
+import { AxiosError } from 'axios'
 
 import './AssociationsProfile.css'
 
@@ -89,14 +90,19 @@ const AssociationProfile: React.FC = () => {
 			const associationId = localStorage.getItem('associationId')
 			setLoading(true)
 			try {
-				const response = await axios.get(
-					`http://34.116.158.34/association/findOne/${associationId}`
+				const response = await axiosInstance.get(
+					`/association/findOne/${associationId}`
 				)
 				setAssociation(response.data)
 			} catch (error) {
-				setAlertMessage('Error fetching association data. Please try again later.')
+				if (error instanceof AxiosError) {
+					setAlertMessage('Error fetching association data. Please try again later.')
+					console.error('Error fetching association data:', error.message)
+				} else {
+					setAlertMessage('An unexpected error occurred. Please try again later.')
+					console.error('Unexpected error:', error)
+				}
 				setShowAlert(true)
-				console.error('Error fetching association data:', error)
 			} finally {
 				setLoading(false)
 			}
@@ -132,7 +138,7 @@ const AssociationProfile: React.FC = () => {
 
 		try {
 			setLoading(true)
-			const response = await axios.post('http://34.116.158.34/blog', newBlog)
+			const response = await axiosInstance.post('/blog', newBlog)
 			setAssociation((prev) => ({
 				...prev!,
 				blogs: [...prev!.blogs, response.data]
@@ -141,9 +147,14 @@ const AssociationProfile: React.FC = () => {
 			setNewBlogDescription('')
 			setDialogOpen(false)
 		} catch (error) {
-			setAlertMessage('Error creating new blog. Please try again later.')
+			if (error instanceof AxiosError) {
+				setAlertMessage('Error creating new blog. Please try again later.')
+				console.error('Error creating new blog:', error.message)
+			} else {
+				setAlertMessage('An unexpected error occurred. Please try again later.')
+				console.error('Unexpected error:', error)
+			}
 			setShowAlert(true)
-			console.error('Error creating new blog:', error)
 		} finally {
 			setLoading(false)
 		}

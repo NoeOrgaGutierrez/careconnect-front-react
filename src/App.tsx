@@ -72,10 +72,13 @@ const App: React.FC = () => {
             <Menu />
             <IonRouterOutlet id="main">
               <Route path="/" exact={true}>
-                <Redirect to="/home" exact={true} />
+                <Redirect to="/profile" exact={true} />
+              </Route>
+              <Route path="/profile" exact={true}>
+                <UserInformation name="Profile" />
               </Route>
               <Route path="/home" exact={true}>
-                <Home name="Home" />
+                <UserInformation name="Profile" />
               </Route>
               <Route path="/associations" exact={true}>
                 <Associations name="Associations" />

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import axios from 'axios'
 import {
 	IonAvatar,
 	IonButton,
@@ -33,8 +32,9 @@ import {
 	TextField,
 	Button
 } from '@mui/material'
+import axiosInstance from '../../axiosconfig'
+import { AxiosError } from 'axios'
 import './CommunitiesDetails.css'
-import { Margin } from '@mui/icons-material'
 
 interface Comment {
 	id: number
@@ -81,22 +81,31 @@ const CommunitiesDetails: React.FC = () => {
 	useEffect(() => {
 		const userId = localStorage.getItem('memberId')
 		if (userId) {
-			axios
-				.get(`http://34.116.158.34/publication/comments/${id}/${userId}`)
+			axiosInstance
+				.get(`/publication/comments/${id}/${userId}`)
 				.then((response) => {
 					setComments(response.data || [])
 				})
 				.catch((error) => {
-					console.error('Error fetching comments:', error)
+					if (error instanceof AxiosError) {
+						console.error('Error fetching comments:', error.message)
+					} else {
+						console.error('Unexpected error:', error)
+					}
 				})
 
-			axios
-				.get(`http://34.116.158.34/publication/${id}`)
+			axiosInstance
+				.get(`/publication/${id}`)
 				.then((response) => {
+					console.log(response.data)
 					setPublication(response.data)
 				})
 				.catch((error) => {
-					console.error('Error fetching publication details:', error)
+					if (error instanceof AxiosError) {
+						console.error('Error fetching publication details:', error.message)
+					} else {
+						console.error('Unexpected error:', error)
+					}
 				})
 		}
 	}, [id])
@@ -112,8 +121,8 @@ const CommunitiesDetails: React.FC = () => {
 					parentComment: replyToComment ? { id: replyToComment.id } : null,
 					updated: new Date().toISOString()
 				}
-				axios
-					.post(`http://34.116.158.34/comment`, payload)
+				axiosInstance
+					.post('/comment', payload)
 					.then((response) => {
 						const newCommentData = response.data
 						if (replyToComment) {
@@ -135,7 +144,11 @@ const CommunitiesDetails: React.FC = () => {
 						setReplyToComment(null)
 					})
 					.catch((error) => {
-						console.error('Error adding comment:', error)
+						if (error instanceof AxiosError) {
+							console.error('Error adding comment:', error.message)
+						} else {
+							console.error('Unexpected error:', error)
+						}
 					})
 			}
 		}

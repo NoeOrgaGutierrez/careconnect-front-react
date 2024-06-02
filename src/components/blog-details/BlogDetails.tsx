@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import axios from 'axios'
 import {
 	IonPage,
 	IonContent,
@@ -16,6 +15,8 @@ import {
 import { arrowBackOutline } from 'ionicons/icons'
 import Comments from './../comments/Comments'
 import { Typography } from '@mui/material'
+import axiosInstance from '../../axiosconfig'
+import { AxiosError } from 'axios'
 import './BlogDetails.css'
 
 interface User {
@@ -70,8 +71,8 @@ const BlogDetails: React.FC = () => {
 			return null
 		}
 		try {
-			const response = await axios.get(
-				`http://34.116.158.34/user-association/user/${memberId}`
+			const response = await axiosInstance.get(
+				`/user-association/user/${memberId}`
 			)
 			console.log('User associations:', response.data)
 			const userAssociations = response.data
@@ -84,7 +85,11 @@ const BlogDetails: React.FC = () => {
 			)
 			return userAssociation ? userAssociation.id : null
 		} catch (error) {
-			console.error('Error fetching user associations:', error)
+			if (error instanceof AxiosError) {
+				console.error('Error fetching user associations:', error.message)
+			} else {
+				console.error('Unexpected error:', error)
+			}
 			return null
 		}
 	}
@@ -102,9 +107,9 @@ const BlogDetails: React.FC = () => {
 					setLoading(false)
 					return
 				}
-				const blogResponse = await axios.get(`http://34.116.158.34/blog/${id}`)
-				const commentsResponse = await axios.get(
-					`http://34.116.158.34/blog/comments/${id}/${memberId}`
+				const blogResponse = await axiosInstance.get(`/blog/${id}`)
+				const commentsResponse = await axiosInstance.get(
+					`/blog/comments/${id}/${memberId}`
 				)
 
 				const blogData: Blog = {
@@ -114,11 +119,16 @@ const BlogDetails: React.FC = () => {
 				console.log('Blog data:', blogData)
 				setBlog(blogData)
 			} catch (error) {
-				setAlertMessage(
-					'Error al obtener datos del blog. Por favor, inténtelo de nuevo más tarde.'
-				)
+				if (error instanceof AxiosError) {
+					setAlertMessage(
+						'Error al obtener datos del blog. Por favor, inténtelo de nuevo más tarde.'
+					)
+					console.error('Error fetching blog data:', error.message)
+				} else {
+					setAlertMessage('An unexpected error occurred. Please try again later.')
+					console.error('Unexpected error:', error)
+				}
 				setShowAlert(true)
-				console.error('Error fetching blog data:', error)
 			} finally {
 				setLoading(false)
 			}
@@ -153,7 +163,7 @@ const BlogDetails: React.FC = () => {
 				<IonToolbar>
 					<IonTitle>{blog ? blog.name : 'Detalles del Blog'}</IonTitle>
 					<IonButtons slot='end'>
-						<IonButton onClick={handleBackClick}>
+					<IonButton onClick={() => history.goBack()}>
 							<IonIcon icon={arrowBackOutline} slot='icon-only' />
 						</IonButton>
 					</IonButtons>

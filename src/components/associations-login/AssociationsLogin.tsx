@@ -19,10 +19,11 @@ import {
 	IonButtons
 } from '@ionic/react'
 import { eye, eyeOff, arrowBackOutline } from 'ionicons/icons'
-import axios from 'axios'
 import { useHistory } from 'react-router-dom'
+import axiosInstance from '../../axiosconfig'
+import { AxiosError } from 'axios'
 
-import './AssociationsLogin.css' // Asegúrate de que el archivo CSS esté en la ruta correcta
+import './AssociationsLogin.css'
 
 const AssociationLogin: React.FC = () => {
 	const [loginCode, setLoginCode] = useState('')
@@ -38,15 +39,7 @@ const AssociationLogin: React.FC = () => {
 		setLoading(true)
 
 		try {
-			console.log('Sending login request:', {
-				method: 'POST',
-				url: 'http://34.116.158.34/association/login',
-				data: {
-					loginCode,
-					password
-				}
-			})
-			const response = await axios.post('http://34.116.158.34/association/login', {
+			const response = await axiosInstance.post('/association/login', {
 				loginCode: loginCode,
 				password: password
 			})
@@ -58,16 +51,26 @@ const AssociationLogin: React.FC = () => {
 				localStorage.setItem('associationId', associationId.toString()) // Save the association ID to local storage
 				console.log('Login successful:', response.data)
 				history.push('/associations-profile') // Redirect to association profile
-				window.location.reload() // Reload the page to apply the login state
 			} else {
 				setAlertMessage('Invalid login credentials. Please check and try again.')
 				setShowAlert(true) // Show alert message
 			}
 		} catch (error) {
 			setLoading(false) // Update loading state
-			setAlertMessage('Connection error. Please try again later.')
-			setShowAlert(true) // Show alert message
-			console.error('Login failed:', error)
+			if (error instanceof AxiosError) {
+				if (error.response && error.response.status === 404) {
+					setAlertMessage('Invalid login credentials. Please check and try again.')
+					setShowAlert(true)
+				} else {
+					setAlertMessage('Connection error. Please try again later.')
+					setShowAlert(true)
+					console.error('Login failed:', error)
+				}
+			} else {
+				setAlertMessage('An unexpected error occurred. Please try again later.')
+				setShowAlert(true)
+				console.error('Unexpected error:', error)
+			}
 		}
 	}
 
@@ -77,7 +80,7 @@ const AssociationLogin: React.FC = () => {
 				<IonToolbar>
 					<IonTitle>Association Login</IonTitle>
 					<IonButtons slot='end'>
-						<IonButton onClick={() => history.goBack()}>
+					<IonButton onClick={() => history.goBack()}>
 							<IonIcon icon={arrowBackOutline} slot='icon-only' />
 						</IonButton>
 					</IonButtons>

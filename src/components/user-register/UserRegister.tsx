@@ -14,14 +14,17 @@ import {
 	IonLoading,
 	IonAlert,
 	IonCard,
-	IonCardContent
+	IonCardContent,
+	IonIcon
 } from '@ionic/react'
-import axios from 'axios'
 import { useHistory } from 'react-router-dom'
 import imageCompression from 'browser-image-compression'
-
-import './UserRegister.css' // Asegúrate de que el archivo CSS esté en la ruta correcta
 import { TextField } from '@mui/material'
+import axiosInstance from '../../axiosconfig'
+import { AxiosError } from 'axios'
+
+import './UserRegister.css'
+import { arrowBackOutline } from 'ionicons/icons'
 
 const UserRegister: React.FC = () => {
 	const [name, setName] = useState('')
@@ -48,7 +51,7 @@ const UserRegister: React.FC = () => {
 				bio
 			}
 
-			const response = await axios.post('http://34.116.158.34/user', userData)
+			const response = await axiosInstance.post('/user', userData)
 
 			if (response.status === 201) {
 				const userId = response.data.id
@@ -60,8 +63,8 @@ const UserRegister: React.FC = () => {
 					const formData = new FormData()
 					formData.append('file', avatar)
 
-					await axios.post(
-						`http://34.116.158.34/storage/upload/user/${userId}`,
+					await axiosInstance.post(
+						`/storage/upload/user/${userId}`,
 						formData,
 						{
 							headers: {
@@ -73,7 +76,7 @@ const UserRegister: React.FC = () => {
 				}
 
 				setLoading(false) // Update loading state
-				history.push('/') // Redirect to home page
+				history.push(`/`) 
 				window.location.reload() // Reload the page to apply the login state
 			} else {
 				setLoading(false) // Update loading state
@@ -82,9 +85,15 @@ const UserRegister: React.FC = () => {
 			}
 		} catch (error) {
 			setLoading(false) // Update loading state
-			setAlertMessage('Connection error. Please try again later.')
-			setShowAlert(true) // Show alert message
-			console.error('Registration failed:', error)
+			if (error instanceof AxiosError) {
+				setAlertMessage('Connection error. Please try again later.')
+				setShowAlert(true) // Show alert message
+				console.error('Registration failed:', error)
+			} else {
+				setAlertMessage('An unexpected error occurred. Please try again later.')
+				setShowAlert(true)
+				console.error('Unexpected error:', error)
+			}
 		}
 	}
 
@@ -111,9 +120,9 @@ const UserRegister: React.FC = () => {
 		<IonPage>
 			<IonHeader>
 				<IonToolbar>
-					<IonButtons slot='end'>
-						<IonButton onClick={() => history.goBack()}>Back</IonButton>
-					</IonButtons>
+				<IonButton onClick={() => history.goBack()}>
+							<IonIcon icon={arrowBackOutline} slot='icon-only' />
+						</IonButton>
 					<IonTitle>User Register</IonTitle>
 				</IonToolbar>
 			</IonHeader>
