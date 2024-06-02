@@ -3,12 +3,12 @@ import react from '@vitejs/plugin-react'
 import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig({
-	server: {
-		hmr: {
-			protocol: 'ws'
-		},
-		host: '0.0.0.0'
-	},
-	plugins: [react(), legacy()]
+	plugins: [react(), legacy()],
+	test: {
+		globals: true,
+		environment: 'jsdom',
+		setupFiles: './src/setupTests.ts'
+	}
 })
