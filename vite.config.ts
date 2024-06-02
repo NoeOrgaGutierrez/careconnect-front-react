@@ -6,11 +6,9 @@ import { defineConfig } from 'vite'
 export default defineConfig({
 	server: {
 		hmr: {
-			host: '34.118.16.66',
-			port: 80,
 			protocol: 'ws'
 		},
-		host: true
+		host: '0.0.0.0'
 	},
 	plugins: [react(), legacy()]
 })
