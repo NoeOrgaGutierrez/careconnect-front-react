@@ -166,7 +166,7 @@ const AssociationsDetails: React.FC = () => {
             {association ? association.name : "Perfil de la Asociación"}
           </IonTitle>
           <IonButtons slot="end">
-		  <IonButton onClick={() => history.goBack()}>
+		  <IonButton onClick={() => { history.replace("/associations"); window.location.reload(); }}>
 							<IonIcon icon={arrowBackOutline} slot='icon-only' />
 						</IonButton>
           </IonButtons>

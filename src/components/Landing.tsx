@@ -1,12 +1,12 @@
 import {
-	IonButtons,
-	IonContent,
-	IonHeader,
-	IonTitle,
-	IonToolbar,
-	IonButton,
-	IonIcon,
-	IonRouterLink
+  IonButtons,
+  IonContent,
+  IonHeader,
+  IonTitle,
+  IonToolbar,
+  IonButton,
+  IonIcon,
+  IonRouterLink
 } from '@ionic/react'
 import { personCircleOutline } from 'ionicons/icons'
 import React from 'react'
@@ -23,6 +23,7 @@ const HeroSection = styled(Box)(({ theme }) => ({
   color: '#fff',
   padding: theme.spacing(4),
   textAlign: 'center',
+  marginTop: '-50px',
 }));
 
 // Estilos para FeaturesSection
@@ -73,11 +74,11 @@ const Landing: React.FC = () => {
           <Typography variant="h2" gutterBottom>
             Welcome to CareConnect
           </Typography>
-          <Typography variant="h5" paragraph>
+          <Typography variant="h5" paragraph sx={{ marginTop: '30px' }}>
             Connecting you with the best healthcare professionals.
           </Typography>
-          <Button variant="contained" color="primary" size="large">
-            Get Started
+          <Button variant="contained" color="primary" className="get-started">
+            <div>Get Started</div>
           </Button>
         </HeroSection>
         <FeaturesSection>
@@ -122,4 +123,4 @@ const Landing: React.FC = () => {
   )
 }
 
-export default Landing
+export default Landing;

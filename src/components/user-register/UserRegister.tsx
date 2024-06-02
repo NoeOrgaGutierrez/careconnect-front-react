@@ -120,9 +120,11 @@ const UserRegister: React.FC = () => {
 		<IonPage>
 			<IonHeader>
 				<IonToolbar>
-				<IonButton onClick={() => history.goBack()}>
+				<IonButtons slot='end'>
+          <IonButton onClick={() => history.goBack()}>
 							<IonIcon icon={arrowBackOutline} slot='icon-only' />
 						</IonButton>
+          </IonButtons>
 					<IonTitle>User Register</IonTitle>
 				</IonToolbar>
 			</IonHeader>

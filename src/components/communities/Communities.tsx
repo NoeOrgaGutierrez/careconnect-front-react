@@ -206,7 +206,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 					</IonButtons>
 					<IonTitle>{name}</IonTitle>
 					<IonButtons slot='end'>
-					<IonButton onClick={() => history.goBack()}>
+					<IonButton onClick={() => history.replace("/")}>
 							<IonIcon icon={arrowBackOutline} slot='icon-only' />
 						</IonButton>
 					</IonButtons>
@@ -375,6 +375,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 						</Button>
 					</DialogActions>
 				</Dialog>
+				<div style={{ height: '100px' }}></div>
 			</IonContent>
 		</>
 	)
