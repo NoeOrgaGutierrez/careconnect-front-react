@@ -1,85 +1,145 @@
+/* Global text color */
+* {
+  color: rgb(255, 255, 255);
+}
+
+/* Centering content and setting background color */
 .login-content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Usa todo el alto de la vista para centrar el contenido */
-    background-color: #1e1e1e; /* Ajusta al color deseado */
-    padding: 16px; /* Añade padding para un pequeño margen en los lados */
-  }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #1e1e1e; /* Dark background color */
+  padding: 16px;
+}
+
+/* Container styling */
+.login-container {
+  width: 100%;
+  max-width: 360px;
+  background-color: #014560 !important;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin: auto;
+}
+
+/* Card styling */
+.login-card {
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
+}
+
+/* Avatar styling */
+.login-avatar {
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
+  display: block;
+  margin: 0 auto 20px;
+}
+
+/* Input item styling */
+.login-item {
+  background: #ffffff !important; /* Input background */
+  border-radius: 8px;
+  margin-bottom: 16px;
+}
+
+/* Text Field styling for MUI components */
+.MuiOutlinedInput-root {
+  color: #000000 !important; /* Input text color */
+}
+
+.MuiInputLabel-root {
+  color: #010000 !important; /* Input label color */
+  font-weight: 500 !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #0d0000 !important; /* Input border color */
+}
+
+/* Label styling */
+.login-label {
+  color: #60adc4; /* Blue label color */
+  font-size: 16px;
+}
+
+/* Input text styling */
+.login-input {
+  color: #60adc4 !important; /* Input text color */
+  font-size: 16px;
+}
+
+/* Button styling */
+.login-button {
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  --background: #ffffff !important; /* Button background color */
+  color: #000000 !important; /* Button text color */
+  font-weight: 900 !important;
+  border-radius: 8px;
+}
+
+/* Secondary button styling */
+.login-button-clear {
   
-  .login-container {
-    width: 100%;
-    max-width: 360px; /* Ajusta según la anchura deseada para el formulario */
-    background-color: #242424; /* Fondo del formulario */
-    color: #ffffff; /* Color de texto */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra para el formulario */
-    border-radius: 12px; /* Bordes redondeados */
-    padding: 20px; /* Padding interno para espacio alrededor de los elementos del formulario */
-    text-align: center; /* Centra el contenido del formulario */
-    margin: auto; /* Centra el formulario horizontalmente */
-  }
-  
-  .login-card {
-    background-color: transparent; /* Fondo transparente */
-    box-shadow: none; /* Sin sombra */
-    border: none; /* Sin borde */
-  }
-  
-  .login-avatar {
-    --border-radius: 50%;
-    width: 80px; /* Ajusta el tamaño del avatar */
-    height: 80px; /* Ajusta el tamaño del avatar */
-    display: block;
-    margin: 0 auto 20px; /* Asegura que el avatar está centrado y tiene margen */
-  }
-  
-  .login-item {
-    --background: #333333; /* Fondo de los campos de entrada */
-    --color: #ffffff; /* Color del texto */
-    --placeholder-color: #bbbbbb; /* Color de los placeholders */
-    --border-radius: 8px; /* Bordes redondeados para los campos de entrada */
-    --padding-start: 10px; /* Padding interno para espacio alrededor de los elementos del formulario */
-    --padding-end: 10px; /* Padding interno para espacio alrededor de los elementos del formulario */
-    margin-bottom: 16px; /* Espacio entre campos de entrada */
-    position: relative; /* Necesario para posicionar el botón de mostrar/ocultar contraseña */
-  }
-  
-  .login-label {
-    color: #bbbbbb; /* Color de las etiquetas */
-    font-size: 16px; /* Tamaño de fuente de las etiquetas */
-  }
-  
-  .login-input {
-    color: #ffffff; /* Color del texto de entrada */
-    font-size: 16px; /* Tamaño de fuente del texto de entrada */
-  }
-  
-  .login-button {
-    display: block; /* Asegura que el botón ocupe todo el ancho disponible */
-    width: 100%; /* Ancho completo dentro del formulario */
-    margin-top: 20px; /* Espacio antes del botón */
-    --background: #6200ea; /* Color del botón */
-    --color: #ffffff; /* Texto del botón */
-    border-radius: 8px; /* Bordes redondeados */
-  }
-  
-  .login-button-clear {
-    color: #bbbbbb; /* Color para los botones secundarios */
-    font-weight: bold; /* Negrita para los botones secundarios */
-    margin-top: 10px; /* Espacio antes de los botones secundarios */
-    text-transform: uppercase; /* Texto en mayúsculas para botones secundarios */
-  }
-  
-  .login-footer {
-    background: none; /* Sin fondo para el pie */
-  }
-  
-  /* Estilo para centrar el botón de mostrar/ocultar contraseña verticalmente */
-  .password-toggle-button {
-    position: absolute;
-    right: 10px; /* Espacio desde el borde derecho */
-    top: 50%;
-    transform: translateY(-50%);
-    color: #bbbbbb; /* Color del ícono */
-  }
-  
+  width: 100%;
+  border: 2px solid;
+  border-radius: 25px; /* Border radius for rounded corners */
+  border-color: #60adc4 !important;
+  background-color: #60adc4 !important;
+  color: #000000 !important;
+  margin-top: 10px;
+  text-transform: uppercase;
+  padding: 10px 20px; /* Added padding for a better look */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Centering the buttons container */
+.login-buttons {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Space between the buttons */
+}
+
+/* Footer styling */
+.login-footer {
+  background: none;
+}
+
+/* Spacer for layout */
+.spacer {
+  height: 50px;
+}
+
+/* Focused input styling */
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input {
+  font-size: 15px !important; /* Larger font size when focused */
+  color: #60adc4 !important; /* Blue text color when focused */
+}
+
+.MuiInputLabel-root.Mui-focused {
+  font-size: 18px !important; /* Larger label font size when focused */
+  color: #ce3f3f !important; /* Red label color when focused */
+  font-weight: bolder !important;
+  border-radius: 10% !important;
+}
+
+/* Password toggle button */
+.password-toggle-button {
+  position: absolute;
+  right: 10px; /* Space from the right edge */
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bbbbbb; /* Icon color */
+}

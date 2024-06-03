@@ -1,87 +1,152 @@
+/* Global text color */
+* {
+  color: rgb(255, 255, 255);
+}
+
+/* Centering content and setting background color */
 .register-content {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Usa todo el alto de la vista para centrar el contenido */
-  background-color: #1e1e1e; /* Ajusta al color deseado */
-  padding: 16px; /* Añade padding para un pequeño margen en los lados */
-  padding-top: 72px; /* Espacio entre el header y el formulario */
+  height: 100vh;
+  background-color: #1e1e1e;
+  padding: 16px;
+  padding-top: 72px;
 }
 
+/* Container styling */
 .register-container {
   width: 100%;
-  max-width: 360px; /* Ajusta según la anchura deseada para el formulario */
-  background-color: #242424; /* Fondo del formulario */
-  color: #ffffff; /* Color de texto */
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); /* Sombra para el formulario */
-  border-radius: 12px; /* Bordes redondeados */
-  padding: 20px; /* Padding interno para espacio alrededor de los elementos del formulario */
-  text-align: center; /* Centra el contenido del formulario */
-  margin: auto; /* Centra el formulario horizontalmente */
+  max-width: 360px;
+  background-color: #014560 !important;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin: auto;
 }
 
+/* Card styling */
 .register-card {
-  background-color: transparent; /* Fondo transparente */
-  box-shadow: none; /* Sin sombra */
-  border: none; /* Sin borde */
+  background-color: transparent;
+  box-shadow: none;
+  border: none;
 }
 
+/* Avatar styling */
 .register-avatar {
-  --border-radius: 50%;
-  width: 80px; /* Ajusta el tamaño del avatar */
-  height: 80px; /* Ajusta el tamaño del avatar */
+  border-radius: 50%;
+  width: 80px;
+  height: 80px;
   display: block;
-  margin: 0 auto 20px; /* Asegura que el avatar está centrado y tiene margen */
+  margin: 0 auto 20px;
 }
 
+/* Input item styling */
 .register-item {
-  --background: #333333; /* Fondo de los campos de entrada */
-  --color: #ffffff; /* Color del texto */
-  --placeholder-color: #bbbbbb; /* Color de los placeholders */
-  --border-radius: 8px; /* Bordes redondeados para los campos de entrada */
-  --padding-start: 10px; /* Padding interno para espacio alrededor de los elementos del formulario */
-  --padding-end: 10px; /* Padding interno para espacio alrededor de los elementos del formulario */
-  margin-bottom: 16px; /* Espacio entre campos de entrada */
+  background: #ffffff !important;
+  color: #000000 !important;
+  border-radius: 8px;
+  margin-bottom: 16px;
 }
 
+/* Text Field styling for MUI components */
+.MuiOutlinedInput-root {
+  color: #000000 !important;
+}
+
+.MuiInputLabel-root {
+  color: #010000 !important;
+  font-weight: 500 !important;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #0d0000 !important;
+}
+
+/* Label styling */
 .register-label {
-  color: #bbbbbb; /* Color de las etiquetas */
-  font-size: 16px; /* Tamaño de fuente de las etiquetas */
+  color: #60adc4;
+  font-size: 16px;
 }
 
-.text-field {
-  .MuiInputBase-input {
-    color: #ffffff; /* Color del texto de entrada */
-  }
-  .MuiInputLabel-root {
-    color: #bbbbbb; /* Color de las etiquetas */
-  }
-  .MuiOutlinedInput-root {
-    &.Mui-focused fieldset {
-      border-color: #6200ea; /* Color del borde cuando está enfocado */
-    }
-  }
-  .MuiOutlinedInput-notchedOutline {
-    border-color: #555555; /* Color del borde */
+/* Input text styling */
+.text-field .MuiInputBase-input {
+  color: #000000 !important;
+}
+
+.text-field .MuiInputLabel-root {
+  color: #010000 !important;
+}
+
+.text-field .MuiOutlinedInput-root {
+  &.Mui-focused fieldset {
+    border-color: #60adc4 !important;
   }
 }
 
+.text-field .MuiOutlinedInput-notchedOutline {
+  border-color: #000000 !important;
+}
+
+/* Password container */
+.password-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Password toggle button */
+.password-toggle-button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #000000 !important;
+}
+
+/* Button styling */
 .register-button {
-  display: block; /* Asegura que el botón ocupe todo el ancho disponible */
-  width: 100%; /* Ancho completo dentro del formulario */
-  margin-top: 20px; /* Espacio antes del botón */
-  --background: #6200ea; /* Color del botón */
-  --color: #ffffff; /* Texto del botón */
-  border-radius: 8px; /* Bordes redondeados */
+  display: block;
+  width: 100%;
+  margin-top: 20px;
+  --background: #ffffff !important;
+  color: #000000 !important;
+  font-weight: 900 !important;
+  border-radius: 8px;
 }
 
+/* Secondary button styling */
 .login-button-clear {
-  color: #bbbbbb; /* Color para los botones secundarios */
-  font-weight: bold; /* Negrita para los botones secundarios */
-  margin-top: 10px; /* Espacio antes de los botones secundarios */
-  text-transform: uppercase; /* Texto en mayúsculas para botones secundarios */
+  width: 100%;
+  border: 2px solid;
+  border-radius: 25px;
+  border-color: #60adc4 !important;
+  background-color: #60adc4 !important;
+  color: #000000 !important;
+  margin-top: 10px;
+  text-transform: uppercase;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.register-footer {
-  background: none; /* Sin fondo para el pie */
+/* Spacer for layout */
+.spacer {
+  height: 50px;
+}
+
+/* Focused input styling */
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input {
+  font-size: 15px !important;
+  color: #60adc4 !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+  font-size: 18px !important;
+  color: #ce3f3f !important;
+  font-weight: bolder !important;
+  border-radius: 10% !important;
 }

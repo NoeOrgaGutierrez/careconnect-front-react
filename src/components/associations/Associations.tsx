@@ -17,7 +17,7 @@ import {
 	Card,
 	CardContent,
 	CardActions,
-	Button,
+	Button as MUIButton,
 	Typography,
 	CardMedia,
 	Grid
@@ -25,6 +25,7 @@ import {
 import { arrowBackOutline } from 'ionicons/icons'
 import axiosInstance from '../../axiosconfig'
 import { AxiosError } from 'axios'
+import LoadingSpinner from '../LoadingSpinner'
 
 interface Association {
 	id: number
@@ -49,7 +50,6 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 	const [memberCount, setMemberCount] = useState<string>('')
 
 	useEffect(() => {
-		// Carga inicial de todas las asociaciones y asociaciones del usuario
 		const fetchAssociations = async () => {
 			setLoading(true)
 			try {
@@ -176,11 +176,9 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 	}
 
 	const handleMoreInfo = (associationId: number) => {
-		// Navegar a la pantalla de detalles de la asociación
 		history.push(`/association-details/${associationId}`)
 		localStorage.setItem('association-details-id', associationId.toString())
 	}
-
 
 	return (
 		<>
@@ -191,7 +189,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 					</IonButtons>
 					<IonTitle>{name}</IonTitle>
 					<IonButtons slot='end'>
-					<IonButton onClick={() => history.replace("/")}>
+						<IonButton onClick={() => history.replace('/')}>
 							<IonIcon icon={arrowBackOutline} slot='icon-only' />
 						</IonButton>
 					</IonButtons>
@@ -217,71 +215,67 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 					Filtrar
 				</IonButton>
 				{loading ? (
-					<IonLabel>Cargando...</IonLabel>
+					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />
 				) : associations.length > 0 ? (
-					<>
-						<Grid container spacing={3}>
-							{associations.map((association) => (
-								<Grid item xs={12} sm={6} md={4} key={association.id}>
-									<Card
+					<Grid container spacing={3}>
+						{associations.map((association) => (
+							<Grid item xs={12} sm={6} md={4} key={association.id}>
+								<Card
+									style={{
+										marginBottom: '20px',
+										backgroundColor: '#1e1e1e',
+										color: '#ffffff',
+										borderRadius: '15px',
+										boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+										display: 'flex',
+										flexDirection: 'column',
+										justifyContent: 'space-between',
+										height: '100%'
+									}}>
+									<CardMedia
+										component='img'
 										style={{
-											marginBottom: '20px',
-											backgroundColor: '#1e1e1e',
-											color: '#ffffff',
-											borderRadius: '15px',
-											boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
-											display: 'flex',
-											flexDirection: 'column',
-											justifyContent: 'space-between',
-											height: '100%'
-										}}>
-										<CardMedia
-											component='img'
-											style={{
-												height: '150px',
-												objectFit: 'cover',
-												backgroundColor: '#ffffff'
-											}}
-											image={association.logo}
-											alt={`Logo of ${association.name}`}
-										/>
-										<CardContent>
-											<Typography
-												variant='h5'
-												component='div'
-												style={{ color: '#bb86fc' }}>
-												{association.name}
-											</Typography>
-											<Typography
-												variant='body2'
-												style={{ color: '#ffffff', marginBottom: '10px' }}>
-												{association.miniDescription}
-											</Typography>
-											<Typography variant='body2' style={{ color: '#e0e0e0' }}>
-												{association.description}
-											</Typography>
-										</CardContent>
-										<CardActions>
-											<Button
-												size='small'
-												style={{ color: '#bb86fc' }}
-												onClick={() => handleAssociationToggle(association.id)}>
-												{isUserInAssociation(association.id) ? 'Salirse' : 'Unirse'}
-											</Button>
-											<Button
-												size='small'
-												style={{ color: '#bb86fc' }}
-												onClick={() => handleMoreInfo(association.id)}>
-												Saber más
-											</Button>
-										</CardActions>
-									</Card>
-								</Grid>
-							))}
-						</Grid>
-						{/* Elemento vacío para el margen inferior */}
-						<div style={{ height: '50px' }}></div>
-					</>
+											height: '150px',
+											objectFit: 'cover',
+											backgroundColor: '#ffffff'
+										}}
+										image={association.logo}
+										alt={`Logo of ${association.name}`}
+									/>
+									<CardContent>
+										<Typography
+											variant='h5'
+											component='div'
+											style={{ color: '#bb86fc' }}>
+											{association.name}
+										</Typography>
+										<Typography
+											variant='body2'
+											style={{ color: '#ffffff', marginBottom: '10px' }}>
+											{association.miniDescription}
+										</Typography>
+										<Typography variant='body2' style={{ color: '#e0e0e0' }}>
+											{association.description}
+										</Typography>
+									</CardContent>
+									<CardActions>
+										<MUIButton
+											size='small'
+											style={{ color: '#bb86fc' }}
+											onClick={() => handleAssociationToggle(association.id)}>
+											{isUserInAssociation(association.id) ? 'Salirse' : 'Unirse'}
+										</MUIButton>
+										<MUIButton
+											size='small'
+											style={{ color: '#bb86fc' }}
+											onClick={() => handleMoreInfo(association.id)}>
+											Saber más
+										</MUIButton>
+									</CardActions>
+								</Card>
+							</Grid>
+						))}
+					</Grid>
 				) : (
 					<IonLabel>Ninguna asociación fue encontrada.</IonLabel>
 				)}

@@ -11,7 +11,6 @@ import {
   IonLabel,
   IonAvatar,
   IonImg,
-  IonLoading,
   IonAlert,
   IonCard,
   IonCardContent,
@@ -25,6 +24,7 @@ import axiosInstance from '../../axiosconfig';
 import { AxiosError } from 'axios';
 
 import './Login.css';
+import LoadingSpinner from '../LoadingSpinner';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -80,9 +80,9 @@ const Login: React.FC = () => {
     <IonPage>
       <IonHeader className="login-header">
         <IonToolbar>
-          <IonTitle>User Login</IonTitle>
+          <IonTitle>Inicio de Sesión</IonTitle>
           <IonButtons slot="end">
-            <IonButton onClick={() => { history.goBack(); window.location.reload(); }}>
+            <IonButton onClick={() => { history.push('/'), window.location.reload() }}>
               <IonIcon icon={arrowBackOutline} slot="icon-only" />
             </IonButton>
           </IonButtons>
@@ -98,35 +98,37 @@ const Login: React.FC = () => {
               </IonAvatar>
               <form onSubmit={handleLogin}>
                 <TextField
-                  label="Email address"
+                  label="Correo de electronico"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  variant="outlined"
+                  variant="filled"
                   fullWidth
                   className="login-item"
                   margin="normal"
                   InputLabelProps={{ className: 'login-label' }}
                 />
-                <Box display="flex" alignItems="center" marginBottom={2}>
-                  <Box flex={1}>
-                    <TextField
-                      label="Password"
-                      type={showPassword ? 'text' : 'password'}
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      variant="outlined"
-                      fullWidth
-                      className="login-item"
-                      InputLabelProps={{ className: 'login-label' }}
-                    />
-                  </Box>
-                  <IonButton fill="clear" onClick={() => setShowPassword(!showPassword)}>
+                <Box display="flex" alignItems="center" marginBottom={2} position="relative">
+                  <TextField
+                    label="Contraseña"
+                    type={showPassword ? 'text' : 'password'}
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    variant="filled"
+                    fullWidth
+                    className="login-item"
+                    InputLabelProps={{ className: 'login-label' }}
+                  />
+                  <IonButton 
+                    fill="clear" 
+                    className="eye-button" 
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
                     <IonIcon slot="icon-only" icon={showPassword ? eyeOff : eye} />
                   </IonButton>
                 </Box>
                 <IonButton type="submit" expand="block" className="login-button">
-                  Sign In
+                  Iniciar Sesión
                 </IonButton>
               </form>
             </IonCardContent>
@@ -136,19 +138,19 @@ const Login: React.FC = () => {
                 fill="clear"
                 className="login-button-clear"
                 onClick={() => history.push('/user-register')}>
-                Register
+                Registro de Usuario
               </IonButton>
               <IonButton
                 expand="block"
                 fill="clear"
                 className="login-button-clear"
                 onClick={() => history.push('/associations-login')}>
-                Association Login
+                Inicio de sesion de Asociación
               </IonButton>
             </div>
           </IonCard>
         </div>
-        {loading && <IonLoading isOpen={loading} message="Please wait..." />}
+        <LoadingSpinner isOpen={loading} imageUrl="resources\Icono.png" />
         <IonAlert
           isOpen={showAlert}
           onDidDismiss={() => setShowAlert(false)}

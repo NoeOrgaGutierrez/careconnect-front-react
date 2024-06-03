@@ -1,10 +1,11 @@
 ion-menu ion-content {
-  --background: var(--ion-item-background, var(--ion-background-color, #121212));
+  --background: var(--ion-item-background, var(--ion-background-color, #121212)) !important;
   color: #ffffff; /* Text color */
   font-family: 'Roboto', sans-serif;
 }
 
 ion-menu.md ion-content {
+  --background: var(--ion-text-color) !important;
   --padding-start: 16px;
   --padding-end: 16px;
   --padding-top: 20px;

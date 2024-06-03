@@ -35,6 +35,7 @@ import {
 	Select,
 	MenuItem
 } from '@mui/material'
+import LoadingSpinner from '../LoadingSpinner'
 
 interface Publication {
 	id: number
@@ -72,6 +73,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 	const [topicDescription, setTopicDescription] = useState<string>('')
 	const [publicationName, setPublicationName] = useState<string>('')
 	const [publicationDescription, setPublicationDescription] = useState<string>('')
+	const [loading, setLoading] = useState<boolean>(true)
 	const history = useHistory()
 
 	const handleFilter = async () => {
@@ -117,6 +119,8 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 				} else {
 					console.error('Unexpected error:', error)
 				}
+			} finally {
+				setLoading(false)
 			}
 		}
 
@@ -204,19 +208,39 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 					<IonButtons slot='start'>
 						<IonMenuButton />
 					</IonButtons>
-					<IonTitle>{name}</IonTitle>
+					<IonTitle>Comunidades</IonTitle>
 					<IonButtons slot='end'>
-					<IonButton onClick={() => history.replace("/")}>
+						<IonButton onClick={() => history.replace('/')}>
 							<IonIcon icon={arrowBackOutline} slot='icon-only' />
 						</IonButton>
 					</IonButtons>
 				</IonToolbar>
 			</IonHeader>
 			<IonContent class='ion-padding'>
-				<h1>Communities</h1>
-				<p>Connect with people like you</p>
+				<IonTitle>Filtros</IonTitle>
+				<IonList>
+					<IonItem>
+						<IonLabel position='stacked'>Filtrar por Nombre del Topico</IonLabel>
+						<IonInput
+							value={filterName}
+							placeholder='Ingrese el Nombre del Topico'
+							onIonChange={(e) => setFilterName(e.detail.value!)}
+						/>
+					</IonItem>
+					<IonItem>
+						<IonLabel position='stacked'>Filtrar por Número de Comentarios</IonLabel>
+						<IonInput
+							value={filterNumber}
+							placeholder='Ingrese el Número de Comentarios'
+							onIonChange={(e) => setFilterNumber(e.detail.value!)}
+						/>
+					</IonItem>
+					<IonButton expand='full' onClick={handleFilter}>
+						Aplicar Filtro
+					</IonButton>
+				</IonList>
 				<IonButton expand='full' onClick={() => setShowTopicModal(true)}>
-					Create Topic
+					Crear Topico
 				</IonButton>
 				<IonButton
 					expand='full'
@@ -225,30 +249,12 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 						fetchTopics()
 					}}
 				>
-					Create Community
+					Crear Comunidad
 				</IonButton>
-				<IonList>
-					<IonItem>
-						<IonLabel position='stacked'>Filter by Topic Name</IonLabel>
-						<IonInput
-							value={filterName}
-							placeholder='Enter Topic Name'
-							onIonChange={(e) => setFilterName(e.detail.value!)}
-						/>
-					</IonItem>
-					<IonItem>
-						<IonLabel position='stacked'>Filter by Comment Count</IonLabel>
-						<IonInput
-							value={filterNumber}
-							placeholder='Enter Comment Count'
-							onIonChange={(e) => setFilterNumber(e.detail.value!)}
-						/>
-					</IonItem>
-					<IonButton expand='full' onClick={handleFilter}>
-						Apply Filter
-					</IonButton>
-				</IonList>
-				{filteredPublications.length > 0 ? (
+
+				{loading ? (
+					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />
+				) : filteredPublications.length > 0 ? (
 					filteredPublications.map((publication) => (
 						<IonCard key={publication.id}>
 							<IonCardHeader>
@@ -288,90 +294,161 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 								style={{ float: 'right' }}
 								onClick={() => handleViewPost(publication.id)}
 							>
-								VIEW POST
+									VER POST
 							</IonButton>
 						</IonCard>
 					))
 				) : (
-					<IonLabel>No communities found with the applied filters.</IonLabel>
+					<IonLabel>No se encontraron comunidades con los filtros aplicados.</IonLabel>
 				)}
 
-				<Dialog open={showTopicModal} onClose={() => setShowTopicModal(false)}>
-					<DialogTitle>Create Topic</DialogTitle>
+				<Dialog
+					open={showTopicModal}
+					onClose={() => setShowTopicModal(false)}
+					PaperProps={{
+						style: {
+							backgroundColor: '#333',
+							color: 'white'
+						}
+					}}
+				>
+					<DialogTitle style={{ color: 'white' }}>Crear Topico</DialogTitle>
 					<DialogContent>
 						<TextField
 							autoFocus
 							margin='dense'
-							label='Topic Name'
+							label='Nombre del Topico'
 							type='text'
 							fullWidth
 							value={topicName}
 							onChange={(e) => setTopicName(e.target.value)}
+							InputProps={{
+								style: {
+									color: 'white'
+								}
+							}}
+							InputLabelProps={{
+								style: {
+									color: 'white'
+								}
+							}}
 						/>
 						<TextField
 							margin='dense'
-							label='Topic Description'
+							label='Descripción del Topico'
 							type='text'
 							fullWidth
 							multiline
 							rows={4}
 							value={topicDescription}
 							onChange={(e) => setTopicDescription(e.target.value)}
+							InputProps={{
+								style: {
+									color: 'white'
+								}
+							}}
+							InputLabelProps={{
+								style: {
+									color: 'white'
+								}
+							}}
 						/>
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={() => setShowTopicModal(false)} color='primary'>
-							Cancel
+							Cancelar
 						</Button>
 						<Button onClick={handleCreateTopic} color='primary'>
-							Create Topic
+							Crear Topico
 						</Button>
 					</DialogActions>
 				</Dialog>
 
-				<Dialog open={showCreateModal} onClose={() => setShowCreateModal(false)}>
-					<DialogTitle>Create Community</DialogTitle>
+				<Dialog
+					open={showCreateModal}
+					onClose={() => setShowCreateModal(false)}
+					PaperProps={{
+						style: {
+							backgroundColor: '#333',
+							color: 'white'
+						}
+					}}
+				>
+					<DialogTitle style={{ color: 'white' }}>Crear Comunidad</DialogTitle>
 					<DialogContent>
 						<Select
 							fullWidth
 							value={selectedTopic}
 							onChange={(e) => setSelectedTopic(e.target.value as number)}
 							displayEmpty
+							inputProps={{
+								style: {
+									color: 'white'
+								}
+							}}
+							MenuProps={{
+								PaperProps: {
+									style: {
+										backgroundColor: '#333',
+										color: 'white'
+									}
+								}
+							}}
 						>
 							<MenuItem value='' disabled>
-								Select Topic
+								<span style={{ color: 'white' }}>Seleccionar Topico</span>
 							</MenuItem>
 							{topics.map((topic) => (
-								<MenuItem key={topic.id} value={topic.id}>
+								<MenuItem key={topic.id} value={topic.id} style={{ color: 'white' }}>
 									{topic.name}
 								</MenuItem>
 							))}
 						</Select>
 						<TextField
 							margin='dense'
-							label='Publication Name'
+							label='Nombre de la Publicación'
 							type='text'
 							fullWidth
 							value={publicationName}
 							onChange={(e) => setPublicationName(e.target.value)}
+							InputProps={{
+								style: {
+									color: 'white'
+								}
+							}}
+							InputLabelProps={{
+								style: {
+									color: 'white'
+								}
+							}}
 						/>
 						<TextField
 							margin='dense'
-							label='Publication Description'
+							label='Descripción de la Publicación'
 							type='text'
 							fullWidth
 							multiline
 							rows={4}
 							value={publicationDescription}
 							onChange={(e) => setPublicationDescription(e.target.value)}
+							InputProps={{
+								style: {
+									color: 'white'
+								}
+							}}
+							InputLabelProps={{
+								style: {
+									color: 'white'
+								}
+							}}
 						/>
 					</DialogContent>
 					<DialogActions>
 						<Button onClick={() => setShowCreateModal(false)} color='primary'>
-							Cancel
+							Cancelar
 						</Button>
 						<Button onClick={handleCreateCommunity} color='primary'>
-							Create Community
+							Crear Comunidad
 						</Button>
 					</DialogActions>
 				</Dialog>

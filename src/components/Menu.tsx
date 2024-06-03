@@ -29,19 +29,19 @@ interface AppPage {
 
 const appPages: AppPage[] = [
   {
-    title: 'Profile',
+    title: 'Perfil',
     url: '/',
     iosIcon: homeOutline,
     mdIcon: homeOutline,
   },
   {
-    title: 'Communities',
+    title: 'Comunidades',
     url: '/communities',
     iosIcon: chatbubbleOutline,
     mdIcon: chatbubbleOutline,
   },
   {
-    title: 'Associations',
+    title: 'Asociaciones',
     url: '/associations',
     iosIcon: heartOutline,
     mdIcon: heartSharp,
@@ -60,7 +60,7 @@ const Menu: React.FC = () => {
       <IonContent>
         <IonList id='options'>
           <IonListHeader>CareConnect</IonListHeader>
-          <IonNote>Connect with others like you</IonNote>
+          <IonNote>Conecta con otros como tú</IonNote>
           {appPages.map((appPage, index) => (
             <IonMenuToggle key={index} autoHide={false}>
               <IonItem

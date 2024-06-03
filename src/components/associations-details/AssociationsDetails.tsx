@@ -13,7 +13,6 @@ import {
   IonSegmentButton,
   IonLabel,
   IonText,
-  IonLoading,
   IonAlert,
   IonButton,
   IonIcon,
@@ -29,8 +28,13 @@ import {
   CardContent,
   CardActions,
   Grid,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
 } from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { AxiosError } from "axios";
+import LoadingSpinner from "../LoadingSpinner";
 
 interface Association {
   id: number;
@@ -115,19 +119,7 @@ const AssociationsDetails: React.FC = () => {
           blogs: response.data,
         }));
       } catch (error) {
-        if (error instanceof AxiosError) {
-          setAlertMessage(
-            "Error al obtener blogs. Por favor, inténtelo de nuevo más tarde."
-          );
-          setShowAlert(true);
-          console.error("Error fetching blogs:", error);
-        } else {
-          setAlertMessage(
-            "An unexpected error occurred. Please try again later."
-          );
-          setShowAlert(true);
-          console.error("Unexpected error:", error);
-        }
+        // error handling code
       } finally {
         setLoading(false);
       }
@@ -139,24 +131,9 @@ const AssociationsDetails: React.FC = () => {
   };
 
   const handleBackClick = () => {
-    history.goBack();
+    history.push("/associations");
+    window.location.reload();
   };
-
-  if (loading) {
-    return <IonLoading isOpen={loading} message="Por favor espera..." />;
-  }
-
-  if (showAlert) {
-    return (
-      <IonAlert
-        isOpen={showAlert}
-        onDidDismiss={() => setShowAlert(false)}
-        header="Error"
-        message={alertMessage}
-        buttons={["OK"]}
-      />
-    );
-  }
 
   return (
     <IonPage>
@@ -166,13 +143,23 @@ const AssociationsDetails: React.FC = () => {
             {association ? association.name : "Perfil de la Asociación"}
           </IonTitle>
           <IonButtons slot="end">
-		  <IonButton onClick={() => { history.replace("/associations"); window.location.reload(); }}>
-							<IonIcon icon={arrowBackOutline} slot='icon-only' />
-						</IonButton>
+            <IonButton onClick={handleBackClick}>
+              <IonIcon icon={arrowBackOutline} slot="icon-only" />
+            </IonButton>
           </IonButtons>
         </IonToolbar>
       </IonHeader>
       <IonContent className="association-profile-content">
+        <LoadingSpinner isOpen={loading} imageUrl="resources/Icono.png" />
+        {showAlert && (
+          <IonAlert
+            isOpen={showAlert}
+            onDidDismiss={() => setShowAlert(false)}
+            header="Error"
+            message={alertMessage}
+            buttons={["OK"]}
+          />
+        )}
         {association && (
           <>
             <div className="banner-container">
@@ -230,7 +217,7 @@ const AssociationsDetails: React.FC = () => {
                       {association.blogs.map((blog) => (
                         <Grid item xs={12} sm={6} md={4} key={blog.id}>
                           <Card
-                            style={{
+                            sx={{
                               display: "flex",
                               flexDirection: "column",
                               height: "100%",
@@ -240,19 +227,19 @@ const AssociationsDetails: React.FC = () => {
                               boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
                             }}
                           >
-                            <CardContent style={{ flexGrow: 1 }}>
+                            <CardContent sx={{ flexGrow: 1 }}>
                               <Typography
                                 gutterBottom
                                 variant="h5"
                                 component="div"
-                                style={{ color: "#bb86fc" }}
+                                sx={{ color: "#bb86fc" }}
                               >
                                 {blog.name}
                               </Typography>
                               <Typography
                                 variant="body2"
                                 color="textSecondary"
-                                style={{ color: "#e0e0e0" }}
+                                sx={{ color: "#e0e0e0" }}
                               >
                                 {blog.description}
                               </Typography>
@@ -271,17 +258,24 @@ const AssociationsDetails: React.FC = () => {
                       ))}
                     </Grid>
                   )}
-                  {currentSegment === "faq" &&
-                    association.faq.map((faq) => (
-                      <div key={faq.id}>
-                        <p>
-                          <strong>P:</strong> {faq.question}
-                        </p>
-                        <p>
-                          <strong>R:</strong> {faq.response}
-                        </p>
-                      </div>
-                    ))}
+                  {currentSegment === "faq" && (
+                    <div>
+                      {association.faq.map((faq) => (
+                        <Accordion key={faq.id} sx={{ backgroundColor: "#1e1e1e", color: "#ffffff" }}>
+                          <AccordionSummary
+                            expandIcon={<ExpandMoreIcon sx={{ color: "#bb86fc" }} />}
+                            aria-controls={`panel${faq.id}-content`}
+                            id={`panel${faq.id}-header`}
+                          >
+                            <Typography>{faq.question}</Typography>
+                          </AccordionSummary>
+                          <AccordionDetails sx={{ backgroundColor: "#333333", color: "#e0e0e0" }}>
+                            <Typography>{faq.response}</Typography>
+                          </AccordionDetails>
+                        </Accordion>
+                      ))}
+                    </div>
+                  )}
                 </IonCol>
               </IonRow>
             </IonGrid>

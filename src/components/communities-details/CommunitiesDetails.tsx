@@ -34,6 +34,7 @@ import {
 } from '@mui/material'
 import axiosInstance from '../../axiosconfig'
 import { AxiosError } from 'axios'
+import LoadingSpinner from '../LoadingSpinner'
 import './CommunitiesDetails.css'
 
 interface Comment {
@@ -77,6 +78,7 @@ const CommunitiesDetails: React.FC = () => {
 	const [comments, setComments] = useState<Comment[]>([])
 	const [showDialog, setShowDialog] = useState<boolean>(false)
 	const [replyToComment, setReplyToComment] = useState<Comment | null>(null)
+	const [loading, setLoading] = useState<boolean>(true)
 
 	useEffect(() => {
 		const userId = localStorage.getItem('memberId')
@@ -106,6 +108,9 @@ const CommunitiesDetails: React.FC = () => {
 					} else {
 						console.error('Unexpected error:', error)
 					}
+				})
+				.finally(() => {
+					setLoading(false)
 				})
 		}
 	}, [id])
@@ -183,7 +188,7 @@ const CommunitiesDetails: React.FC = () => {
 							setShowDialog(true)
 						}}>
 						<IonIcon icon={chatboxOutline} slot='start' />
-						Reply
+						Responder
 					</IonButton>
 					{comment.comments &&
 						comment.comments.length > 0 &&
@@ -209,32 +214,43 @@ const CommunitiesDetails: React.FC = () => {
 				</IonToolbar>
 			</IonHeader>
 			<IonContent className='content-with-extra-padding'>
-				{publication && (
-					<IonCard className='publication-card'>
-						<IonCardHeader>
-							<IonChip className='publication-chip'>
-								<IonAvatar>
-									<img
-										alt='User Avatar'
-										src={publication.user.avatar || 'https://via.placeholder.com/150'}
-									/>
-								</IonAvatar>
-								<IonLabel>
-									{publication.user.name} {publication.user.surname}
-								</IonLabel>
-							</IonChip>
-							<IonCardTitle>{publication.name}</IonCardTitle>
-							<IonCardSubtitle>r/{publication.topic.name}</IonCardSubtitle>
-						</IonCardHeader>
-						<IonCardContent>{publication.description}</IonCardContent>
-					</IonCard>
+				{loading ? (
+					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />
+				) : (
+					<>
+						{publication && (
+							<IonCard className='publication-card'>
+								<IonCardHeader>
+									<IonChip className='publication-chip'>
+										<IonAvatar>
+											<img
+												alt='User Avatar'
+												src={publication.user.avatar || 'https://via.placeholder.com/150'}
+											/>
+										</IonAvatar>
+										<IonLabel>
+											{publication.user.name} {publication.user.surname}
+										</IonLabel>
+									</IonChip>
+									<IonCardTitle>{publication.name}</IonCardTitle>
+									<IonCardSubtitle>r/{publication.topic.name}</IonCardSubtitle>
+								</IonCardHeader>
+								<IonCardContent>{publication.description}</IonCardContent>
+							</IonCard>
+						)}
+						<div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
+							<IonButton onClick={() => setShowDialog(true)} color='primary'>
+							Añadir Comentario
+							</IonButton>
+						</div>
+						<IonList>{renderComments(comments)}</IonList>
+						<div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
+							<IonButton onClick={() => setShowDialog(true)} color='primary'>
+								Añadir Comentario
+							</IonButton>
+						</div>
+					</>
 				)}
-				<IonList>{renderComments(comments)}</IonList>
-				<div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
-					<IonButton onClick={() => setShowDialog(true)} color='primary'>
-						Add Comment
-					</IonButton>
-				</div>
 				<div style={{ height: '60px' }}></div>
 				<Dialog
 					open={showDialog}
@@ -243,21 +259,37 @@ const CommunitiesDetails: React.FC = () => {
 						setReplyToComment(null)
 					}}
 					fullWidth
-					maxWidth='sm'>
-					<DialogTitle>
-						{replyToComment ? 'Reply to Comment' : 'Add Comment'}
+					maxWidth='sm'
+					PaperProps={{
+						style: {
+							backgroundColor: '#333',
+							color: 'white'
+						}
+					}}>
+					<DialogTitle style={{ color: 'white' }}>
+						{replyToComment ? 'Responder a Comentario' : 'Añadir Comentario'}
 					</DialogTitle>
 					<DialogContent>
 						<TextField
 							autoFocus
 							margin='dense'
-							label='Comment'
+							label='Comentario'
 							type='text'
 							fullWidth
 							multiline
 							rows={4}
 							value={newComment}
 							onChange={(e) => setNewComment(e.target.value)}
+							InputProps={{
+								style: {
+									color: 'white'
+								}
+							}}
+							InputLabelProps={{
+								style: {
+									color: 'white'
+								}
+							}}
 						/>
 					</DialogContent>
 					<DialogActions>
@@ -267,10 +299,10 @@ const CommunitiesDetails: React.FC = () => {
 								setReplyToComment(null)
 							}}
 							color='primary'>
-							Cancel
+							Cancelar
 						</Button>
 						<Button onClick={handleAddComment} color='primary'>
-							{replyToComment ? 'Reply' : 'Post'}
+							{replyToComment ? 'Responder' : 'Añadir'}
 						</Button>
 					</DialogActions>
 				</Dialog>

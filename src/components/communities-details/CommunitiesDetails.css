@@ -20,6 +20,14 @@
   margin-left: 40px;
 }
 
+.comment-level-3 {
+  margin-left: 50px;
+}
+
+.comment-level-4 {
+  margin-left: 60px;
+}
+
 /* Añade más niveles si es necesario */
 
 .content-with-extra-padding {

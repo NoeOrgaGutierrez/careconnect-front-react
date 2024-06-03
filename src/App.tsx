@@ -103,7 +103,10 @@ const App: React.FC = () => {
           </IonSplitPane>
         ) : (
           <IonRouterOutlet>
-            <Route path="/" exact={true}>
+            <Route path="/" exact={true} component={Landing}>
+              <Landing />
+            </Route>
+            <Route path="/Landing" exact={true} component={Landing}>
               <Landing />
             </Route>
             <Route path="/login" exact={true}>

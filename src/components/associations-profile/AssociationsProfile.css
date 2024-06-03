@@ -1,46 +1,55 @@
 .association-profile-content {
-  --background: #1e1e1e; /* Fondo oscuro para el contenido */
-  color: #ffffff; /* Color del texto */
+  --background: #1e1e1e;
+  color: #ffffff;
+  padding-top: 20px;
 }
 
 .banner-container {
-  background-color: #ffffff; /* Fondo blanco para el contenedor del banner */
+  width: calc(100% - 40px);
+  max-width: 1152px;
+  height: 200px;
+  margin: 20px auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  border: 5px solid #ffffff;
+  position: relative;
 }
 
 .association-banner {
   width: 100%;
-  height: auto; /* Asegura que la altura se ajuste automáticamente */
-  background-color: #ffffff; /* Fondo blanco para el banner */
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .association-avatar-container {
-  background-color: #ffffff; /* Fondo blanco para el contenedor del avatar */
+  background-color: #ffffff;
   display: inline-block;
   padding: 10px;
-  border-radius: 50%; /* Bordes redondeados */
-  margin-top: -50px; /* Superposición del avatar sobre el banner */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto flotante */
-  overflow: hidden; /* Recorta cualquier contenido que sobresalga */
+  border-radius: 50%;
+  margin-top: -50px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .association-avatar {
   width: 100px;
   height: 100px;
-  border-radius: 50%; /* Bordes redondeados para la imagen del avatar */
-  object-fit: cover; /* Asegura que la imagen cubra completamente el área del contenedor */
+  border-radius: 50%;
+  object-fit: cover;
 }
 
 .association-name, .association-meta {
   display: block;
   margin-top: 5px;
-  text-align: center; /* Alineación central */
+  text-align: center;
 }
 
 .association-name {
   font-size: 24px;
   font-weight: bold;
-  color: #ffffff; /* Color del texto del nombre */
-  margin-bottom: 10px; /* Espacio entre el nombre y los detalles */
+  color: #ffffff;
+  margin-bottom: 10px;
 }
 
 .association-meta {
@@ -67,34 +76,82 @@
 }
 
 .ion-segment-button {
-  --background: #444444; /* Fondo para el botón de segmento */
-  --color-checked: #ffffff; /* Color del texto cuando está seleccionado */
+  --background: #444444;
+  --color-checked: #ffffff;
 }
 
-
-/* Establece el color de fondo general y el color del texto */
-.association-profile-content {
-  color: #333; /* Cambio de color de texto a más oscuro para mejor contraste */
-  padding-top: 20px; /* Añade un espacio en la parte superior del contenido */
+.faq-list {
+  padding: 15px;
 }
 
-/* Estilos del contenedor del banner con margen y sombra */
-.banner-container {
-  width: calc(100% - 40px); /* Calcula el ancho con un margen total horizontal de 40px */
-  max-width: 1152px; /* Máximo ancho del banner para evitar que se extienda demasiado en pantallas grandes */
-  height: 200px; /* Altura fija más pequeña para controlar el estiramiento */
-  margin: 20px auto; /* Centra el banner horizontalmente con un margen superior */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra sutil para dar profundidad */
-  overflow: hidden; /* Oculta cualquier parte de la imagen que exceda el tamaño del contenedor */
-  border: 5px solid #ffffff; /* Borde blanco para destacar el banner */
-  position: relative; /* Posicionamiento relativo para elementos internos */
+.faq-item {
+  background-color: #2b2b2b;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 10px;
 }
 
-/* Estilos de la imagen del banner para asegurar cobertura completa */
-.association-banner {
-  width: 100%; /* Ancho completo para cubrir el contenedor */
-  height: 100%; /* Altura completa para cubrir el contenedor */
-  object-fit: cover; /* Asegura que la imagen cubra el espacio disponible sin deformarse */
-  object-position: center; /* Centra la imagen dentro del contenedor */
+.faq-question {
+  color: #ffffff;
 }
 
+.faq-answer {
+  color: #dddddd;
+}
+
+.members-list {
+  padding: 15px;
+}
+
+.member-card {
+  background-color: #2b2b2b !important;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.member-name {
+  color: #ffffff !important;
+}
+
+.member-email {
+  color: #dddddd;
+}
+
+.association-blogs {
+  margin-top: 20px !important;
+
+  display: flex !important;
+}
+
+.create-blog-button{
+  margin-top: 20px !important;
+  justify-content: center !important;
+}
+
+.blog-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: #2b2b2b !important;
+  color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.blog-card-content {
+  flex-grow: 1;
+}
+
+.blog-card-title {
+  color: #ffffff;
+}
+
+.blog-card-description {
+  color: #bbbbbb !important;
+}
+
+.blog-card-actions {
+  display: flex;
+  justify-content: space-between;
+}

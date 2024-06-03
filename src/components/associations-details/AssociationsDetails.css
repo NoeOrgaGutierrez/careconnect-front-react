@@ -71,13 +71,6 @@
   --color-checked: #ffffff; /* Color del texto cuando está seleccionado */
 }
 
-
-/* Establece el color de fondo general y el color del texto */
-.association-profile-content {
-  color: #333; /* Cambio de color de texto a más oscuro para mejor contraste */
-  padding-top: 20px; /* Añade un espacio en la parte superior del contenido */
-}
-
 /* Estilos del contenedor del banner con margen y sombra */
 .banner-container {
   width: calc(100% - 40px); /* Calcula el ancho con un margen total horizontal de 40px */
@@ -97,4 +90,3 @@
   object-fit: cover; /* Asegura que la imagen cubra el espacio disponible sin deformarse */
   object-position: center; /* Centra la imagen dentro del contenedor */
 }
-

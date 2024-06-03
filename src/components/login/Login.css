@@ -1,3 +1,4 @@
+/* Global text color */
 * {
   color: rgb(255, 255, 255);
 }
@@ -32,7 +33,7 @@
   border: none;
 }
 
-.button-native{
+.button-native {
   background-color: #60adc4 !important;
 }
 
@@ -53,15 +54,16 @@
 }
 
 .MuiOutlinedInput-root {
-  color: #60adc4; /* Input text color */
+  color: #000000 !important; /* Input text color */
 }
 
 .MuiInputLabel-root {
-  color: #60adc4; /* Input label color */
+  color: #010000 !important; /* Input label color */
+  font-weight: 500 !important;
 }
 
 .MuiOutlinedInput-notchedOutline {
-  border-color: #60adc4; /* Input border color */
+  border-color: #0d0000 !important; /* Input border color */
 }
 
 /* Label styling */
@@ -82,7 +84,7 @@
   width: 100%;
   margin-top: 20px;
   --background: #ffffff !important;
-  color: #000000  !important;
+  color: #000000 !important;
   font-weight: 900 !important;
   border-radius: 8px;
 }
@@ -92,7 +94,7 @@
   border: 2px solid;
   border-radius: 25px; /* Border radius for rounded corners */
   border-color: #60adc4 !important;
-  background-color: #60adc4!important;
+  background-color: #60adc4 !important;
   color: #000000 !important;
   margin-top: 10px;
   text-transform: uppercase;
@@ -118,4 +120,26 @@
 
 .spacer {
   height: 50px;
+}
+
+/* Focused input styling */
+.MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input {
+  font-size: 15px !important; 
+  color: #60adc4 !important;
+}
+
+.MuiInputLabel-root.Mui-focused {
+  font-size: 18px !important; 
+  color: #ce3f3f !important;
+  font-weight: bolder !important;
+  border-radius: 10% !important;
+}
+
+/* Eye button styling */
+.eye-button {
+  position: absolute;
+  right: 10px;
+  color: #000000 !important; /* Adjust the color as needed for visibility */
+  top: 50%;
+  transform: translateY(-50%);
 }
