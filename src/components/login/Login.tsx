@@ -82,7 +82,7 @@ const Login: React.FC = () => {
         <IonToolbar>
           <IonTitle>User Login</IonTitle>
           <IonButtons slot="end">
-            <IonButton onClick={() => history.goBack()}>
+            <IonButton onClick={() => { history.goBack(); window.location.reload(); }}>
               <IonIcon icon={arrowBackOutline} slot="icon-only" />
             </IonButton>
           </IonButtons>
@@ -94,7 +94,7 @@ const Login: React.FC = () => {
           <IonCard className="login-card">
             <IonCardContent>
               <IonAvatar className="login-avatar">
-                <IonImg src="../../../resources/logo.png" />
+                <IonImg src="resources\Logo.png" />
               </IonAvatar>
               <form onSubmit={handleLogin}>
                 <TextField

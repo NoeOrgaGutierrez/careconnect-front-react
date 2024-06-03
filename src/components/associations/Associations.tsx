@@ -181,10 +181,6 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 		localStorage.setItem('association-details-id', associationId.toString())
 	}
 
-	const handleViewBlogs = (associationId: number) => {
-		// Implementa la lógica para manejar la navegación o mostrar los blogs de la asociación
-		console.log(`View blogs for association ${associationId}`)
-	}
 
 	return (
 		<>
@@ -277,12 +273,6 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 												style={{ color: '#bb86fc' }}
 												onClick={() => handleMoreInfo(association.id)}>
 												Saber más
-											</Button>
-											<Button
-												size='small'
-												style={{ color: '#bb86fc' }}
-												onClick={() => handleViewBlogs(association.id)}>
-												Blogs
 											</Button>
 										</CardActions>
 									</Card>

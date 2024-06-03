@@ -77,7 +77,8 @@ const Landing: React.FC = () => {
           <Typography variant="h5" paragraph sx={{ marginTop: '30px' }}>
             Connecting you with the best healthcare professionals.
           </Typography>
-          <Button variant="contained" color="primary" className="get-started">
+          <Button variant="contained" color="primary" className="get-started"
+            component={IonRouterLink} routerLink="/user-register">
             <div>Get Started</div>
           </Button>
         </HeroSection>

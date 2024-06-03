@@ -274,19 +274,6 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 							  </IonCard>
 						  </IonCol>
 					  </IonRow>
-					  <IonRow>
-						  <IonCol size='12'>
-							  <IonCard>
-								  <IonCardHeader>
-									  <IonCardTitle>Calendar</IonCardTitle>
-								  </IonCardHeader>
-								  <IonCardContent>
-									  {/* Aquí podrías insertar un componente de calendario */}
-									  <p>Calendar component placeholder</p>
-								  </IonCardContent>
-							  </IonCard>
-						  </IonCol>
-					  </IonRow>
 					  {associations.length > 0 && (
 						  <IonRow>
 							  <IonCol size='12'>
@@ -323,7 +310,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 																	  onClick={() => handleLeaveAssociation(assoc.association.id)}>
 																	  Leave
 																  </IonButton>
-																  <IonButton fill='outline' size='small'>
+																  <IonButton fill='outline' size='small' onClick={() => history.push(`/association-details/${assoc.association.id}`)}>
 																	  Know more
 																  </IonButton>
 															  </IonCardContent>
