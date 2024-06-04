@@ -7,3 +7,28 @@
     object-fit: contain;
   }
   
+  .recent-activity-content{
+    background-color: #347ec7 !important;
+  }
+  .leave-button{
+    --ion-color-contrast: #fff !important;
+    --background: #db2626 !important;
+  }
+
+  .know-more-button{
+    --ion-color-contrast: #fff !important;
+    --background: #235485 !important;
+    border: "2px solid #28629c" ;
+    border-color: "#28629c" !important;
+    
+  }
+
+  .association-title{
+    color: #85b0ff;
+    font-weight: bolder;
+  }
+
+  .association-text{
+    color: #d8dfe5;
+    font-weight: bold;
+  }

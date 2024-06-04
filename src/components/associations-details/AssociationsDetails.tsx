@@ -215,8 +215,8 @@ const AssociationsDetails: React.FC = () => {
                   {currentSegment === "blogs" && (
                     <Grid container spacing={3}>
                       {association.blogs.map((blog) => (
-                        <Grid item xs={12} sm={6} md={4} key={blog.id}>
-                          <Card
+                        <Grid item xs={12} sm={6} md={4} key={blog.id} >
+                          <Card style={{ border: '2px solid #265c91 ', borderRadius: '10px' }}
                             sx={{
                               display: "flex",
                               flexDirection: "column",

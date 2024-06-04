@@ -68,7 +68,7 @@
   
   /* Dark Theme */
   body.dark {
-    --ion-background-color: ;
+    --ion-background-color: #2b2f3f;
     --ion-background-color-rgb: 18, 18, 18;
   
     --ion-text-color: #0b0a0a;

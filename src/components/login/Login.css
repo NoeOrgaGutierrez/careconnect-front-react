@@ -17,7 +17,7 @@
 .login-container {
   width: 100%;
   max-width: 360px;
-  background-color: #014560 !important;
+  background-color: #0d84d3 !important;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
@@ -28,13 +28,12 @@
 
 /* Card styling */
 .login-card {
-  background-color: transparent;
   box-shadow: none;
   border: none;
 }
 
 .button-native {
-  background-color: #60adc4 !important;
+  background-color: #1976d2 !important;
 }
 
 /* Avatar styling */
@@ -92,10 +91,10 @@
 /* Secondary button styling */
 .login-button-clear {
   border: 2px solid;
-  border-radius: 25px; /* Border radius for rounded corners */
-  border-color: #60adc4 !important;
-  background-color: #60adc4 !important;
-  color: #000000 !important;
+  border-radius: 25px; /* Border radius for rounded corners*/
+  border-color: #347ec7 !important;
+  background-color: #0b58a5 !important;
+  color: #ffffff !important;
   margin-top: 10px;
   text-transform: uppercase;
   padding: 10px 20px; /* Added padding for a better look */
@@ -135,6 +134,10 @@
   border-radius: 10% !important;
 }
 
+.button-native{
+  color: #000000 !important;
+  background-color: #60adc4 !important;
+}
 /* Eye button styling */
 .eye-button {
   position: absolute;

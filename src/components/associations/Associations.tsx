@@ -187,7 +187,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 					<IonButtons slot='start'>
 						<IonMenuButton />
 					</IonButtons>
-					<IonTitle>{name}</IonTitle>
+					<IonTitle>Asociaciones</IonTitle>
 					<IonButtons slot='end'>
 						<IonButton onClick={() => history.replace('/')}>
 							<IonIcon icon={arrowBackOutline} slot='icon-only' />
@@ -211,9 +211,10 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 						onIonChange={(e) => setMemberCount(e.detail.value!)}
 					/>
 				</IonItem>
-				<IonButton expand='block' onClick={handleFilterChange}>
+				<IonButton className='community-button-caracteristics' expand='block' onClick={handleFilterChange}>
 					Filtrar
 				</IonButton>
+				<div style={{ height: '10px' }}></div>
 				{loading ? (
 					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />
 				) : associations.length > 0 ? (
@@ -279,6 +280,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 				) : (
 					<IonLabel>Ninguna asociación fue encontrada.</IonLabel>
 				)}
+				<div style={{ height: '100px' }}></div>
 			</IonContent>
 		</>
 	)

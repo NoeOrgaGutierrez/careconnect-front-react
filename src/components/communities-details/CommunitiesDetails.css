@@ -40,3 +40,7 @@
   height: 200px; /* Aumenta el valor para más espacio */
   background: transparent;
 }
+
+.add-comment{
+  --background: #030615 !important;
+}

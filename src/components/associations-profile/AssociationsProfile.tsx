@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   IonPage,
   IonContent,
@@ -16,10 +16,11 @@ import {
   IonAlert,
   IonButton,
   IonIcon,
-  IonButtons
-} from '@ionic/react';
-import { arrowBackOutline, arrowUndoOutline } from 'ionicons/icons';
-import { useParams, useHistory } from 'react-router-dom';
+  IonButtons,
+} from "@ionic/react";
+import { arrowBackOutline } from "ionicons/icons";
+import { useParams, useHistory } from "react-router-dom";
+import axiosInstance from "../../axiosconfig";
 import {
   Button,
   Typography,
@@ -27,17 +28,19 @@ import {
   CardContent,
   CardActions,
   Grid,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
   Dialog,
   DialogTitle,
   DialogContent,
   DialogActions,
-  TextField
-} from '@mui/material';
-import axiosInstance from '../../axiosconfig';
-import { AxiosError } from 'axios';
-
-import './AssociationsProfile.css';
-import LoadingSpinner from '../LoadingSpinner';
+  TextField,
+} from "@mui/material";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { AxiosError } from "axios";
+import LoadingSpinner from "../LoadingSpinner";
+import "./AssociationsProfile.css";
 
 interface Association {
   id: number;
@@ -78,32 +81,35 @@ const AssociationProfile: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const history = useHistory();
   const [association, setAssociation] = useState<Association | null>(null);
-  const [currentSegment, setCurrentSegment] = useState('inicio');
+  const [currentSegment, setCurrentSegment] = useState("inicio");
   const [loading, setLoading] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [alertMessage, setAlertMessage] = useState('');
+  const [alertMessage, setAlertMessage] = useState("");
   const [dialogOpen, setDialogOpen] = useState(false);
-  const [newBlogName, setNewBlogName] = useState('');
-  const [newBlogDescription, setNewBlogDescription] = useState('');
+  const [newBlogName, setNewBlogName] = useState("");
+  const [newBlogDescription, setNewBlogDescription] = useState("");
 
   useEffect(() => {
     const fetchAssociation = async () => {
-      const associationId = localStorage.getItem('associationId');
+      let id = localStorage.getItem("association-details-id");
       setLoading(true);
       try {
-        const response = await axiosInstance.get(
-          `/association/findOne/${associationId}`
-        );
+        const response = await axiosInstance.get(`/association/findOne/${id}`);
         setAssociation(response.data);
       } catch (error) {
         if (error instanceof AxiosError) {
-          setAlertMessage('Error fetching association data. Please try again later.');
-          console.error('Error fetching association data:', error.message);
+          setAlertMessage(
+            "Error al obtener datos de la asociación. Por favor, inténtelo de nuevo más tarde."
+          );
+          setShowAlert(true);
+          console.error("Error fetching association data:", error);
         } else {
-          setAlertMessage('An unexpected error occurred. Please try again later.');
-          console.error('Unexpected error:', error);
+          setAlertMessage(
+            "An unexpected error occurred. Please try again later."
+          );
+          setShowAlert(true);
+          console.error("Unexpected error:", error);
         }
-        setShowAlert(true);
       } finally {
         setLoading(false);
       }
@@ -112,16 +118,23 @@ const AssociationProfile: React.FC = () => {
     fetchAssociation();
   }, [id]);
 
-  const deleteAssociation = () => {
-    localStorage.removeItem('associationId');
-    history.push('/associations-login');
-    window.location.reload();
-  };
-
-  const handleSegmentChange = (value: string) => {
+  const handleSegmentChange = async (value: string) => {
     setCurrentSegment(value);
+    if (value === "blogs") {
+      try {
+        setLoading(true);
+        const response = await axiosInstance.get(`/blog/association/${id}`);
+        setAssociation((prev) => ({
+          ...prev!,
+          blogs: response.data,
+        }));
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
   };
-
 
   const handleCreateBlog = async () => {
     if (!newBlogName || !newBlogDescription || !association) return;
@@ -131,31 +144,38 @@ const AssociationProfile: React.FC = () => {
       description: newBlogDescription,
       association: { id: association.id },
       blogComments: [],
-      pins: []
     };
 
     try {
       setLoading(true);
-      const response = await axiosInstance.post('/blog', newBlog);
+      const response = await axiosInstance.post("/blog", newBlog);
       setAssociation((prev) => ({
         ...prev!,
-        blogs: [...prev!.blogs, response.data]
+        blogs: [...prev!.blogs, response.data],
       }));
-      setNewBlogName('');
-      setNewBlogDescription('');
+      setNewBlogName("");
+      setNewBlogDescription("");
       setDialogOpen(false);
     } catch (error) {
       if (error instanceof AxiosError) {
-        setAlertMessage('Error creating new blog. Please try again later.');
-        console.error('Error creating new blog:', error.message);
+        setAlertMessage(
+          "Error al crear nuevo blog. Por favor, inténtelo de nuevo más tarde."
+        );
+        setShowAlert(true);
+        console.error("Error creating new blog:", error);
       } else {
-        setAlertMessage('An unexpected error occurred. Please try again later.');
-        console.error('Unexpected error:', error);
+        setAlertMessage("An unexpected error occurred. Please try again later.");
+        setShowAlert(true);
+        console.error("Unexpected error:", error);
       }
-      setShowAlert(true);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleBackClick = () => {
+    history.push("/");
+    window.location.reload();
   };
 
   return (
@@ -163,10 +183,10 @@ const AssociationProfile: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonTitle>
-            {association ? association.name : 'Perfil de la Asociación'}
+            {association ? association.name : "Perfil de la Asociación"}
           </IonTitle>
           <IonButtons slot="end">
-            <IonButton onClick={deleteAssociation}>
+            <IonButton onClick={handleBackClick}>
               <IonIcon icon={arrowBackOutline} slot="icon-only" />
             </IonButton>
           </IonButtons>
@@ -174,6 +194,15 @@ const AssociationProfile: React.FC = () => {
       </IonHeader>
       <IonContent className="association-profile-content">
         <LoadingSpinner isOpen={loading} imageUrl="resources/Icono.png" />
+        {showAlert && (
+          <IonAlert
+            isOpen={showAlert}
+            onDidDismiss={() => setShowAlert(false)}
+            header="Error"
+            message={alertMessage}
+            buttons={["OK"]}
+          />
+        )}
         {association && (
           <>
             <div className="banner-container">
@@ -183,9 +212,14 @@ const AssociationProfile: React.FC = () => {
               <IonRow>
                 <IonCol size="12" className="ion-text-center">
                   <div className="association-avatar-container">
-                    <IonImg src={association.logo} className="association-avatar" />
+                    <IonImg
+                      src={association.logo}
+                      className="association-avatar"
+                    />
                   </div>
-                  <IonText className="association-name">{association.name}</IonText>
+                  <IonText className="association-name">
+                    {association.name}
+                  </IonText>
                   <IonText className="association-meta">
                     {association.members.length} miembros | {association.faq.length} FAQs
                   </IonText>
@@ -196,7 +230,9 @@ const AssociationProfile: React.FC = () => {
                   <IonSegment
                     value={currentSegment}
                     onIonChange={(e) =>
-                      handleSegmentChange(e.detail.value?.toString() ?? 'defaultValue')
+                      handleSegmentChange(
+                        e.detail.value?.toString() ?? "defaultValue"
+                      )
                     }
                   >
                     <IonSegmentButton value="inicio">
@@ -216,66 +252,78 @@ const AssociationProfile: React.FC = () => {
               </IonRow>
               <IonRow>
                 <IonCol size="12">
-                  {currentSegment === 'inicio' && (
+                  {currentSegment === "inicio" && (
                     <IonText className="association-description">
                       {association.description}
                     </IonText>
                   )}
-                  {currentSegment === 'blogs' && (
+                  {currentSegment === "blogs" && (
                     <>
-                      <Button className='create-blog-button'
+                      <Button
                         variant="contained"
                         color="primary"
                         onClick={() => setDialogOpen(true)}
+                        style={{ marginBottom: '20px' }}
                       >
                         Crear Nuevo Blog
                       </Button>
-                      <Grid container spacing={3} className="association-blogs">
-                        {association.blogs && association.blogs.length > 0 ? (
-                          association.blogs.map((blog) => (
-                            <Grid item xs={12} sm={6} md={4} key={blog.id}>
-                              <Card className="blog-card">
-                                <CardContent className="blog-card-content">
-                                  <Typography
-                                    gutterBottom
-                                    variant="h5"
-                                    component="div"
-                                    className="blog-card-title"
-                                  >
-                                    {blog.name}
-                                  </Typography>
-                                  <Typography
-                                    variant="body2"
-                                    color="textSecondary"
-                                    className="blog-card-description"
-                                  >
-                                    {blog.description}
-                                  </Typography>
-                                </CardContent>
-                              </Card>
-                            </Grid>
-                          ))
-                        ) : (
-                          <Typography>No hay blogs disponibles</Typography>
-                        )}
+                      <Grid container spacing={3}>
+                        {association.blogs.map((blog) => (
+                          <Grid item xs={12} sm={6} md={4} key={blog.id}>
+                            <Card
+                              sx={{
+                                display: "flex",
+                                flexDirection: "column",
+                                height: "100%",
+                                backgroundColor: "#1e1e1e",
+                                color: "#fff",
+                                borderRadius: "15px",
+                                boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+                                border: '2px solid #265c91'
+                              }}
+                            >
+                              <CardContent sx={{ flexGrow: 1 }}>
+                                <Typography
+                                  gutterBottom
+                                  variant="h5"
+                                  component="div"
+                                  sx={{ color: "#bb86fc" }}
+                                >
+                                  {blog.name}
+                                </Typography>
+                                <Typography
+                                  variant="body2"
+                                  color="textSecondary"
+                                  sx={{ color: "#e0e0e0" }}
+                                >
+                                  {blog.description}
+                                </Typography>
+                              </CardContent>
+                            </Card>
+                          </Grid>
+                        ))}
                       </Grid>
                     </>
                   )}
-                  {currentSegment === 'faq' && (
-                    <div className="faq-list">
+                  {currentSegment === "faq" && (
+                    <div>
                       {association.faq.map((faq) => (
-                        <div key={faq.id} className="faq-item">
-                          <Typography variant="h6" className="faq-question">
-                            <strong>P:</strong> {faq.question}
-                          </Typography>
-                          <Typography variant="body1" className="faq-answer">
-                            <strong>R:</strong> {faq.response}
-                          </Typography>
-                        </div>
+                        <Accordion key={faq.id} sx={{ backgroundColor: "#1e1e1e", color: "#ffffff" }}>
+                          <AccordionSummary
+                            expandIcon={<ExpandMoreIcon sx={{ color: "#bb86fc" }} />}
+                            aria-controls={`panel${faq.id}-content`}
+                            id={`panel${faq.id}-header`}
+                          >
+                            <Typography>{faq.question}</Typography>
+                          </AccordionSummary>
+                          <AccordionDetails sx={{ backgroundColor: "#333333", color: "#e0e0e0" }}>
+                            <Typography>{faq.response}</Typography>
+                          </AccordionDetails>
+                        </Accordion>
                       ))}
                     </div>
                   )}
-                  {currentSegment === 'miembros' && (
+                  {currentSegment === "miembros" && (
                     <div className="members-list">
                       {association.members.map((member) => (
                         <Card key={member.id} className="member-card">
@@ -297,13 +345,6 @@ const AssociationProfile: React.FC = () => {
           </>
         )}
       </IonContent>
-      <IonAlert
-        isOpen={showAlert}
-        onDidDismiss={() => setShowAlert(false)}
-        header="Error"
-        message={alertMessage}
-        buttons={['OK']}
-      />
       <Dialog open={dialogOpen} onClose={() => setDialogOpen(false)}>
         <DialogTitle>Crear Nuevo Blog</DialogTitle>
         <DialogContent>

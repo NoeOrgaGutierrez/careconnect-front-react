@@ -12,18 +12,16 @@ import {
   IonAlert,
   IonCard,
   IonCardContent,
-  IonIcon,
-  IonItem,
-  IonLabel
+  IonIcon
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
-import { TextField, Box } from '@mui/material';
+import { TextField, Box, Button } from '@mui/material';
 import axiosInstance from '../../axiosconfig';
 import { AxiosError } from 'axios';
 
 import './UserRegister.css';
-import { arrowBackOutline, eye, eyeOff } from 'ionicons/icons';
+import { arrowBackOutline, eye, eyeOff, text } from 'ionicons/icons';
 import LoadingSpinner from '../LoadingSpinner';
 
 const UserRegister: React.FC = () => {
@@ -176,22 +174,32 @@ const UserRegister: React.FC = () => {
                 <Box display="flex" alignItems="center" className="register-item">
                   <TextField
                     label="Contraseña"
-                    type={showPassword ? 'text' : 'password'}
+                    type="text"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     variant="filled"
                     fullWidth
                     className="register-item"
                     InputLabelProps={{ className: 'register-label' }}
+           
                   />
-                  <IonButton fill="clear" className="password-toggle-button" onClick={() => setShowPassword(!showPassword)}>
-                    <IonIcon slot="icon-only" icon={showPassword ? eyeOff : eye} />
-                  </IonButton>
                 </Box>
-                <IonItem lines="none" className="register-item">
-                  <IonLabel className="register-label" position="stacked">Avatar</IonLabel>
-                  <input type="file" accept="image/*" onChange={handleAvatarChange} />
-                </IonItem>
+                <Box className="register-item">
+                  <p style={{ color: 'black' }}>Avatar</p>
+                  <Button
+                    variant="contained"
+                    component="label"
+                    className="register-avatar-button"
+                  >
+                    Seleccionar archivo
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleAvatarChange}
+                      hidden
+                    />
+                  </Button>
+                </Box>
                 <TextField
                   label="Biografía"
                   value={bio}
@@ -200,7 +208,6 @@ const UserRegister: React.FC = () => {
                   fullWidth
                   margin="normal"
                   multiline
-                  rows={4}
                   className="register-item"
                   InputLabelProps={{ className: 'register-label' }}
                 />

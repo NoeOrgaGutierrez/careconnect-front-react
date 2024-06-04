@@ -5,7 +5,7 @@ ion-menu ion-content {
 }
 
 ion-menu.md ion-content {
-  --background: var(--ion-text-color) !important;
+  --background: var(--ion-background-color) !important;
   --padding-start: 16px;
   --padding-end: 16px;
   --padding-top: 20px;

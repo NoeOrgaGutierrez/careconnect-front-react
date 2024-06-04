@@ -124,7 +124,7 @@ const Login: React.FC = () => {
                     className="eye-button" 
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    <IonIcon slot="icon-only" icon={showPassword ? eyeOff : eye} />
+                    <IonIcon slot="icon-only" icon={showPassword ? eyeOff : eye} color='black'/>
                   </IonButton>
                 </Box>
                 <IonButton type="submit" expand="block" className="login-button">

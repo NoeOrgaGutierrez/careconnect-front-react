@@ -161,8 +161,8 @@ const CommunitiesDetails: React.FC = () => {
 
 	const renderComments = (comments: Comment[], level: number = 0) => {
 		return comments.map((comment) => (
-			<IonCard key={comment.id} className={`comment-level-${level}`}>
-				<IonCardHeader>
+			<IonCard key={comment.id} className={`comment-level-${level}`}  style={{ border: '2px solid #347ec7 ', borderRadius: '10px'}}>
+				<IonCardHeader >
 					<IonChip className='comment-chip'>
 						<IonAvatar>
 							<img
@@ -219,7 +219,7 @@ const CommunitiesDetails: React.FC = () => {
 				) : (
 					<>
 						{publication && (
-							<IonCard className='publication-card'>
+							<IonCard className='publication-card' style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
 								<IonCardHeader>
 									<IonChip className='publication-chip'>
 										<IonAvatar>
@@ -239,20 +239,20 @@ const CommunitiesDetails: React.FC = () => {
 							</IonCard>
 						)}
 						<div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
-							<IonButton onClick={() => setShowDialog(true)} color='primary'>
+							<IonButton className='add-comment' onClick={() => setShowDialog(true)}>
 							Añadir Comentario
 							</IonButton>
 						</div>
-						<IonList>{renderComments(comments)}</IonList>
+						<IonList >{renderComments(comments)}</IonList>
 						<div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
-							<IonButton onClick={() => setShowDialog(true)} color='primary'>
+							<IonButton className='add-comment' onClick={() => setShowDialog(true)} >
 								Añadir Comentario
 							</IonButton>
 						</div>
 					</>
 				)}
 				<div style={{ height: '60px' }}></div>
-				<Dialog
+				<Dialog 
 					open={showDialog}
 					onClose={() => {
 						setShowDialog(false)

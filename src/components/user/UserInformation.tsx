@@ -28,6 +28,7 @@ import axiosInstance from '../../axiosconfig';
 import { AxiosError } from 'axios';
 import './UserInformation.css';
 import LoadingSpinner from '../LoadingSpinner';
+import { BorderAllRounded, BorderColor, BorderStyle } from '@mui/icons-material';
 
 interface User {
   id: number;
@@ -82,12 +83,12 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
   useEffect(() => {
     const memberId = localStorage.getItem('memberId');
     if (memberId) {
-      Promise.all([
+      Promise.allSettled([
         axiosInstance.get(`/user/${memberId}`),
         axiosInstance.get(`/user/latest-comments/${memberId}`),
         axiosInstance.get(`/user/pinned-blogs/${memberId}`),
         axiosInstance.get(`/valoration/user/${memberId}`),
-        axiosInstance.get(`/user-association/user/${memberId}`)
+        axiosInstance.get(`/user-association/user/${memberId}`),
       ])
         .then(([
           userResponse,
@@ -96,18 +97,24 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
           ratingResponse,
           associationsResponse
         ]) => {
-          setUser(userResponse.data);
-          setRecentComments(commentsResponse.data.slice(0, 4));
-          setPinnedBlogs(blogsResponse.data);
-          setUserRating(ratingResponse.data);
-          setAssociations(associationsResponse.data);
+          if (userResponse.status === 'fulfilled') {
+            setUser(userResponse.value.data);
+          }
+          if (commentsResponse.status === 'fulfilled') {
+            setRecentComments(commentsResponse.value.data.slice(0, 4));
+          }
+          if (blogsResponse.status === 'fulfilled') {
+            setPinnedBlogs(blogsResponse.value.data);
+          }
+          if (ratingResponse.status === 'fulfilled') {
+            setUserRating(ratingResponse.value.data);
+          }
+          if (associationsResponse.status === 'fulfilled') {
+            setAssociations(associationsResponse.value.data);
+          }
         })
         .catch((error) => {
-          if (error instanceof AxiosError) {
-            console.error('Error fetching data:', error.message);
-          } else {
-            console.error('Unexpected error:', error);
-          }
+          console.error('Error fetching data:', error);
         })
         .finally(() => {
           setLoading(false);
@@ -151,15 +158,11 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
           <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
-          <IonTitle>{name}</IonTitle>
+          <IonTitle>Perfil</IonTitle>
           <IonButtons slot="end">
-            <IonButton onClick={handleProfileClick}>
-              <IonIcon icon={personCircleOutline} />
-              Profile
-            </IonButton>
             <IonButton onClick={handleLogoutClick}>
               <IonIcon icon={logOutOutline} />
-              Logout
+              Cerrar Sesión
             </IonButton>
           </IonButtons>
         </IonToolbar>
@@ -181,7 +184,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                 <p>{user.email}</p>
                 <p>{user.bio}</p>
                 {userRating && (
-                  <IonItem>
+                  <IonItem >
                     <IonLabel>
                       <strong>Rating:</strong>
                     </IonLabel>
@@ -195,35 +198,35 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                   </IonItem>
                 )}
               </IonCol>
-              <IonCol size="12" size-md="8">
-                <IonCard>
+              <IonCol size="12" size-md="8" >
+                <IonCard >
                   <IonCardHeader>
-                    <IonCardTitle>Pinned Topics</IonCardTitle>
+                    <IonCardTitle>Topicos Favoritos</IonCardTitle>
                   </IonCardHeader>
-                  <IonCardContent>
-                    <IonList lines="none">
+                  <IonCardContent >
+                    <IonList lines="none" >
                       {pinnedBlogs.map((blog) => (
                         <IonItem key={blog.blog_id}>
-                          <IonLabel>
-                            <h3>{blog.blog_name}</h3>
-                            <p>{blog.blog_description}</p>
+                          <IonLabel style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
+                            <h3 style={{ padding: '5px' }}>{blog.blog_name}</h3>
+                            <p style={{ padding: '5px', color: 'white' }}>{blog.blog_description}</p>
                           </IonLabel>
                         </IonItem>
                       ))}
                     </IonList>
                   </IonCardContent>
                 </IonCard>
-                <IonCard>
+                <IonCard >
                   <IonCardHeader>
-                    <IonCardTitle>Recent Activity</IonCardTitle>
+                    <IonCardTitle>Actividad Reciente</IonCardTitle>
                   </IonCardHeader>
-                  <IonCardContent>
-                    <IonList lines="none">
+                  <IonCardContent >
+                    <IonList lines="none" >
                       {recentComments.map((comment) => (
                         <IonItem key={comment.comment_id}>
-                          <IonLabel>
-                            <h3>{comment.comment_content}</h3>
-                            <p>{new Date(comment.comment_created).toLocaleString()}</p>
+                          <IonLabel style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
+                            <h3 style={{ padding: '5px' }}>{comment.comment_content}</h3>
+                            <p style={{ padding: '5px', color: 'white' }}>{new Date(comment.comment_created).toLocaleString()}</p>
                           </IonLabel>
                         </IonItem>
                       ))}
@@ -233,21 +236,21 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
               </IonCol>
             </IonRow>
             {associations.length > 0 && (
-              <IonRow>
+              <IonRow >
                 <IonCol size="12">
                   <IonCard>
-                    <IonCardHeader>
-                      <IonCardTitle>My Joined Associations</IonCardTitle>
+                    <IonCardHeader >
+                      <IonCardTitle>Mis asociaciones</IonCardTitle>
                     </IonCardHeader>
-                    <IonCardContent>
+                    <IonCardContent >
                       <IonGrid>
-                        <IonRow>
+                        <IonRow >
                           {associations.map((assoc) => (
-                            <IonCol size="12" size-md="6" size-lg="4" key={assoc.id}>
-                              <IonCard className="association-card">
+                            <IonCol   size="12" size-md="6" size-lg="4" key={assoc.id} >
+                              <IonCard className="association-card" style={{ border: '2px solid #265c91 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
                                 <IonCardHeader>
-                                  <IonCardTitle>{assoc.association.name}</IonCardTitle>
-                                  <IonCardSubtitle>
+                                  <IonCardTitle className='association-title'>{assoc.association.name}</IonCardTitle>
+                                  <IonCardSubtitle className='association-text'>
                                     {assoc.association.miniDescription}
                                   </IonCardSubtitle>
                                 </IonCardHeader>
@@ -261,15 +264,15 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                                       backgroundColor: 'white'
                                     }}
                                   />
-                                  <p>{assoc.association.description}</p>
-                                  <IonButton
-                                    color="danger"
+                                  <p className='association-text'>{assoc.association.description}</p>
+                                  <IonButton className='leave-button'
                                     size="small"
+                                    
                                     onClick={() => handleLeaveAssociation(assoc.association.id)}>
-                                    Leave
+                                    Salir
                                   </IonButton>
-                                  <IonButton fill="outline" size="small" onClick={() => history.push(`/association-details/${assoc.association.id}`)}>
-                                    Know more
+                                  <IonButton className='know-more-button' fill="outline" size="small" onClick={() => history.push(`/association-details/${assoc.association.id}`)}>
+                                    Saber Más
                                   </IonButton>
                                 </IonCardContent>
                               </IonCard>
@@ -292,3 +295,4 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 };
 
 export default UserInformation;
+

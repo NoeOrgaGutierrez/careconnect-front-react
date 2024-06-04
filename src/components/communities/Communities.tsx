@@ -37,6 +37,8 @@ import {
 } from '@mui/material'
 import LoadingSpinner from '../LoadingSpinner'
 
+import './Communities.css'
+
 interface Publication {
 	id: number
 	name: string
@@ -235,14 +237,15 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 							onIonChange={(e) => setFilterNumber(e.detail.value!)}
 						/>
 					</IonItem>
-					<IonButton expand='full' onClick={handleFilter}>
+					<IonButton className='community-button-caracteristics' expand='full' onClick={handleFilter}>
 						Aplicar Filtro
 					</IonButton>
 				</IonList>
-				<IonButton expand='full' onClick={() => setShowTopicModal(true)}>
+				<IonButton className='community-button-caracteristics' expand='full' onClick={() => setShowTopicModal(true)}>
 					Crear Topico
 				</IonButton>
 				<IonButton
+				className='community-button-caracteristics'
 					expand='full'
 					onClick={() => {
 						setShowCreateModal(true)
@@ -256,7 +259,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />
 				) : filteredPublications.length > 0 ? (
 					filteredPublications.map((publication) => (
-						<IonCard key={publication.id}>
+						<IonCard key={publication.id} style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28628c' }}>
 							<IonCardHeader>
 								<IonChip
 									style={{

@@ -13,18 +13,7 @@
   padding: 16px;
 }
 
-/* Container styling */
-.login-container {
-  width: 100%;
-  max-width: 360px;
-  background-color: #014560 !important;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  margin: auto;
-}
+
 
 /* Card styling */
 .login-card {
@@ -86,22 +75,7 @@
   border-radius: 8px;
 }
 
-/* Secondary button styling */
-.login-button-clear {
-  
-  width: 100%;
-  border: 2px solid;
-  border-radius: 25px; /* Border radius for rounded corners */
-  border-color: #60adc4 !important;
-  background-color: #60adc4 !important;
-  color: #000000 !important;
-  margin-top: 10px;
-  text-transform: uppercase;
-  padding: 10px 20px; /* Added padding for a better look */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 /* Centering the buttons container */
 .login-buttons {

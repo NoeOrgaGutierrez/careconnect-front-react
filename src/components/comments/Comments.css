@@ -1,62 +1,71 @@
-/* Comments.css */
-.comments-container {
+/* General styling */
+.content-with-extra-padding {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 20px;
+}
+
+.footer-space {
+  height: 50px;
+  background: transparent;
+}
+
+/* Blog details specific styling */
+.blog-details-content {
   padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.blog-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
   background-color: #ffffff;
-  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 20px;
 }
 
-.comment-paper {
-  padding: 15px;
-  margin-top: 10px;
-  background-color: #fafafa;
-  border-radius: 8px;
-  border: 1px solid #e0e0e0;
+.publication-card {
+  margin-bottom: 20px;
+  border: 2px solid #347ec7;
+  border-radius: 10px;
+  background-color: #28629c;
 }
 
-.comment-header {
+.publication-chip {
   display: flex;
   align-items: center;
-  margin-bottom: 10px;
 }
 
-.comment-avatar {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
+.add-comment {
+  --background: #030615 !important;
 }
 
-.comment-author {
-  font-weight: bold;
-  color: #333333;
+/* Comment styling */
+.comment-chip {
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
 }
 
-.comment-content {
-  font-size: 1rem;
-  color: #555555;
-  margin-top: 5px;
-  line-height: 1.5;
+.comment-level-0 {
+  margin-left: 0;
 }
 
-.comment-actions {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
+.comment-level-1 {
+  margin-left: 20px;
 }
 
-.comment-actions .MuiIconButton-root {
-  padding: 5px;
+.comment-level-2 {
+  margin-left: 40px;
 }
 
-.comment-actions .MuiTypography-root {
-  margin-left: 5px;
+.comment-level-3 {
+  margin-left: 50px;
 }
 
-.comment-reply {
-  margin-top: 15px;
+.comment-level-4 {
+  margin-left: 60px;
 }
 
-.comment-reply .MuiTextField-root {
-  width: 100%;
-}
+/* Add more levels if necessary */

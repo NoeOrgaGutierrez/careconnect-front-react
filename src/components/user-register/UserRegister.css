@@ -18,7 +18,7 @@
 .register-container {
   width: 100%;
   max-width: 360px;
-  background-color: #014560 !important;
+  background-color: #0d84d3 !important;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
@@ -117,22 +117,6 @@
   border-radius: 8px;
 }
 
-/* Secondary button styling */
-.login-button-clear {
-  width: 100%;
-  border: 2px solid;
-  border-radius: 25px;
-  border-color: #60adc4 !important;
-  background-color: #60adc4 !important;
-  color: #000000 !important;
-  margin-top: 10px;
-  text-transform: uppercase;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 /* Spacer for layout */
 .spacer {
   height: 50px;
@@ -149,4 +133,16 @@
   color: #ce3f3f !important;
   font-weight: bolder !important;
   border-radius: 10% !important;
+}
+
+/* Avatar input styling */
+.register-avatar-input {
+  display: none;
+}
+
+.register-avatar-button{
+   width: min-content;
+   height: min-content;
+   padding: 5px;
+   margin: 0px;
 }
