@@ -70,6 +70,7 @@ const BlogDetails: React.FC = () => {
   const [newComment, setNewComment] = useState<string>('');
   const [showDialog, setShowDialog] = useState<boolean>(false);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
+  const [pinnedBlogId, setPinnedBlogId] = useState<number | null>(null);
 
   const getMemberIdForBlog = async (blogId: string) => {
     const memberId = localStorage.getItem('memberId');
@@ -109,6 +110,14 @@ const BlogDetails: React.FC = () => {
           blogComments: commentsResponse.data,
         };
         setBlog(blogData);
+
+        // Verificar si el blog ya está fijado
+        const pinnedResponse = await axiosInstance.get(`/user/pinned-blogs/${memberId}`);
+        const pinnedBlog = pinnedResponse.data.find((pinned: any) => pinned.blog.id === parseInt(id));
+        if (pinnedBlog) {
+          setIsFavorited(true);
+          setPinnedBlogId(pinnedBlog.id);
+        }
       } catch (error) {
         setAlertMessage('Error al obtener datos del blog. Por favor, inténtelo de nuevo más tarde.');
         setShowAlert(true);
@@ -161,22 +170,30 @@ const BlogDetails: React.FC = () => {
   };
 
   const handleFavorite = async () => {
+    const memberId = await getMemberIdForBlog(id);
+    if (!memberId) {
+      console.error('No valid memberId found');
+      return;
+    }
+
     try {
-      const memberId = await getMemberIdForBlog(id);
-      if (!memberId) {
-        console.error('No valid memberId found');
-        return;
+      if (isFavorited && pinnedBlogId) {
+        await axiosInstance.delete(`http://34.116.158.34/pin/${pinnedBlogId}`);
+        setIsFavorited(false);
+        setPinnedBlogId(null);
+      } else {
+        const requestBody = {
+          member: {
+            id: memberId
+          },
+          blog: {
+            id: id
+          }
+        };
+        const response = await axiosInstance.post('http://34.116.158.34/pin', requestBody);
+        setIsFavorited(true);
+        setPinnedBlogId(response.data.id);
       }
-      const requestBody = {
-        member: {
-          id: memberId
-        },
-        blog: {
-          id: id
-        }
-      };
-      await axiosInstance.post('http://34.116.158.34/pin', requestBody);
-      setIsFavorited(!isFavorited);
     } catch (error) {
       console.error('Error favoriting the blog:', error);
       if (error instanceof AxiosError) {
@@ -205,7 +222,7 @@ const BlogDetails: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="end">
+          <IonButtons slot="start">
             <IonButton onClick={handleBackClick}>
               <IonIcon icon={arrowBackOutline} slot="icon-only" />
             </IonButton>

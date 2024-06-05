@@ -91,7 +91,7 @@ const AssociationProfile: React.FC = () => {
 
   useEffect(() => {
     const fetchAssociation = async () => {
-      let id = localStorage.getItem("association-details-id");
+      let id = localStorage.getItem("associationId");
       setLoading(true);
       try {
         const response = await axiosInstance.get(`/association/findOne/${id}`);

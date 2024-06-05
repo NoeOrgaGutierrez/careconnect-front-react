@@ -20,15 +20,15 @@ import {
   IonCardTitle,
   IonCardSubtitle,
   IonCardContent,
-  IonMenuButton
+  IonMenuButton,
+  IonFooter
 } from '@ionic/react';
-import { pencilOutline, arrowUndoOutline, star, personCircleOutline, logOutOutline } from 'ionicons/icons';
+import { pencilOutline, arrowUndoOutline, star, logOutOutline, trashOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
 import axiosInstance from '../../axiosconfig';
 import { AxiosError } from 'axios';
 import './UserInformation.css';
 import LoadingSpinner from '../LoadingSpinner';
-import { BorderAllRounded, BorderColor, BorderStyle } from '@mui/icons-material';
 
 interface User {
   id: number;
@@ -63,6 +63,7 @@ interface PinnedBlog {
   blog_id: number;
   blog_name: string;
   blog_description: string;
+  pin_id: number;
 }
 
 interface UserRating {
@@ -151,6 +152,19 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
     }
   };
 
+  const handleUnpinBlog = async (pin_id: number) => {
+    try {
+      await axiosInstance.delete(`http://34.116.158.34/pin/${pin_id}`);
+      window.location.reload();
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        console.error('Error unpinning blog:', error.message);
+      } else {
+        console.error('Unexpected error:', error);
+      }
+    }
+  };
+
   return (
     <IonPage>
       <IonHeader>
@@ -169,7 +183,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
       </IonHeader>
       <IonContent className="ion-padding">
         {loading ? (
-          <LoadingSpinner imageUrl="resources\Icono.png" isOpen={loading} />
+          <LoadingSpinner imageUrl="resources/Icono.png" isOpen={loading} />
         ) : user ? (
           <IonGrid>
             <IonRow>
@@ -211,6 +225,9 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                             <h3 style={{ padding: '5px' }}>{blog.blog_name}</h3>
                             <p style={{ padding: '5px', color: 'white' }}>{blog.blog_description}</p>
                           </IonLabel>
+                          <IonButton onClick={() => handleUnpinBlog(blog.pin_id)} fill="clear" slot="end">
+                            <IonIcon icon={trashOutline} />
+                          </IonButton>
                         </IonItem>
                       ))}
                     </IonList>
@@ -246,7 +263,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                       <IonGrid>
                         <IonRow >
                           {associations.map((assoc) => (
-                            <IonCol   size="12" size-md="6" size-lg="4" key={assoc.id} >
+                            <IonCol size="12" size-md="6" size-lg="4" key={assoc.id} >
                               <IonCard className="association-card" style={{ border: '2px solid #265c91 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
                                 <IonCardHeader>
                                   <IonCardTitle className='association-title'>{assoc.association.name}</IonCardTitle>
@@ -267,7 +284,6 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                                   <p className='association-text'>{assoc.association.description}</p>
                                   <IonButton className='leave-button'
                                     size="small"
-                                    
                                     onClick={() => handleLeaveAssociation(assoc.association.id)}>
                                     Salir
                                   </IonButton>
@@ -287,7 +303,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
             )}
           </IonGrid>
         ) : (
-          <LoadingSpinner imageUrl="resources\Icono.png" isOpen={!user} />
+          <LoadingSpinner imageUrl="resources/Icono.png" isOpen={!user} />
         )}
       </IonContent>
     </IonPage>
@@ -295,4 +311,3 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 };
 
 export default UserInformation;
-
