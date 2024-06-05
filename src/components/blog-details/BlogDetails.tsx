@@ -167,10 +167,21 @@ const BlogDetails: React.FC = () => {
         console.error('No valid memberId found');
         return;
       }
-      await axiosInstance.post('http://34.116.158.34/pin', { blogId: id, userAssociationId: memberId });
+      const requestBody = {
+        member: {
+          id: memberId
+        },
+        blog: {
+          id: id
+        }
+      };
+      await axiosInstance.post('http://34.116.158.34/pin', requestBody);
       setIsFavorited(!isFavorited);
     } catch (error) {
       console.error('Error favoriting the blog:', error);
+      if (error instanceof AxiosError) {
+        console.error('Error details:', error.response?.data);
+      }
     }
   };
 
@@ -186,104 +197,103 @@ const BlogDetails: React.FC = () => {
         header="Error"
         message={alertMessage}
         buttons={['OK']}
-        />
-        );
-      }
-    
-      return (
-        <IonPage>
-          <IonHeader>
-            <IonToolbar>
-              <IonButtons slot="start">
-                <IonButton onClick={handleBackClick}>
-                  <IonIcon icon={arrowBackOutline} slot="icon-only" />
-                </IonButton>
-              </IonButtons>
-              <IonTitle>{blog ? blog.name : 'Detalles del Blog'}</IonTitle>
-              <IonButtons slot="end">
-                <IonButton onClick={handleFavorite}>
-                  <IonIcon icon={isFavorited ? star : starOutline} slot="icon-only" />
-                </IonButton>
-              </IonButtons>
-            </IonToolbar>
-          </IonHeader>
-          <IonContent className="content-with-extra-padding">
-            {blog && (
-              <>
-                <IonCard className="publication-card" style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
-                  <IonCardHeader>
-                    <IonChip className="publication-chip">
-                      <IonAvatar>
-                        <img alt="User Avatar" src={blog.blogComments[0]?.member.user.avatar || 'https://via.placeholder.com/150'} />
-                      </IonAvatar>
-                      <IonLabel>{blog.blogComments[0]?.member.user.name}</IonLabel>
-                    </IonChip>
-                    <IonCardTitle>{blog.name}</IonCardTitle>
-                  </IonCardHeader>
-                  <IonCardContent>{blog.description}</IonCardContent>
-                </IonCard>
-                <div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
-                  <IonButton className="add-comment" onClick={() => setShowDialog(true)}>
-                    Añadir Comentario
-                  </IonButton>
-                </div>
-                <IonList>
-                  <Comments blogId={id} initialComments={blog.blogComments} />
-                </IonList>
-              </>
-            )}
-            <Dialog
-              open={showDialog}
-              onClose={() => setShowDialog(false)}
+      />
+    );
+  }
+
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar>
+          <IonButtons slot="start">
+            <IonButton onClick={handleBackClick}>
+              <IonIcon icon={arrowBackOutline} slot="icon-only" />
+            </IonButton>
+          </IonButtons>
+          <IonTitle>{blog ? blog.name : 'Detalles del Blog'}</IonTitle>
+          <IonButtons slot="end">
+            <IonButton onClick={handleFavorite}>
+              <IonIcon icon={isFavorited ? star : starOutline} slot="icon-only" />
+            </IonButton>
+          </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent className="content-with-extra-padding">
+        {blog && (
+          <>
+            <IonCard className="publication-card" style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
+              <IonCardHeader>
+                <IonChip className="publication-chip">
+                  <IonAvatar>
+                    <img alt="User Avatar" src={blog.blogComments[0]?.member.user.avatar || 'https://via.placeholder.com/150'} />
+                  </IonAvatar>
+                  <IonLabel>{blog.blogComments[0]?.member.user.name}</IonLabel>
+                </IonChip>
+                <IonCardTitle>{blog.name}</IonCardTitle>
+              </IonCardHeader>
+              <IonCardContent>{blog.description}</IonCardContent>
+            </IonCard>
+            <div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
+              <IonButton className="add-comment" onClick={() => setShowDialog(true)}>
+                Añadir Comentario
+              </IonButton>
+            </div>
+            <IonList>
+              <Comments blogId={id} initialComments={blog.blogComments} />
+            </IonList>
+          </>
+        )}
+        <Dialog
+          open={showDialog}
+          onClose={() => setShowDialog(false)}
+          fullWidth
+          maxWidth="sm"
+          PaperProps={{
+            style: {
+              backgroundColor: '#333',
+              color: 'white',
+            },
+          }}
+        >
+          <DialogTitle style={{ color: 'white' }}>
+            Añadir Comentario
+          </DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              label="Comentario"
+              type="text"
               fullWidth
-              maxWidth="sm"
-              PaperProps={{
+              multiline
+              rows={4}
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              InputProps={{
                 style: {
-                  backgroundColor: '#333',
                   color: 'white',
                 },
               }}
-            >
-              <DialogTitle style={{ color: 'white' }}>
-                Añadir Comentario
-              </DialogTitle>
-              <DialogContent>
-                <TextField
-                  autoFocus
-                  margin="dense"
-                  label="Comentario"
-                  type="text"
-                  fullWidth
-                  multiline
-                  rows={4}
-                  value={newComment}
-                  onChange={(e) => setNewComment(e.target.value)}
-                  InputProps={{
-                    style: {
-                      color: 'white',
-                    },
-                  }}
-                  InputLabelProps={{
-                    style: {
-                      color: 'white',
-                    },
-                  }}
-                />
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={() => setShowDialog(false)} color="primary">
-                  Cancelar
-                </Button>
-                <Button onClick={handleAddComment} color="primary">
-                  Añadir
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </IonContent>
-          <IonFooter className="footer-space"></IonFooter>
-        </IonPage>
-      );
-    };
-    
-    export default BlogDetails;
-    
+              InputLabelProps={{
+                style: {
+                  color: 'white',
+                },
+              }}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={() => setShowDialog(false)} color="primary">
+              Cancelar
+            </Button>
+            <Button onClick={handleAddComment} color="primary">
+              Añadir
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </IonContent>
+      <IonFooter className="footer-space"></IonFooter>
+    </IonPage>
+  );
+};
+
+export default BlogDetails;
