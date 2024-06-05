@@ -205,7 +205,7 @@ const BlogDetails: React.FC = () => {
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot="start">
+          <IonButtons slot="end">
             <IonButton onClick={handleBackClick}>
               <IonIcon icon={arrowBackOutline} slot="icon-only" />
             </IonButton>
