@@ -97,7 +97,7 @@ const BlogDetails: React.FC = () => {
       try {
         const memberId = await getMemberIdForBlog(id);
         if (!memberId) {
-          setAlertMessage('No se pudo obtener el memberId. Por favor, inténtelo de nuevo más tarde.');
+          setAlertMessage('Necesitá estar unido a la asociación para ver este blog.');
           setShowAlert(true);
           setLoading(false);
           return;
