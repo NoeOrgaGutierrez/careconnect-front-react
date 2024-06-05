@@ -68,4 +68,34 @@
   margin-left: 60px;
 }
 
+.dialog-content {
+  background-color: #333;
+  color: #fff;
+}
+
+.dialog-actions {
+  background-color: #444;
+}
+
+.dialog-title {
+  background-color: #222;
+  color: #fff;
+}
+
+.text-field input {
+  color: #fff;
+}
+
+.text-field label {
+  color: #bbb;
+}
+
+.text-field .MuiInput-underline:before {
+  border-bottom: 1px solid #777;
+}
+
+.text-field .MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-bottom: 2px solid #bbb;
+}
+
 /* Add more levels if necessary */

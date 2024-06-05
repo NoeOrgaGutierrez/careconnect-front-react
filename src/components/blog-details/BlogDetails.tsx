@@ -109,6 +109,7 @@ const BlogDetails: React.FC = () => {
           blogComments: commentsResponse.data,
         };
         setBlog(blogData);
+        console.log(blogData);
       } catch (error) {
         setAlertMessage('Error al obtener datos del blog. Por favor, inténtelo de nuevo más tarde.');
         setShowAlert(true);

@@ -95,6 +95,7 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
       setCommentList((prevComments) => [...prevComments, response.data]);
       setNewComment('');
       setShowDialog(false);
+      window.location.reload();
     } catch (error) {
       console.error('Error posting comment:', error);
     } finally {
@@ -134,6 +135,7 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
       setReplyCommentId(null);
       setReplyContent('');
       setShowReplyDialog(false);
+      window.location.reload();
     } catch (error) {
       console.error('Error replying to comment:', error);
     } finally {
@@ -171,6 +173,7 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
       };
 
       await axiosInstance.post('/valoration', valorationData);
+      window.location.reload();
     } catch (error) {
       console.error('Error submitting valoration:', error);
       // Revert UI update if there's an error
@@ -227,6 +230,39 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
     });
   };
 
+  const CommonDialog: React.FC<{
+    open: boolean;
+    onClose: () => void;
+    onSubmit: () => void;
+    title: string;
+    value: string;
+    setValue: React.Dispatch<React.SetStateAction<string>>;
+  }> = ({ open, onClose, onSubmit, title, value, setValue }) => (
+    <Dialog open={open} onClose={onClose}>
+      <DialogTitle className="dialog-title">{title}</DialogTitle>
+      <DialogContent className="dialog-content">
+        <TextField
+          autoFocus
+          margin="dense"
+          label={title}
+          type="text"
+          fullWidth
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          className="text-field"
+        />
+      </DialogContent>
+      <DialogActions className="dialog-actions">
+        <Button onClick={onClose} color="primary">
+          Cancelar
+        </Button>
+        <Button onClick={onSubmit} color="primary">
+          {title}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   return (
     <div>
       <Typography variant="h6">Comentarios</Typography>
@@ -235,50 +271,22 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({ bl
       ) : (
         renderComments(commentList)
       )}
-      <Dialog open={showDialog} onClose={() => setShowDialog(false)}>
-        <DialogTitle>Añadir un nuevo comentario</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Comentario"
-            type="text"
-            fullWidth
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowDialog(false)} color="primary">
-            Cancelar
-          </Button>
-          <Button onClick={handleNewComment} color="primary">
-            Añadir
-          </Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={showReplyDialog} onClose={() => setShowReplyDialog(false)}>
-        <DialogTitle>Responder comentario</DialogTitle>
-        <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Respuesta"
-            type="text"
-            fullWidth
-            value={replyContent}
-            onChange={(e) => setReplyContent(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setShowReplyDialog(false)} color="primary">
-            Cancelar
-          </Button>
-          <Button onClick={() => replyCommentId && handleReply(replyCommentId)} color="primary">
-            Responder
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <CommonDialog
+        open={showDialog}
+        onClose={() => setShowDialog(false)}
+        onSubmit={handleNewComment}
+        title="Añadir un nuevo comentario"
+        value={newComment}
+        setValue={setNewComment}
+      />
+      <CommonDialog
+        open={showReplyDialog}
+        onClose={() => setShowReplyDialog(false)}
+        onSubmit={() => replyCommentId && handleReply(replyCommentId)}
+        title="Responder comentario"
+        value={replyContent}
+        setValue={setReplyContent}
+      />
       <div style={{ height: '50px' }}></div>
     </div>
   );

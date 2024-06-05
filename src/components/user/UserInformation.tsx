@@ -215,7 +215,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
               <IonCol size="12" size-md="8" >
                 <IonCard >
                   <IonCardHeader>
-                    <IonCardTitle>Topicos Favoritos</IonCardTitle>
+                    <IonCardTitle>Blogs Favoritos</IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent >
                     <IonList lines="none" >
@@ -235,7 +235,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                 </IonCard>
                 <IonCard >
                   <IonCardHeader>
-                    <IonCardTitle>Actividad Reciente</IonCardTitle>
+                    <IonCardTitle>Actividad de Asociaciones Reciente</IonCardTitle>
                   </IonCardHeader>
                   <IonCardContent >
                     <IonList lines="none" >
