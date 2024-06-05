@@ -106,6 +106,7 @@ const Login: React.FC = () => {
                   fullWidth
                   className="login-item"
                   margin="normal"
+                  required
                   InputLabelProps={{ className: 'login-label' }}
                 />
                 <Box display="flex" alignItems="center" marginBottom={2} position="relative">
@@ -116,6 +117,7 @@ const Login: React.FC = () => {
                     onChange={(e) => setPassword(e.target.value)}
                     variant="filled"
                     fullWidth
+                    required
                     className="login-item"
                     InputLabelProps={{ className: 'login-label' }}
                   />
