@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #1e1e1e; /* Dark background color */
+  background-color: #1f2227 !important; /* Dark background color */
   padding: 16px;
 }
 
@@ -17,7 +17,8 @@
 .login-container {
   width: 100%;
   max-width: 360px;
-  background-color: #0d84d3 !important;
+  height: 500px;
+  background-color: #1f2227 !important;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
@@ -30,8 +31,10 @@
 .login-card {
   box-shadow: none;
   border: none;
+  background: #1f2227 !important;
 }
 
+/* Button styling */
 .button-native {
   background-color: #1976d2 !important;
 }
@@ -112,13 +115,32 @@
   gap: 10px; /* Space between the buttons */
 }
 
+/* Styling for the links */
+.login-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.login-link {
+  color: #60adc4;
+  margin-top: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
 /* Footer styling */
 .login-footer {
   background: none;
 }
 
 .spacer {
-  height: 50px;
+  height: 200px !important;
 }
 
 /* Focused input styling */
@@ -138,6 +160,7 @@
   color: #000000 !important;
   background-color: #60adc4 !important;
 }
+
 /* Eye button styling */
 .eye-button {
   position: absolute;

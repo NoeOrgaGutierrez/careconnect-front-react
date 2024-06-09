@@ -1,64 +1,70 @@
-/* HeroSection Styles */
+/* Estilos compartidos para HeroSection y IonHeader */
+.shared-hero-style {
+  background: linear-gradient(to right, #00c6ff, #0072ff) !important;
+  color: #fff !important;
+}
+
+/* Estilos para HeroSection */
 .hero-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: linear-gradient(to right, #00c6ff, #0072ff);
-    color: #fff;
-    padding: 16px;
-    text-align: center;
-    margin-top: -50px;
-  }
-  
-  /* FeaturesSection Styles */
-  .features-section {
-    padding: 32px 16px;
-  }
-  
-  /* FeatureItem Styles */
-  .feature-item {
-    margin-bottom: 16px;
-  }
-  
-  /* Customized IonHeader */
-  .ion-header-custom {
-    background: linear-gradient(to right, #00c6ff, #0072ff);
-    color: #fff;
-  }
-  
-  .ion-toolbar-custom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .ion-title-custom {
-    margin-left: 16px;
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  /* Button Styles */
-  .landing-button {
-    --background: #2979ff; /* Blue */
-    --background-hover: #1565c0; /* Darker blue */
-    color: #fff;
-    border-radius: 8px;
-    padding: 12px 24px; /* More padding */
-    font-size: 1.1em; /* Larger text */
-    font-family: 'Roboto', sans-serif;
-    transition: background 0.3s, transform 0.3s; /* Smooth transition */
-  }
-  
-  .landing-button:hover {
-    --background: var(--background-hover); /* Hover effect */
-    transform: scale(1.05); /* Slightly enlarge on hover */
-  }
-  
-  .get-started {
-    height: 100px !important;
-    font-size: 1.2em !important;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to right, #00c6ff, #0072ff);
+  color: #fff;
+  padding: 32px; /* theme.spacing(4) */
+  text-align: center;
+  margin-top: -50px;
+  width: 100%; /* Asegurarse de que ocupe todo el ancho */
+  box-sizing: border-box; /* Incluir padding en el ancho */
+}
+
+/* Estilos para FeaturesSection */
+.features-section {
+  padding: 64px 32px; /* theme.spacing(8, 4) */
+  width: 100%; /* Asegurarse de que ocupe todo el ancho */
+  box-sizing: border-box; /* Incluir padding en el ancho */
+}
+
+/* Estilos para FeatureItem */
+.feature-item {
+  margin-bottom: 32px; /* theme.spacing(4) */
+}
+
+/* Estilos personalizados para IonHeader */
+.styled-ion-header {
+  background: linear-gradient(to right, #00c6ff, #0072ff) !important;
+  color: #fff !important;
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* Estilos personalizados para IonToolbar */
+.styled-ion-toolbar {
+  background: transparent !important;
+  display: flex !important;
+  justify-content: flex-end !important;
+  align-items: center !important;
+}
+
+/* Estilos personalizados para IonButton */
+.styled-ion-button {
+  font-size: 2rem; /* Ajustar el tamaño de la fuente del botón */
+  padding: 16px; /* theme.spacing(2) */
+}
+
+/* Estilos para ocultar la barra de desplazamiento */
+.inner-scroll {
+  overflow: hidden !important;
+}
+
+/* Para navegadores basados en Webkit (Chrome, Safari) */
+.inner-scroll::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* Para navegadores basados en Firefox */
+.inner-scroll {
+  scrollbar-width: none !important;
+}

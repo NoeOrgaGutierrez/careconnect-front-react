@@ -2,7 +2,6 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
-  IonTitle,
   IonToolbar,
   IonButton,
   IonIcon,
@@ -10,67 +9,25 @@ import {
 } from "@ionic/react";
 import { personCircleOutline } from "ionicons/icons";
 import React from "react";
-import { Button, Grid, Typography, Box, styled } from "@mui/material";
-
-// Estilos para HeroSection
-const HeroSection = styled(Box)(({ theme }) => ({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  justifyContent: "center",
-  height: "100vh",
-  background: "linear-gradient(to right, #00c6ff, #0072ff)",
-  color: "#fff",
-  padding: theme.spacing(4),
-  textAlign: "center",
-  marginTop: "-50px",
-}));
-
-// Estilos para FeaturesSection
-const FeaturesSection = styled(Box)(({ theme }) => ({
-  padding: theme.spacing(8, 4),
-}));
-
-// Estilos para FeatureItem
-const FeatureItem = styled(Box)(({ theme }) => ({
-  marginBottom: theme.spacing(4),
-}));
-
-// Estilos personalizados para IonHeader
-const StyledIonHeader = styled(IonHeader)(({ theme }) => ({
-  background: "linear-gradient(to right, #00c6ff, #0072ff)",
-  color: "#fff",
-}));
-
-const StyledIonToolbar = styled(IonToolbar)(({ theme }) => ({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-}));
-
-const StyledIonTitle = styled(IonTitle)(({ theme }) => ({
-  marginLeft: theme.spacing(2),
-  fontSize: "1.5rem",
-  fontWeight: "bold",
-}));
+import { Button, Grid, Typography, Box } from "@mui/material";
+import "./Landing.css";
 
 const Landing: React.FC = () => {
   return (
     <>
-      <StyledIonHeader>
-        <StyledIonToolbar>
-          <StyledIonTitle>Landing</StyledIonTitle>
+      <IonHeader className="styled-ion-header">
+        <IonToolbar className="styled-ion-toolbar">
           <IonButtons slot="end">
-            <IonButton size="large">
+            <IonButton className="styled-ion-button" size="large">
               <IonRouterLink routerLink="/login">
-                <IonIcon icon={personCircleOutline} />
+                <IonIcon icon={personCircleOutline} style={{ fontSize: "2rem", color: "#fff" }} />
               </IonRouterLink>
             </IonButton>
           </IonButtons>
-        </StyledIonToolbar>
-      </StyledIonHeader>
+        </IonToolbar>
+      </IonHeader>
       <IonContent>
-        <HeroSection>
+        <Box className="hero-section">
           <Typography variant="h2" gutterBottom>
             Bienvenido a CareConnect
           </Typography>
@@ -86,46 +43,44 @@ const Landing: React.FC = () => {
           >
             <div>Únete y marca la diferencia</div>
           </Button>
-        </HeroSection>
-        <FeaturesSection>
-  <Typography variant="h4" gutterBottom>
-    Nuestras Características
-  </Typography>
-  <Grid container spacing={4}>
-    <Grid item xs={12} md={4}>
-      <FeatureItem>
-        <Typography variant="h6" gutterBottom>
-          Información Centralizada
-        </Typography>
-        <Typography>
-          Accede a toda la información que necesitas en un solo lugar.
-        </Typography>
-      </FeatureItem>
-    </Grid>
-    <Grid item xs={12} md={4}>
-      <FeatureItem>
-        <Typography variant="h6" gutterBottom>
-          Contenido Personalizado
-        </Typography>
-        <Typography>
-          Recibe información y recursos adaptados a tus necesidades específicas.
-        </Typography>
-      </FeatureItem>
-    </Grid>
-    <Grid item xs={12} md={4}>
-      <FeatureItem>
-        <Typography variant="h6" gutterBottom>
-          Interacción Social
-        </Typography>
-        <Typography>
-          Conéctate con otros usuarios para compartir experiencias y apoyo.
-        </Typography>
-      </FeatureItem>
-    </Grid>
-  </Grid>
-</FeaturesSection>
-
-
+        </Box>
+        <Box className="features-section">
+          <Typography variant="h4" gutterBottom>
+            Nuestras Características
+          </Typography>
+          <Grid container spacing={4}>
+            <Grid item xs={12} md={4}>
+              <Box className="feature-item">
+                <Typography variant="h6" gutterBottom>
+                  Información Centralizada
+                </Typography>
+                <Typography>
+                  Accede a toda la información que necesitas en un solo lugar.
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box className="feature-item">
+                <Typography variant="h6" gutterBottom>
+                  Contenido Personalizado
+                </Typography>
+                <Typography>
+                  Recibe información y recursos adaptados a tus necesidades específicas.
+                </Typography>
+              </Box>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Box className="feature-item">
+                <Typography variant="h6" gutterBottom>
+                  Interacción Social
+                </Typography>
+                <Typography>
+                  Conéctate con otros usuarios para compartir experiencias y apoyo.
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+        </Box>
       </IonContent>
     </>
   );

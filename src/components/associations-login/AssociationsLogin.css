@@ -13,11 +13,21 @@
   padding: 16px;
 }
 
-
+/* Container styling */
+.login-container {
+  width: 100%;
+  max-width: 360px;
+  background-color: #1f2227 !important;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  margin: auto;
+}
 
 /* Card styling */
 .login-card {
-  background-color: transparent;
   box-shadow: none;
   border: none;
 }
@@ -38,7 +48,6 @@
   margin-bottom: 16px;
 }
 
-/* Text Field styling for MUI components */
 .MuiOutlinedInput-root {
   color: #000000 !important; /* Input text color */
 }
@@ -69,13 +78,26 @@
   display: block;
   width: 100%;
   margin-top: 20px;
-  --background: #ffffff !important; /* Button background color */
-  color: #000000 !important; /* Button text color */
+  --background: #ffffff !important;
+  color: #000000 !important;
   font-weight: 900 !important;
   border-radius: 8px;
 }
 
-
+/* Secondary button styling */
+.login-button-clear {
+  border: 2px solid;
+  border-radius: 25px; /* Border radius for rounded corners*/
+  border-color: #347ec7 !important;
+  background-color: #0b58a5 !important;
+  color: #ffffff !important;
+  margin-top: 10px;
+  text-transform: uppercase;
+  padding: 10px 20px; /* Added padding for a better look */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 /* Centering the buttons container */
 .login-buttons {
@@ -86,25 +108,43 @@
   gap: 10px; /* Space between the buttons */
 }
 
+/* Styling for the links */
+.login-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.login-link {
+  color: #60adc4;
+  margin-top: 10px;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
+}
+
 /* Footer styling */
 .login-footer {
   background: none;
 }
 
-/* Spacer for layout */
 .spacer {
   height: 50px;
 }
 
 /* Focused input styling */
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input {
-  font-size: 15px !important; /* Larger font size when focused */
-  color: #60adc4 !important; /* Blue text color when focused */
+  font-size: 15px !important; 
+  color: #60adc4 !important;
 }
 
 .MuiInputLabel-root.Mui-focused {
-  font-size: 18px !important; /* Larger label font size when focused */
-  color: #ce3f3f !important; /* Red label color when focused */
+  font-size: 18px !important; 
+  color: #ce3f3f !important;
   font-weight: bolder !important;
   border-radius: 10% !important;
 }

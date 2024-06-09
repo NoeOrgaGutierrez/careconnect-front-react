@@ -15,7 +15,8 @@ import {
   IonCard,
   IonCardContent,
   IonIcon,
-  IonButtons
+  IonButtons,
+  IonRouterLink,
 } from '@ionic/react';
 import { eye, eyeOff, arrowBackOutline } from 'ionicons/icons';
 import { useHistory } from 'react-router-dom';
@@ -94,11 +95,11 @@ const Login: React.FC = () => {
           <IonCard className="login-card">
             <IonCardContent>
               <IonAvatar className="login-avatar">
-                <IonImg src="resources\Logo.png" />
+                <IonImg src="resources/Icono.png" />
               </IonAvatar>
               <form onSubmit={handleLogin}>
                 <TextField
-                  label="Correo de electronico"
+                  label="Correo electrónico"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -126,7 +127,7 @@ const Login: React.FC = () => {
                     className="eye-button" 
                     onClick={() => setShowPassword(!showPassword)}
                   >
-                    <IonIcon slot="icon-only" icon={showPassword ? eyeOff : eye} color='black'/>
+                    <IonIcon slot="icon-only" icon={showPassword ? eyeOff : eye} color="black"/>
                   </IonButton>
                 </Box>
                 <IonButton type="submit" expand="block" className="login-button">
@@ -134,25 +135,17 @@ const Login: React.FC = () => {
                 </IonButton>
               </form>
             </IonCardContent>
-            <div className="login-buttons">
-              <IonButton
-                expand="block"
-                fill="clear"
-                className="login-button-clear"
-                onClick={() => history.push('/user-register')}>
-                Registro de Usuario
-              </IonButton>
-              <IonButton
-                expand="block"
-                fill="clear"
-                className="login-button-clear"
-                onClick={() => history.push('/associations-login')}>
-                Inicio de sesion de Asociación
-              </IonButton>
+            <div className="login-links">
+              <IonRouterLink routerLink="/user-register" className="login-link">
+                ¿No tienes una cuenta? Regístrate
+              </IonRouterLink>
+              <IonRouterLink routerLink="/associations-login" className="login-link">
+                ¿Eres una asociación? Inicia sesión aquí
+              </IonRouterLink>
             </div>
           </IonCard>
         </div>
-        <LoadingSpinner isOpen={loading} imageUrl="resources\Icono.png" />
+        <LoadingSpinner isOpen={loading} imageUrl="resources/Icono.png" />
         <IonAlert
           isOpen={showAlert}
           onDidDismiss={() => setShowAlert(false)}

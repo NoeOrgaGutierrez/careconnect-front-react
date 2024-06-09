@@ -12,16 +12,17 @@ import {
   IonAlert,
   IonCard,
   IonCardContent,
-  IonIcon
+  IonIcon,
+  IonRouterLink
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
-import { TextField, Box, Button } from '@mui/material';
+import { TextField, Box } from '@mui/material';
 import axiosInstance from '../../axiosconfig';
 import { AxiosError } from 'axios';
 
 import './UserRegister.css';
-import { arrowBackOutline, eye, eyeOff, text } from 'ionicons/icons';
+import { arrowBackOutline, eye, eyeOff } from 'ionicons/icons';
 import LoadingSpinner from '../LoadingSpinner';
 
 const UserRegister: React.FC = () => {
@@ -171,34 +172,37 @@ const UserRegister: React.FC = () => {
                   margin="normal"
                   InputLabelProps={{ className: 'register-label' }}
                 />
-                <Box display="flex" alignItems="center" className="register-item">
+                <Box display="flex" alignItems="center" className="register-item password-container">
                   <TextField
                     label="Contraseña"
-                    type="text"
+                    type={showPassword ? 'text' : 'password'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     variant="filled"
                     fullWidth
                     className="register-item"
                     InputLabelProps={{ className: 'register-label' }}
-           
                   />
-                </Box>
-                <Box className="register-item">
-                  <p style={{ color: 'black' }}>Avatar</p>
-                  <Button
-                    variant="contained"
-                    component="label"
-                    className="register-avatar-button"
+                  <IonButton
+                    fill="clear"
+                    className="password-toggle-button"
+                    onClick={() => setShowPassword(!showPassword)}
                   >
-                    Seleccionar archivo
-                    <input
-                      type="file"
-                      accept="image/*"
-                      onChange={handleAvatarChange}
-                      hidden
-                    />
-                  </Button>
+                    <IonIcon color="black" slot="icon-only" icon={showPassword ? eyeOff : eye} />
+                  </IonButton>
+                </Box>
+                <Box display="flex" alignItems="center" className="register-item">
+                  <label htmlFor="avatar-upload" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828926.png" alt="Upload Icon" style={{ width: '24px', height: '24px' }} />
+                    <span style={{ marginLeft: '10px', color: 'black' }}>Seleccionar archivo</span>
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handleAvatarChange}
+                    style={{ display: 'none' }}
+                    id="avatar-upload"
+                  />
                 </Box>
                 <TextField
                   label="Biografía"
@@ -217,22 +221,12 @@ const UserRegister: React.FC = () => {
               </form>
             </IonCardContent>
             <div className="login-buttons">
-              <IonButton
-                expand="block"
-                fill="clear"
-                className="login-button-clear"
-                onClick={() => history.push('/login')}
-              >
+              <IonRouterLink routerLink="/login" className="login-link">
                 Iniciar Sesión
-              </IonButton>
-              <IonButton
-                expand="block"
-                fill="clear"
-                className="login-button-clear"
-                onClick={() => history.push('/associations-login')}
-              >
+              </IonRouterLink>
+              <IonRouterLink routerLink="/associations-login" className="login-link">
                 Inicio de Sesión de Asociación
-              </IonButton>
+              </IonRouterLink>
             </div>
           </IonCard>
         </div>

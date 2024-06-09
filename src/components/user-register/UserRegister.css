@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #1e1e1e;
+  background-color: #1f2227;
   padding: 16px;
   padding-top: 72px;
 }
@@ -18,7 +18,7 @@
 .register-container {
   width: 100%;
   max-width: 360px;
-  background-color: #0d84d3 !important;
+  background-color: #1f2227 !important;
   color: #ffffff;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
@@ -125,7 +125,7 @@
 /* Focused input styling */
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input {
   font-size: 15px !important;
-  color: #60adc4 !important;
+  color: #1f2227 !important;
 }
 
 .MuiInputLabel-root.Mui-focused {
@@ -145,4 +145,23 @@
    height: min-content;
    padding: 5px;
    margin: 0px;
+}
+
+/* Login buttons styling */
+.login-buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px; /* Space between the links */
+}
+
+.login-link {
+  color: #60adc4;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.login-link:hover {
+  text-decoration: underline;
 }
