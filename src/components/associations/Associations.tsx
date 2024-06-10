@@ -216,6 +216,9 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 								placeholder='Nombre'
 								value={associationName}
 								onIonChange={(e) => setAssociationName(e.detail.value!)}
+								style={{
+									'--highlight-color-focused': '#4c8dff'
+								}}
 							/>
 						</Grid>
 					</Grid>
@@ -223,10 +226,14 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 						<Grid>
 							<IonInput
 								type='number'
+								min={0}
 								fill='solid'
-								placeholder='Número'
+								placeholder='Nº Miembros'
 								value={memberCount}
 								onIonChange={(e) => setMemberCount(e.detail.value!)}
+								style={{
+									'--highlight-color-focused': '#4c8dff'
+								}}
 							/>
 						</Grid>
 					</Grid>

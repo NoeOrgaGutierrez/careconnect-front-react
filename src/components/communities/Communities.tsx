@@ -33,9 +33,14 @@ import {
 	DialogTitle,
 	TextField,
 	Select,
-	MenuItem
+	MenuItem,
+	Divider,
+	Grid,
+	IconButton,
+	Typography
 } from '@mui/material'
 import LoadingSpinner from '../LoadingSpinner'
+import SearchIcon from '@mui/icons-material/Search'
 
 import './Communities.css'
 
@@ -66,7 +71,9 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 	const [publications, setPublications] = useState<Publication[]>([])
 	const [filterName, setFilterName] = useState<string>('')
 	const [filterNumber, setFilterNumber] = useState<string>('')
-	const [filteredPublications, setFilteredPublications] = useState<Publication[]>([])
+	const [filteredPublications, setFilteredPublications] = useState<
+		Publication[]
+	>([])
 	const [topics, setTopics] = useState<Topic[]>([])
 	const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
 	const [showTopicModal, setShowTopicModal] = useState<boolean>(false)
@@ -74,7 +81,8 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 	const [topicName, setTopicName] = useState<string>('')
 	const [topicDescription, setTopicDescription] = useState<string>('')
 	const [publicationName, setPublicationName] = useState<string>('')
-	const [publicationDescription, setPublicationDescription] = useState<string>('')
+	const [publicationDescription, setPublicationDescription] =
+		useState<string>('')
 	const [loading, setLoading] = useState<boolean>(true)
 	const history = useHistory()
 
@@ -219,39 +227,85 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 				</IonToolbar>
 			</IonHeader>
 			<IonContent class='ion-padding'>
-				<IonTitle>Filtros</IonTitle>
-				<IonList>
-					<IonItem>
-						<IonLabel position='stacked'>Filtrar por Nombre del Topico</IonLabel>
+				<Grid
+					container
+					spacing={2}
+					direction='row'
+					justifyContent={'space-around'}
+					xs={12}
+					alignContent={'center'}>
+					<Grid item xs={12} md={9}>
 						<IonInput
+							type='text'
+							fill='solid'
+							placeholder='Nombre'
 							value={filterName}
-							placeholder='Ingrese el Nombre del Topico'
 							onIonChange={(e) => setFilterName(e.detail.value!)}
+							style={{
+								'--highlight-color-focused': '#4c8dff'
+							}}
 						/>
-					</IonItem>
-					<IonItem>
-						<IonLabel position='stacked'>Filtrar por Número de Comentarios</IonLabel>
+					</Grid>
+					<Grid item xs={12} md={2}>
 						<IonInput
+							type='number'
+							fill='solid'
+							min={0}
+							placeholder='Nº Miembros'
 							value={filterNumber}
-							placeholder='Ingrese el Número de Comentarios'
 							onIonChange={(e) => setFilterNumber(e.detail.value!)}
+							style={{
+								'--highlight-color-focused': '#4c8dff'
+							}}
 						/>
-					</IonItem>
-					<IonButton className='community-button-caracteristics' expand='full' onClick={handleFilter}>
-						Aplicar Filtro
-					</IonButton>
-				</IonList>
-				<IonButton className='community-button-caracteristics' expand='full' onClick={() => setShowTopicModal(true)}>
+					</Grid>
+					<Grid
+						container
+						item
+						justifyContent={'center'}
+						alignContent={'center'}
+						alignItems={'center'}
+						xs={12}
+						md={1}>
+						<IconButton
+							sx={{
+								bgcolor: '#4c8dff',
+								color: 'text.secondary',
+								borderRadius: '1.5rem',
+								padding: '5px',
+								width: '100%',
+								boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								':hover': {
+									cursor: 'pointer',
+									bgcolor: '#e0e0e0',
+									animation: 'pulse 1s infinite'
+								}
+							}}
+							onClick={handleFilter}>
+							<SearchIcon fontSize='large' />
+						</IconButton>
+					</Grid>
+					<Grid item xs={12} mt={2}>
+						<Divider style={{ backgroundColor: '#ffffff' }} />
+					</Grid>
+				</Grid>
+
+				<IonButton
+					className='community-button-caracteristics'
+					expand='full'
+					onClick={() => setShowTopicModal(true)}>
 					Crear Topico
 				</IonButton>
 				<IonButton
-				className='community-button-caracteristics'
+					className='community-button-caracteristics'
 					expand='full'
 					onClick={() => {
 						setShowCreateModal(true)
 						fetchTopics()
-					}}
-				>
+					}}>
 					Crear Comunidad
 				</IonButton>
 
@@ -259,15 +313,20 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />
 				) : filteredPublications.length > 0 ? (
 					filteredPublications.map((publication) => (
-						<IonCard key={publication.id} style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28628c' }}>
+						<IonCard
+							key={publication.id}
+							style={{
+								border: '2px solid #347ec7 ',
+								borderRadius: '10px',
+								backgroundColor: '#28628c'
+							}}>
 							<IonCardHeader>
 								<IonChip
 									style={{
 										width: 'fit-content',
 										maxWidth: '100%',
 										minWidth: 0
-									}}
-								>
+									}}>
 									<IonAvatar>
 										<img
 											alt='User Avatar'
@@ -288,21 +347,21 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 									display: '-webkit-box',
 									WebkitLineClamp: 3,
 									WebkitBoxOrient: 'vertical'
-								}}
-							>
+								}}>
 								Descripción: {publication.description}
 							</IonCardContent>
 							<IonButton
 								fill='clear'
 								style={{ float: 'right' }}
-								onClick={() => handleViewPost(publication.id)}
-							>
-									VER POST
+								onClick={() => handleViewPost(publication.id)}>
+								VER POST
 							</IonButton>
 						</IonCard>
 					))
 				) : (
-					<IonLabel>No se encontraron comunidades con los filtros aplicados.</IonLabel>
+					<IonLabel>
+						No se encontraron comunidades con los filtros aplicados.
+					</IonLabel>
 				)}
 
 				<Dialog
@@ -313,8 +372,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 							backgroundColor: '#333',
 							color: 'white'
 						}
-					}}
-				>
+					}}>
 					<DialogTitle style={{ color: 'white' }}>Crear Topico</DialogTitle>
 					<DialogContent>
 						<TextField
@@ -375,8 +433,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 							backgroundColor: '#333',
 							color: 'white'
 						}
-					}}
-				>
+					}}>
 					<DialogTitle style={{ color: 'white' }}>Crear Comunidad</DialogTitle>
 					<DialogContent>
 						<Select
@@ -396,8 +453,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 										color: 'white'
 									}
 								}
-							}}
-						>
+							}}>
 							<MenuItem value='' disabled>
 								<span style={{ color: 'white' }}>Seleccionar Topico</span>
 							</MenuItem>
