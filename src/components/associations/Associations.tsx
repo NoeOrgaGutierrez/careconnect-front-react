@@ -24,7 +24,8 @@ import {
 	TextField,
 	Divider,
 	Box,
-	IconButton
+	IconButton,
+	Button
 } from '@mui/material'
 import { arrowBackOutline } from 'ionicons/icons'
 import axiosInstance from '../../axiosconfig'
@@ -274,58 +275,80 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 				{loading ? (
 					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />
 				) : associations.length > 0 ? (
-					<Grid container spacing={3}>
+					<Grid container spacing={2}>
 						{associations.map((association) => (
-							<Grid item xs={12} sm={6} md={4} key={association.id}>
+							<Grid item xs={12} sm={4} md={4} key={association.id} height={'400px'}>
 								<Card
 									style={{
 										marginBottom: '20px',
-										backgroundColor: '#1e1e1e',
+										backgroundColor: '#28629c',
 										color: '#ffffff',
-										borderRadius: '15px',
+										borderRadius: '10px',
 										boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
 										display: 'flex',
 										flexDirection: 'column',
 										justifyContent: 'space-between',
-										height: '100%'
+										height: '100%',
+										border: '2px solid #265c91'
 									}}>
 									<CardMedia
 										component='img'
 										style={{
-											height: '150px',
+											height: '40%',
 											objectFit: 'cover',
-											backgroundColor: '#ffffff'
+											backgroundColor: 'white',
+											width: '100%'
 										}}
 										image={association.logo}
 										alt={`Logo of ${association.name}`}
 									/>
-									<CardContent>
-										<Typography variant='h5' component='div' style={{ color: '#bb86fc' }}>
-											{association.name}
-										</Typography>
-										<Typography
-											variant='body2'
-											style={{ color: '#ffffff', marginBottom: '10px' }}>
-											{association.miniDescription}
-										</Typography>
-										<Typography variant='body2' style={{ color: '#e0e0e0' }}>
-											{association.description}
-										</Typography>
+									<CardContent style={{ flex: 1 }}>
+										<Grid
+											container
+											justifyContent={'space-between'}
+											direction={'column'}
+											alignItems={'flex-start'}>
+											<Grid item>
+												<Typography
+													variant='h5'
+													component='div'
+													style={{ color: '#bb86fc' }}>
+													{association.name}
+												</Typography>
+											</Grid>
+											<Grid item>
+												<Typography
+													variant='body2'
+													style={{ color: '#ffffff', marginBottom: '10px' }}>
+													{association.miniDescription}
+												</Typography>
+											</Grid>
+											<Grid item>
+												<Typography variant='body2' style={{ color: '#e0e0e0' }}>
+													{association.description}
+												</Typography>
+											</Grid>
+										</Grid>
 									</CardContent>
-									<CardActions>
-										<MUIButton
-											size='small'
-											style={{ color: '#bb86fc' }}
-											onClick={() => handleAssociationToggle(association.id)}>
-											{isUserInAssociation(association.id) ? 'Salirse' : 'Unirse'}
-										</MUIButton>
-										<MUIButton
-											size='small'
-											style={{ color: '#bb86fc' }}
-											onClick={() => handleMoreInfo(association.id)}>
-											Saber más
-										</MUIButton>
-									</CardActions>
+									<Grid
+										container
+										justifyContent={'flex-start'}
+										direction={'row-reverse'}>
+										<CardActions>
+											<Button
+												size='small'
+												style={{ color: '#bb86fc' }}
+												onClick={() => handleAssociationToggle(association.id)}>
+												{isUserInAssociation(association.id) ? 'Salirse' : 'Unirse'}
+											</Button>
+											<Button
+												size='small'
+												style={{ color: '#bb86fc' }}
+												onClick={() => handleMoreInfo(association.id)}>
+												Saber más
+											</Button>
+										</CardActions>
+									</Grid>
 								</Card>
 							</Grid>
 						))}
