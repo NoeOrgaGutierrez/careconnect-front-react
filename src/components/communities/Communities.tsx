@@ -241,15 +241,22 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 							placeholder='Nombre'
 							value={filterName}
 							onIonChange={(e) => setFilterName(e.detail.value!)}
+							style={{
+								'--highlight-color-focused': '#4c8dff'
+							}}
 						/>
 					</Grid>
 					<Grid item xs={12} md={2}>
 						<IonInput
 							type='number'
 							fill='solid'
+							min={0}
 							placeholder='Nº Miembros'
 							value={filterNumber}
 							onIonChange={(e) => setFilterNumber(e.detail.value!)}
+							style={{
+								'--highlight-color-focused': '#4c8dff'
+							}}
 						/>
 					</Grid>
 					<Grid
