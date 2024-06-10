@@ -299,7 +299,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 											backgroundColor: 'white',
 											width: '100%'
 										}}
-										image={association.logo}
+										image={association.banner}
 										alt={`Logo of ${association.name}`}
 									/>
 									<CardContent style={{ flex: 1 }}>
