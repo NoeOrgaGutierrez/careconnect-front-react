@@ -318,37 +318,58 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 																		alt={`Logo of ${assoc.association.name}`}
 																	/>
 																	<CardContent>
-																		<Typography
-																			variant='h5'
-																			component='div'
-																			style={{ color: '#bb86fc' }}>
-																			{assoc.association.name}
-																		</Typography>
-																		<Typography
-																			variant='body2'
-																			style={{ color: '#ffffff', marginBottom: '10px' }}>
-																			{assoc.association.miniDescription}
-																		</Typography>
-																		<Typography variant='body2' style={{ color: '#e0e0e0' }}>
-																			{assoc.association.description}
-																		</Typography>
+																		<Grid
+																			container
+																			justifyContent={'space-between'}
+																			direction={'column'}
+																			alignItems={'flex-start'}>
+																			<Grid xs={4} item>
+																				<Typography
+																					variant='h5'
+																					component='div'
+																					style={{ color: '#bb86fc' }}>
+																					{assoc.association.name}
+																				</Typography>
+																			</Grid>
+																			<Grid xs={4} item>
+																				<Typography
+																					variant='body2'
+																					style={{ color: '#ffffff', marginBottom: '10px' }}>
+																					{assoc.association.miniDescription}
+																				</Typography>
+																			</Grid>
+																			<Grid xs={4} item>
+																				<Typography variant='body2' style={{ color: '#e0e0e0' }}>
+																					{assoc.association.description}
+																				</Typography>
+																			</Grid>
+																		</Grid>
 																	</CardContent>
-																	<CardActions>
-																		<Button
-																			size='small'
-																			style={{ color: '#bb86fc' }}
-																			onClick={() => handleLeaveAssociation(assoc.association.id)}>
-																			Salir
-																		</Button>
-																		<Button
-																			size='small'
-																			style={{ color: '#bb86fc' }}
-																			onClick={() =>
-																				history.push(`/association-details/${assoc.association.id}`)
-																			}>
-																			Saber más
-																		</Button>
-																	</CardActions>
+																	<Grid
+																		container
+																		justifyContent={'flex-start'}
+																		direction={'row-reverse'}>
+																		<CardActions>
+																			<Button
+																				size='small'
+																				style={{ color: '#bb86fc' }}
+																				onClick={() =>
+																					handleLeaveAssociation(assoc.association.id)
+																				}>
+																				Salir
+																			</Button>
+																			<Button
+																				size='small'
+																				style={{ color: '#bb86fc' }}
+																				onClick={() =>
+																					history.push(
+																						`/association-details/${assoc.association.id}`
+																					)
+																				}>
+																				Saber más
+																			</Button>
+																		</CardActions>
+																	</Grid>
 																</Card>
 															</Grid>
 														))}
