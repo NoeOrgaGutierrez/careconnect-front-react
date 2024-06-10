@@ -22,7 +22,9 @@ import {
 	CardMedia,
 	Grid,
 	TextField,
-	Divider
+	Divider,
+	Box,
+	IconButton
 } from '@mui/material'
 import { arrowBackOutline } from 'ionicons/icons'
 import axiosInstance from '../../axiosconfig'
@@ -236,7 +238,25 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 						alignItems={'center'}
 						xs={12}
 						md={1}>
-						<SearchIcon onClick={handleFilterChange} fontSize='large' />
+						<IconButton
+							sx={{
+								bgcolor: '#4c8dff',
+								color: 'text.secondary',
+								borderRadius: '1.5rem',
+								padding: '5px',
+								width: '100%',
+								boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+								display: 'flex',
+								alignItems: 'center',
+								justifyContent: 'center',
+								':hover': {
+									cursor: 'pointer',
+									bgcolor: '#e0e0e0',
+									animation: 'pulse 1s infinite'
+								}
+							}}>
+							<SearchIcon onClick={handleFilterChange} fontSize='large' />
+						</IconButton>
 					</Grid>
 				</Grid>
 
