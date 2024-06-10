@@ -1,6 +1,9 @@
+*{
+  color: #ffffff !important;
+}
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #121212)) !important;
-  color: #ffffff; /* Text color */
+  color: #ffffff !important; /* Text color */
 }
 
 ion-menu.md ion-content {

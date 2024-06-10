@@ -1,6 +1,6 @@
 /* Global text color */
 * {
-  color: rgb(255, 255, 255) !important;
+  color: rgb(0, 0, 0) !important;
 }
 
 /* Centering content and setting background color */
@@ -9,7 +9,7 @@
   justify-content: center !important;
   align-items: center !important;
   height: 100vh !important;
-  background-color: #1f2227 !important;
+  background-color: #73727a!important;
   padding: 16px !important;
   padding-top: 72px !important;
 }
@@ -18,7 +18,7 @@
 .register-container {
   width: 100% !important;
   max-width: 360px !important;
-  background-color: #1f2227 !important ;
+  background-color: #73727a!important ;
   color: #ffffff !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
   border-radius: 12px !important;
@@ -125,12 +125,12 @@
 /* Focused input styling */
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input {
   font-size: 15px !important ;
-  color: #1f2227 !important ;
+  color: #73727a!important ;
 }
 
 .MuiInputLabel-root.Mui-focused {
   font-size: 18px !important ;
-  color: #ce3f3f !important ;
+  color: #000000 !important ;
   font-weight: bolder !important ;
   border-radius: 10% !important ;
 }

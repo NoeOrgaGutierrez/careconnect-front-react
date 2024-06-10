@@ -221,13 +221,13 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                     <IonList lines="none" >
                       {pinnedBlogs.map((blog) => (
                         <IonItem key={blog.blog_id}>
-                          <IonLabel style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
+                          <IonLabel style={{ border: '2px solid #a8ddec ', borderRadius: '10px', backgroundColor: '#a8ddec' }}>
                             <h3 style={{ padding: '5px' }}>{blog.blog_name}</h3>
                             <p style={{ padding: '5px', color: 'white' }}>{blog.blog_description}</p>
-                          </IonLabel>
-                          <IonButton onClick={() => handleUnpinBlog(blog.pin_id)} fill="clear" slot="end">
+                          <IonButton onClick={() => handleUnpinBlog(blog.pin_id)} fill="clear" slot="end" >
                             <IonIcon icon={trashOutline} />
                           </IonButton>
+                          </IonLabel>
                         </IonItem>
                       ))}
                     </IonList>
@@ -241,7 +241,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                     <IonList lines="none" >
                       {recentComments.map((comment) => (
                         <IonItem key={comment.comment_id}>
-                          <IonLabel style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
+                          <IonLabel style={{ border: '2px solid #a8ddec ', borderRadius: '10px', backgroundColor: '#a8ddec' }}>
                             <h3 style={{ padding: '5px' }}>{comment.comment_content}</h3>
                             <p style={{ padding: '5px', color: 'white' }}>{new Date(comment.comment_created).toLocaleString()}</p>
                           </IonLabel>
@@ -264,7 +264,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
                         <IonRow >
                           {associations.map((assoc) => (
                             <IonCol size="12" size-md="6" size-lg="4" key={assoc.id} >
-                              <IonCard className="association-card" style={{ border: '2px solid #265c91 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
+                              <IonCard className="association-card" style={{ border: '2px solid #a8ddec ', borderRadius: '10px', backgroundColor: '#a8ddec' }}>
                                 <IonCardHeader>
                                   <IonCardTitle className='association-title'>{assoc.association.name}</IonCardTitle>
                                   <IonCardSubtitle className='association-text'>
