@@ -19,7 +19,6 @@
   max-width: 360px;
   background-color: var(ion-background-color-secondary, #73727a) !important;
   color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   border-radius: 12px;
   padding: 20px;
   text-align: center;
@@ -28,7 +27,6 @@
 
 /* Card styling */
 .login-card {
-  box-shadow: none;
   border: none;
 }
 

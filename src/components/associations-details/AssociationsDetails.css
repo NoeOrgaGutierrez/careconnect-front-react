@@ -19,7 +19,6 @@
   padding: 10px;
   border-radius: 50%; /* Bordes redondeados */
   margin-top: -50px; /* Superposición del avatar sobre el banner */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra para un efecto flotante */
   overflow: hidden; /* Recorta cualquier contenido que sobresalga */
 }
 
@@ -77,7 +76,6 @@
   max-width: 1152px; /* Máximo ancho del banner para evitar que se extienda demasiado en pantallas grandes */
   height: 200px; /* Altura fija más pequeña para controlar el estiramiento */
   margin: 20px auto; /* Centra el banner horizontalmente con un margen superior */
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* Sombra sutil para dar profundidad */
   overflow: hidden; /* Oculta cualquier parte de la imagen que exceda el tamaño del contenedor */
   border: 5px solid #ffffff; /* Borde blanco para destacar el banner */
   position: relative; /* Posicionamiento relativo para elementos internos */

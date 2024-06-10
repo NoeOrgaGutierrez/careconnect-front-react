@@ -17,7 +17,7 @@
 
   .know-more-button{
     --ion-color-contrast: #fff !important;
-    --background: #235485 !important;
+    --background: #a8ddec !important;
     border: "2px solid #28629c" ;
     border-color: "#28629c" !important;
     
@@ -31,4 +31,8 @@
   .association-text{
     color: #d8dfe5;
     font-weight: bold;
+  }
+
+  .recent-activity :hover{
+    background-color: #abb2ba !important;
   }

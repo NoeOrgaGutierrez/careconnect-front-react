@@ -20,7 +20,6 @@
   max-width: 360px !important;
   background-color: #73727a!important ;
   color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
   border-radius: 12px !important;
   padding: 20px !important;
   text-align: center !important;
@@ -30,7 +29,6 @@
 /* Card styling */
 .register-card {
   background-color: transparent !important;
-  box-shadow: none !important;
   border: none !important;
 }
 
