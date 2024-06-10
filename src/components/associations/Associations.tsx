@@ -224,7 +224,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 							<IonInput
 								type='number'
 								fill='solid'
-								placeholder='Número'
+								placeholder='Nº Miembros'
 								value={memberCount}
 								onIonChange={(e) => setMemberCount(e.detail.value!)}
 							/>
