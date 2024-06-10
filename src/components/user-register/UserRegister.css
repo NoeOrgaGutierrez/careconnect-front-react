@@ -1,167 +1,180 @@
 /* Global text color */
 * {
-  color: rgb(255, 255, 255);
+  color: rgb(255, 255, 255) !important;
 }
 
 /* Centering content and setting background color */
 .register-content {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background-color: #1f2227;
-  padding: 16px;
-  padding-top: 72px;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  height: 100vh !important;
+  background-color: #1f2227 !important;
+  padding: 16px !important;
+  padding-top: 72px !important;
 }
 
 /* Container styling */
 .register-container {
-  width: 100%;
-  max-width: 360px;
-  background-color: #1f2227 !important;
-  color: #ffffff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-  margin: auto;
+  width: 100% !important;
+  max-width: 360px !important;
+  background-color: #1f2227 !important ;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+  border-radius: 12px !important;
+  padding: 20px !important;
+  text-align: center !important;
+  margin: auto !important;
 }
 
 /* Card styling */
 .register-card {
-  background-color: transparent;
-  box-shadow: none;
-  border: none;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 /* Avatar styling */
 .register-avatar {
-  border-radius: 50%;
-  width: 80px;
-  height: 80px;
-  display: block;
-  margin: 0 auto 20px;
+  border-radius: 50% !important;
+  width: 80px !important;
+  height: 80px !important;
+  display: block !important;
+  margin: 0 auto 20px !important;
 }
 
 /* Input item styling */
 .register-item {
-  background: #ffffff !important;
-  color: #000000 !important;
-  border-radius: 8px;
-  margin-bottom: 16px;
+  background: #ffffff !important ;
+  color: #000000 !important ;
+  border-radius: 8px !important;
+  margin-bottom: 16px !important;
 }
 
 /* Text Field styling for MUI components */
 .MuiOutlinedInput-root {
-  color: #000000 !important;
+  color: #000000 !important ;
 }
 
 .MuiInputLabel-root {
-  color: #010000 !important;
-  font-weight: 500 !important;
+  color: #010000 !important ;
+  font-weight: 500 !important ;
 }
 
 .MuiOutlinedInput-notchedOutline {
-  border-color: #0d0000 !important;
+  border-color: #0d0000 !important ;
 }
 
 /* Label styling */
 .register-label {
-  color: #60adc4;
-  font-size: 16px;
+  color: #60adc4 !important;
+  font-size: 16px !important;
 }
 
 /* Input text styling */
 .text-field .MuiInputBase-input {
-  color: #000000 !important;
+  color: #000000 !important ;
 }
 
 .text-field .MuiInputLabel-root {
-  color: #010000 !important;
+  color: #010000 !important ;
 }
 
 .text-field .MuiOutlinedInput-root {
   &.Mui-focused fieldset {
-    border-color: #60adc4 !important;
+    border-color: #60adc4 !important ;
   }
 }
 
 .text-field .MuiOutlinedInput-notchedOutline {
-  border-color: #000000 !important;
+  border-color: #000000 !important ;
 }
 
 /* Password container */
 .password-container {
-  display: flex;
-  align-items: center;
-  position: relative;
+  display: flex !important;
+  align-items: center !important;
+  position: relative !important;
 }
 
 /* Password toggle button */
 .password-toggle-button {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #000000 !important;
+  position: absolute !important;
+  right: 10px !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  color: #000000 !important ;
 }
 
 /* Button styling */
 .register-button {
-  display: block;
-  width: 100%;
-  margin-top: 20px;
-  --background: #ffffff !important;
-  color: #000000 !important;
-  font-weight: 900 !important;
-  border-radius: 8px;
+  display: block !important;
+  width: 100% !important;
+  margin-top: 20px !important;
+  --background: #ffffff !important ;
+  color: #000000 !important ;
+  font-weight: 900 !important ;
+  border-radius: 8px !important;
 }
 
 /* Spacer for layout */
 .spacer {
-  height: 50px;
+  height: 5% !important ;
 }
 
 /* Focused input styling */
 .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input {
-  font-size: 15px !important;
-  color: #1f2227 !important;
+  font-size: 15px !important ;
+  color: #1f2227 !important ;
 }
 
 .MuiInputLabel-root.Mui-focused {
-  font-size: 18px !important;
-  color: #ce3f3f !important;
-  font-weight: bolder !important;
-  border-radius: 10% !important;
+  font-size: 18px !important ;
+  color: #ce3f3f !important ;
+  font-weight: bolder !important ;
+  border-radius: 10% !important ;
 }
 
 /* Avatar input styling */
 .register-avatar-input {
-  display: none;
+  display: none !important;
 }
 
-.register-avatar-button{
-   width: min-content;
-   height: min-content;
-   padding: 5px;
-   margin: 0px;
+.register-avatar-button {
+  width: min-content !important;
+  height: min-content !important;
+  padding: 5px !important;
+  margin: 0px !important;
+}
+
+/* Avatar container */
+.avatar-container {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
 }
 
 /* Login buttons styling */
 .login-buttons {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 10px; /* Space between the links */
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 10px !important; /* Space between the links */
 }
 
 .login-link {
-  color: #60adc4;
-  font-weight: 700;
-  text-decoration: none;
+  color: #60adc4 !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
 }
 
 .login-link:hover {
-  text-decoration: underline;
+  text-decoration: underline !important;
+}
+
+.register-icon{
+  *{
+    color: #000000 !important;
+  }
 }

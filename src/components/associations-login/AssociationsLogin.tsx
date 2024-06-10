@@ -91,7 +91,7 @@ const AssociationLogin: React.FC = () => {
           <IonCard className="login-card">
             <IonCardContent>
               <IonAvatar className="login-avatar">
-                <IonImg src="resources/Icono.png" />
+                <IonImg src="resources/Icono-Transparente.png" />
               </IonAvatar>
               <form onSubmit={handleLogin}>
                 <TextField

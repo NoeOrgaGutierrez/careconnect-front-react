@@ -17,12 +17,14 @@ import {
 } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import imageCompression from 'browser-image-compression';
-import { TextField, Box } from '@mui/material';
+import { TextField } from '@mui/material';
 import axiosInstance from '../../axiosconfig';
 import { AxiosError } from 'axios';
 
 import './UserRegister.css';
 import { arrowBackOutline, eye, eyeOff } from 'ionicons/icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'; // Import the FontAwesomeIcon component
+import { faCloudUploadAlt } from '@fortawesome/free-solid-svg-icons';
 import LoadingSpinner from '../LoadingSpinner';
 
 const UserRegister: React.FC = () => {
@@ -134,7 +136,7 @@ const UserRegister: React.FC = () => {
               <IonAvatar className="register-avatar">
                 <IonImg
                   src={
-                    avatar ? URL.createObjectURL(avatar) : 'resources/Logo.png'
+                    avatar ? URL.createObjectURL(avatar) : 'resources/Icono-Transparente.png'
                   }
                 />
               </IonAvatar>
@@ -172,30 +174,39 @@ const UserRegister: React.FC = () => {
                   margin="normal"
                   InputLabelProps={{ className: 'register-label' }}
                 />
-                <Box display="flex" alignItems="center" className="register-item password-container">
+                <div className="register-item-password-container">
                   <TextField
                     label="Contraseña"
-                    type={showPassword ? 'text' : 'password'}
+                    type={'text'}
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     variant="filled"
                     fullWidth
                     className="register-item"
+                    margin="normal"
                     InputLabelProps={{ className: 'register-label' }}
                   />
-                  <IonButton
-                    fill="clear"
-                    className="password-toggle-button"
-                    onClick={() => setShowPassword(!showPassword)}
-                  >
-                    <IonIcon color="black" slot="icon-only" icon={showPassword ? eyeOff : eye} />
-                  </IonButton>
-                </Box>
-                <Box display="flex" alignItems="center" className="register-item">
-                  <label htmlFor="avatar-upload" style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
-                    <img src="https://cdn-icons-png.flaticon.com/512/1828/1828926.png" alt="Upload Icon" style={{ width: '24px', height: '24px' }} />
-                    <span style={{ marginLeft: '10px', color: 'black' }}>Seleccionar archivo</span>
-                  </label>
+                </div>
+                <div className="register-item-avatar-container">
+                  <TextField
+                    label="Avatar"
+                    variant="filled"
+                    fullWidth
+                    className="register-item"
+                    margin="normal"
+                    InputProps={{
+                      endAdornment: (
+                        <IonButton
+                          fill="clear"
+                          className="avatar-upload-button"
+                          onClick={() => document.getElementById('avatar-upload')?.click()}
+                        >
+                          <FontAwesomeIcon className='register-icon' icon={faCloudUploadAlt} size="lg" style={{ color: 'black' }} />
+                        </IonButton>
+                      )
+                    }}
+                    InputLabelProps={{ className: 'register-label' }}
+                  />
                   <input
                     type="file"
                     accept="image/*"
@@ -203,7 +214,7 @@ const UserRegister: React.FC = () => {
                     style={{ display: 'none' }}
                     id="avatar-upload"
                   />
-                </Box>
+                </div>
                 <TextField
                   label="Biografía"
                   value={bio}
@@ -216,13 +227,13 @@ const UserRegister: React.FC = () => {
                   InputLabelProps={{ className: 'register-label' }}
                 />
                 <IonButton type="submit" expand="block" className="register-button">
-                  Registrar
+                  Registrate
                 </IonButton>
               </form>
             </IonCardContent>
             <div className="login-buttons">
               <IonRouterLink routerLink="/login" className="login-link">
-                Iniciar Sesión
+                ¿Ya tienes una cuenta? Inicia sesión
               </IonRouterLink>
               <IonRouterLink routerLink="/associations-login" className="login-link">
                 Inicio de Sesión de Asociación
