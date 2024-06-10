@@ -208,7 +208,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 					justifyContent={'space-around'}
 					xs={12}
 					alignContent={'center'}>
-					<Grid xs={12} md={10} item>
+					<Grid xs={12} md={9} item>
 						<Grid>
 							<IonInput
 								type='text'
@@ -219,7 +219,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 							/>
 						</Grid>
 					</Grid>
-					<Grid xs={12} md={1} item>
+					<Grid xs={12} md={2} item>
 						<Grid>
 							<IonInput
 								type='number'
