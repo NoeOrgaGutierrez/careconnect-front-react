@@ -20,12 +20,15 @@ import {
 	Button as MUIButton,
 	Typography,
 	CardMedia,
-	Grid
+	Grid,
+	TextField,
+	Divider
 } from '@mui/material'
 import { arrowBackOutline } from 'ionicons/icons'
 import axiosInstance from '../../axiosconfig'
 import { AxiosError } from 'axios'
 import LoadingSpinner from '../LoadingSpinner'
+import SearchIcon from '@mui/icons-material/Search'
 
 interface Association {
 	id: number
@@ -196,24 +199,50 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 				</IonToolbar>
 			</IonHeader>
 			<IonContent className='ion-padding' style={{ overflowY: 'auto' }}>
-				<IonItem>
-					<IonLabel position='floating'>Nombre de la asociación</IonLabel>
-					<IonInput
-						value={associationName}
-						onIonChange={(e) => setAssociationName(e.detail.value!)}
-					/>
-				</IonItem>
-				<IonItem>
-					<IonLabel position='floating'>Número de miembros</IonLabel>
-					<IonInput
-						type='number'
-						value={memberCount}
-						onIonChange={(e) => setMemberCount(e.detail.value!)}
-					/>
-				</IonItem>
-				<IonButton className='community-button-caracteristics' expand='block' onClick={handleFilterChange}>
-					Filtrar
-				</IonButton>
+				<Grid
+					container
+					spacing={2}
+					direction='row'
+					justifyContent={'space-around'}
+					xs={12}
+					alignContent={'center'}>
+					<Grid xs={12} md={10} item>
+						<Grid>
+							<IonInput
+								type='text'
+								fill='solid'
+								placeholder='Nombre'
+								value={associationName}
+								onIonChange={(e) => setAssociationName(e.detail.value!)}
+							/>
+						</Grid>
+					</Grid>
+					<Grid xs={12} md={1} item>
+						<Grid>
+							<IonInput
+								type='number'
+								fill='solid'
+								placeholder='Número'
+								value={memberCount}
+								onIonChange={(e) => setMemberCount(e.detail.value!)}
+							/>
+						</Grid>
+					</Grid>
+					<Grid
+						container
+						item
+						justifyContent={'center'}
+						alignContent={'center'}
+						alignItems={'center'}
+						xs={12}
+						md={1}>
+						<SearchIcon onClick={handleFilterChange} fontSize='large' />
+					</Grid>
+				</Grid>
+
+				<Grid mt={2}>
+					<Divider />
+				</Grid>
 				<div style={{ height: '10px' }}></div>
 				{loading ? (
 					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />
@@ -244,10 +273,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 										alt={`Logo of ${association.name}`}
 									/>
 									<CardContent>
-										<Typography
-											variant='h5'
-											component='div'
-											style={{ color: '#bb86fc' }}>
+										<Typography variant='h5' component='div' style={{ color: '#bb86fc' }}>
 											{association.name}
 										</Typography>
 										<Typography
