@@ -296,7 +296,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 																<Card
 																	style={{
 																		marginBottom: '20px',
-																		backgroundColor: '#28629c',
+																		backgroundColor: '#a8ddec',
 																		color: '#ffffff',
 																		borderRadius: '10px',
 																		boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -355,7 +355,8 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 																				style={{ color: '#bb86fc' }}
 																				onClick={() =>
 																					handleLeaveAssociation(assoc.association.id)
-																				}>
+																				}
+																				className='leave-button'>
 																				Salir
 																			</Button>
 																			<Button

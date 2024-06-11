@@ -318,7 +318,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 							style={{
 								border: '2px solid #347ec7 ',
 								borderRadius: '10px',
-								backgroundColor: '#28628c'
+								backgroundColor: '#a8ddec'
 							}}>
 							<IonCardHeader>
 								<IonChip

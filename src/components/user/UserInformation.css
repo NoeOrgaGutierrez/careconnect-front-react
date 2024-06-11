@@ -13,6 +13,8 @@
   .leave-button{
     --ion-color-contrast: #fff !important;
     --background: #db2626 !important;
+    color: #db2626 !important;
+    font-weight: 600 !important;
   }
 
   .know-more-button{
