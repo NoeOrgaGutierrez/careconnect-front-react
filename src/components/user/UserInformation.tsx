@@ -21,7 +21,8 @@ import {
 	IonCardSubtitle,
 	IonCardContent,
 	IonMenuButton,
-	IonFooter
+	IonFooter,
+	IonImg
 } from '@ionic/react'
 import {
 	pencilOutline,
@@ -95,6 +96,8 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 	const [userRating, setUserRating] = useState<UserRating | null>(null)
 	const [loading, setLoading] = useState(true)
 	const history = useHistory()
+	const defaultImageUrl =
+		'https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg'
 
 	useEffect(() => {
 		const memberId = localStorage.getItem('memberId')
@@ -147,6 +150,10 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 	const handleLogoutClick = () => {
 		localStorage.removeItem('memberId')
 		window.location.replace('/')
+	}
+	// SI NO SE DETECTA IMAGEN
+	const handleError = (event) => {
+		event.target.src = defaultImageUrl
 	}
 
 	const handleLeaveAssociation = async (associationId: number) => {
@@ -206,7 +213,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 							<IonCol size='12' size-md='4' className='ion-text-center'>
 								<IonAvatar
 									style={{ margin: '0 auto', width: '150px', height: '150px' }}>
-									<img src={user.avatar} alt='Profile' />
+									<IonImg src={user.avatar} alt='Profile' onIonError={handleError} />
 								</IonAvatar>
 								<h2>
 									{user.name} {user.surname}

@@ -19,7 +19,8 @@ import {
 	IonItem,
 	IonList,
 	IonIcon,
-	IonTextarea
+	IonTextarea,
+	IonImg
 } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
 import { arrowBackOutline } from 'ionicons/icons'
@@ -85,6 +86,12 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 		useState<string>('')
 	const [loading, setLoading] = useState<boolean>(true)
 	const history = useHistory()
+	const defaultImageUrl =
+		'https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg'
+	// SI NO SE DETECTA IMAGEN
+	const handleError = (event) => {
+		event.target.src = defaultImageUrl
+	}
 
 	const handleFilter = async () => {
 		try {
@@ -328,7 +335,8 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 										minWidth: 0
 									}}>
 									<IonAvatar>
-										<img
+										<IonImg
+											onIonError={handleError}
 											alt='User Avatar'
 											src={publication.user.avatar || 'https://via.placeholder.com/150'}
 										/>

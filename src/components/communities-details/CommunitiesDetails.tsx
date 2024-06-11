@@ -21,7 +21,8 @@ import {
 	IonList,
 	IonIcon,
 	IonFooter,
-	IonText
+	IonText,
+	IonImg
 } from '@ionic/react'
 import { chatboxOutline, arrowBackOutline } from 'ionicons/icons'
 import {
@@ -79,6 +80,11 @@ const CommunitiesDetails: React.FC = () => {
 	const [showDialog, setShowDialog] = useState<boolean>(false)
 	const [replyToComment, setReplyToComment] = useState<Comment | null>(null)
 	const [loading, setLoading] = useState<boolean>(true)
+	const defaultImageUrl =
+		'https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg'
+	const handleError = (event) => {
+		event.target.src = defaultImageUrl
+	}
 
 	useEffect(() => {
 		const userId = localStorage.getItem('memberId')
@@ -161,11 +167,15 @@ const CommunitiesDetails: React.FC = () => {
 
 	const renderComments = (comments: Comment[], level: number = 0) => {
 		return comments.map((comment) => (
-			<IonCard key={comment.id} className={`comment-level-${level}`}  style={{ border: '2px solid #347ec7 ', borderRadius: '10px'}}>
-				<IonCardHeader >
+			<IonCard
+				key={comment.id}
+				className={`comment-level-${level}`}
+				style={{ border: '2px solid #347ec7 ', borderRadius: '10px' }}>
+				<IonCardHeader>
 					<IonChip className='comment-chip'>
 						<IonAvatar>
-							<img
+							<IonImg
+								onIonError={handleError}
 								alt='User Avatar'
 								src={comment.user.avatar || 'https://via.placeholder.com/150'}
 							/>
@@ -219,11 +229,18 @@ const CommunitiesDetails: React.FC = () => {
 				) : (
 					<>
 						{publication && (
-							<IonCard className='publication-card' style={{ border: '2px solid #347ec7 ', borderRadius: '10px', backgroundColor: '#28629c' }}>
+							<IonCard
+								className='publication-card'
+								style={{
+									border: '2px solid #347ec7 ',
+									borderRadius: '10px',
+									backgroundColor: '#28629c'
+								}}>
 								<IonCardHeader>
 									<IonChip className='publication-chip'>
 										<IonAvatar>
-											<img
+											<IonImg
+												onIonError={handleError}
 												alt='User Avatar'
 												src={publication.user.avatar || 'https://via.placeholder.com/150'}
 											/>
@@ -238,21 +255,23 @@ const CommunitiesDetails: React.FC = () => {
 								<IonCardContent>{publication.description}</IonCardContent>
 							</IonCard>
 						)}
-						<div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
+						<div
+							style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
 							<IonButton className='add-comment' onClick={() => setShowDialog(true)}>
-							Añadir Comentario
+								Añadir Comentario
 							</IonButton>
 						</div>
-						<IonList >{renderComments(comments)}</IonList>
-						<div style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
-							<IonButton className='add-comment' onClick={() => setShowDialog(true)} >
+						<IonList>{renderComments(comments)}</IonList>
+						<div
+							style={{ padding: '20px', display: 'flex', justifyContent: 'center' }}>
+							<IonButton className='add-comment' onClick={() => setShowDialog(true)}>
 								Añadir Comentario
 							</IonButton>
 						</div>
 					</>
 				)}
 				<div style={{ height: '60px' }}></div>
-				<Dialog 
+				<Dialog
 					open={showDialog}
 					onClose={() => {
 						setShowDialog(false)
