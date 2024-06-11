@@ -97,4 +97,10 @@
   border-bottom: 2px solid #bbb;
 }
 
-/* Add more levels if necessary */
+.icon-like {
+  color: green !important;
+}
+
+.icon-dislike {
+  color: red !important;
+}

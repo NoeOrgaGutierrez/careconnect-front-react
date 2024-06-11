@@ -323,7 +323,7 @@ const BlogDetails: React.FC = () => {
 					</DialogActions>
 				</Dialog>
 			</IonContent>
-			<div style={{ height: '60px' }}></div>
+			
 		</IonPage>
 	)
 }

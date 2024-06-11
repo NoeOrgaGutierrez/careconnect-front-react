@@ -124,6 +124,8 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
       setReplyToComment(null);
       setReplyContent('');
       setShowDialog(false);
+	  
+	  window.location.reload();
     } catch (error) {
       console.error('Error replying to comment:', error);
     } finally {
@@ -131,10 +133,62 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
     }
   };
 
+  const handleValoration = async (commentId: string, valoration: boolean) => {
+    const memberId = await getMemberIdForBlog(blogId);
+    if (!memberId) {
+      console.error('No valid memberId found');
+      return;
+    }
+
+    // Update UI optimistically
+    const updateValoration = (comments: Comment[]): Comment[] =>
+      comments.map((comment) => {
+        if (comment.id === commentId) {
+          const newValoration = [
+            ...comment.valoration.filter((v) => v.id !== memberId),
+            { id: new Date().getTime(), valoration }
+          ];
+          return { ...comment, valoration: newValoration };
+        }
+        return { ...comment, blogComments: updateValoration(comment.blogComments) };
+      });
+
+    setCommentList((prevComments) => updateValoration(prevComments));
+
+    try {
+      const valorationData = {
+        valoration: valoration,
+        userAssociation: { id: memberId },
+        blogComment: { id: commentId }
+      };
+
+      await axiosInstance.post('/valoration', valorationData);
+    } catch (error) {
+      console.error('Error submitting valoration:', error);
+      // Revert UI update if there's an error
+      setCommentList((prevComments) =>
+        prevComments.map((comment) => {
+          if (comment.id === commentId) {
+            const revertedValoration = comment.valoration.filter(
+              (v) => v.id !== memberId
+            );
+            return { ...comment, valoration: revertedValoration };
+          }
+          return { ...comment, blogComments: updateValoration(comment.blogComments) };
+        })
+      );
+    }
+	window.location.reload();
+  };
+
   const renderComments = (commentList: Comment[], level: number = 0) => {
     return commentList.map((comment) => {
       const likes = comment.valoration.filter((v) => v.valoration).length;
       const dislikes = comment.valoration.length - likes;
+      const userValorations = comment.valoration.filter((v) => v.id === parseInt(localStorage.getItem('memberId')!));
+
+      const userLike = userValorations.some((v) => v.valoration === true);
+      const userDislike = userValorations.some((v) => v.valoration === false);
 
       return (
         <IonCard
@@ -160,14 +214,14 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
               <IconButton onClick={() => handleValoration(comment.id, true)}>
                 <IonIcon
                   icon={thumbsUp}
-                  style={{ color: likes > 0 ? 'green' : 'inherit' }}
+                  className={likes > 0 ? 'icon-like' : ''} 
                 />
                 <Typography>{likes}</Typography>
               </IconButton>
               <IconButton onClick={() => handleValoration(comment.id, false)}>
                 <IonIcon
                   icon={thumbsDown}
-                  style={{ color: dislikes > 0 ? 'red' : 'inherit' }}
+                  className={dislikes > 0 ? 'icon-dislike' : ''} 
                 />
                 <Typography>{dislikes}</Typography>
               </IconButton>

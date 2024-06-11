@@ -261,7 +261,7 @@ const AssociationProfile: React.FC = () => {
                     <>
                       <Button
                         variant="contained"
-                        color="primary"
+                        className="create-blog-button"
                         onClick={() => setDialogOpen(true)}
                         style={{ marginBottom: '20px' }}
                       >
@@ -275,7 +275,7 @@ const AssociationProfile: React.FC = () => {
                                 display: "flex",
                                 flexDirection: "column",
                                 height: "100%",
-                                backgroundColor: "#1e1e1e",
+                                backgroundColor: "#a8ddec",
                                 color: "#fff",
                                 borderRadius: "15px",
                                 boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
@@ -308,7 +308,7 @@ const AssociationProfile: React.FC = () => {
                   {currentSegment === "faq" && (
                     <div>
                       {association.faq.map((faq) => (
-                        <Accordion key={faq.id} sx={{ backgroundColor: "#1e1e1e", color: "#ffffff" }}>
+                        <Accordion key={faq.id} sx={{ backgroundColor: "#a8ddec", color: "#ffffff" }}>
                           <AccordionSummary
                             expandIcon={<ExpandMoreIcon sx={{ color: "#bb86fc" }} />}
                             aria-controls={`panel${faq.id}-content`}
@@ -316,7 +316,7 @@ const AssociationProfile: React.FC = () => {
                           >
                             <Typography>{faq.question}</Typography>
                           </AccordionSummary>
-                          <AccordionDetails sx={{ backgroundColor: "#333333", color: "#e0e0e0" }}>
+                          <AccordionDetails sx={{ backgroundColor: "#d1f5ff", color: "#d1f5ff" }}>
                             <Typography>{faq.response}</Typography>
                           </AccordionDetails>
                         </Accordion>

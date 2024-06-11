@@ -30,6 +30,7 @@
 .login-card {
   border: none;
   background: var(--ion-background-color-secondary, #73727a) !important;
+  box-shadow: none !important;
 }
 
 /* Button styling */
