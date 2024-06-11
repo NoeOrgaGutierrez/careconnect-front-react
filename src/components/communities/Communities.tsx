@@ -377,7 +377,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 					onClose={() => setShowTopicModal(false)}
 					PaperProps={{
 						style: {
-							backgroundColor: '#333',
+							backgroundColor: '#ffffff',
 							color: 'white'
 						}
 					}}>
@@ -438,7 +438,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 					onClose={() => setShowCreateModal(false)}
 					PaperProps={{
 						style: {
-							backgroundColor: '#333',
+							backgroundColor: '#ffffff',
 							color: 'white'
 						}
 					}}>

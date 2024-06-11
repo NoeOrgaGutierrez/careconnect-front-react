@@ -281,7 +281,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 								<Card
 									style={{
 										marginBottom: '20px',
-										backgroundColor: '#28629c',
+										backgroundColor: '#a8ddec',
 										color: '#ffffff',
 										borderRadius: '10px',
 										boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
@@ -337,13 +337,13 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 										<CardActions>
 											<Button
 												size='small'
-												style={{ color: '#bb86fc' }}
+												style={{ color: '#bb86fc', marginBottom: '2%' }}
 												onClick={() => handleAssociationToggle(association.id)}>
-												{isUserInAssociation(association.id) ? 'Salirse' : 'Unirse'}
+												{isUserInAssociation(association.id) ? 'Abandonar Asociación' : 'Unirse'}
 											</Button>
 											<Button
 												size='small'
-												style={{ color: '#bb86fc' }}
+												style={{ color: '#bb86fc', marginBottom: '2%' }}
 												onClick={() => handleMoreInfo(association.id)}>
 												Saber más
 											</Button>

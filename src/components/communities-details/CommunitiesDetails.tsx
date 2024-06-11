@@ -170,7 +170,7 @@ const CommunitiesDetails: React.FC = () => {
 			<IonCard
 				key={comment.id}
 				className={`comment-level-${level}`}
-				style={{ border: '2px solid #347ec7 ', borderRadius: '10px' }}>
+				style={{ border: '2px solid #347ec7 ', borderRadius: '10px', marginLeft: '10px' }}>
 				<IonCardHeader>
 					<IonChip className='comment-chip'>
 						<IonAvatar>
@@ -234,7 +234,7 @@ const CommunitiesDetails: React.FC = () => {
 								style={{
 									border: '2px solid #347ec7 ',
 									borderRadius: '10px',
-									backgroundColor: '#28629c'
+									backgroundColor: '#a8ddec'
 								}}>
 								<IonCardHeader>
 									<IonChip className='publication-chip'>
@@ -281,7 +281,7 @@ const CommunitiesDetails: React.FC = () => {
 					maxWidth='sm'
 					PaperProps={{
 						style: {
-							backgroundColor: '#333',
+							backgroundColor: '#ffffff',
 							color: 'white'
 						}
 					}}>

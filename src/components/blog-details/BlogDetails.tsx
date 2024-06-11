@@ -247,7 +247,7 @@ const BlogDetails: React.FC = () => {
 							style={{
 								border: '2px solid #347ec7 ',
 								borderRadius: '10px',
-								backgroundColor: '#28629c'
+								backgroundColor: '#a8ddec'
 							}}>
 							<IonCardHeader>
 								<IonChip className='publication-chip'>
@@ -285,7 +285,7 @@ const BlogDetails: React.FC = () => {
 					maxWidth='sm'
 					PaperProps={{
 						style: {
-							backgroundColor: '#333',
+							backgroundColor: '#ffffff',
 							color: 'white'
 						}
 					}}>
@@ -323,7 +323,7 @@ const BlogDetails: React.FC = () => {
 					</DialogActions>
 				</Dialog>
 			</IonContent>
-			<IonFooter className='footer-space'></IonFooter>
+			<div style={{ height: '60px' }}></div>
 		</IonPage>
 	)
 }

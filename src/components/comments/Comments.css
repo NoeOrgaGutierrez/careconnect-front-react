@@ -37,7 +37,7 @@
 }
 
 .add-comment {
-  --background: #030615 !important;
+  --background: #ffffff !important;
 }
 
 /* Comment styling */
@@ -68,16 +68,16 @@
 }
 
 .dialog-content {
-  background-color: #333;
+  background-color: #ffffff;
   color: #fff;
 }
 
 .dialog-actions {
-  background-color: #444;
+  background-color: #ffffff;
 }
 
 .dialog-title {
-  background-color: #222;
+  background-color: #ffffff;
   color: #fff;
 }
 
