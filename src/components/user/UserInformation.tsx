@@ -152,7 +152,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 		window.location.replace('/')
 	}
 	// SI NO SE DETECTA IMAGEN
-	const handleError = (event) => {
+	const handleError = (event: any) => {
 		event.target.src = defaultImageUrl
 	}
 
@@ -360,9 +360,7 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 																			<Button
 																				size='small'
 																				style={{ color: '#bb86fc' }}
-																				onClick={() =>
-																					handleLeaveAssociation(assoc.association.id)
-																				}
+																				onClick={() => handleLeaveAssociation(assoc.association.id)}
 																				className='leave-button'>
 																				Salir
 																			</Button>

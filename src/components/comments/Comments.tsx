@@ -62,8 +62,10 @@ const Comments: React.FC<{ blogId: string; initialComments: Comment[] }> = ({
 	const [loading, setLoading] = useState<boolean>(false)
 	const [showDialog, setShowDialog] = useState<boolean>(false)
 	const [showReplyDialog, setShowReplyDialog] = useState<boolean>(false)
+	const defaultImageUrl =
+		'https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg'
 	// SI NO SE DETECTA IMAGEN
-	const handleError = (event) => {
+	const handleError = (event: any) => {
 		event.target.src = defaultImageUrl
 	}
 
