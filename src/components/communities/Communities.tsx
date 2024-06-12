@@ -16,10 +16,7 @@ import {
 	IonTitle,
 	IonToolbar,
 	IonInput,
-	IonItem,
-	IonList,
 	IonIcon,
-	IonTextarea,
 	IonImg
 } from '@ionic/react'
 import { useHistory } from 'react-router-dom'
@@ -72,9 +69,7 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 	const [publications, setPublications] = useState<Publication[]>([])
 	const [filterName, setFilterName] = useState<string>('')
 	const [filterNumber, setFilterNumber] = useState<string>('')
-	const [filteredPublications, setFilteredPublications] = useState<
-		Publication[]
-	>([])
+	const [filteredPublications, setFilteredPublications] = useState<Publication[]>([])
 	const [topics, setTopics] = useState<Topic[]>([])
 	const [showCreateModal, setShowCreateModal] = useState<boolean>(false)
 	const [showTopicModal, setShowTopicModal] = useState<boolean>(false)
@@ -82,18 +77,36 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 	const [topicName, setTopicName] = useState<string>('')
 	const [topicDescription, setTopicDescription] = useState<string>('')
 	const [publicationName, setPublicationName] = useState<string>('')
-	const [publicationDescription, setPublicationDescription] =
-		useState<string>('')
+	const [publicationDescription, setPublicationDescription] = useState<string>('')
 	const [loading, setLoading] = useState<boolean>(true)
 	const history = useHistory()
 	const defaultImageUrl =
 		'https://static.vecteezy.com/system/resources/previews/009/292/244/original/default-avatar-icon-of-social-media-user-vector.jpg'
-	// SI NO SE DETECTA IMAGEN
+
 	const handleError = (event: any) => {
 		event.target.src = defaultImageUrl
 	}
 
+	const fetchPublications = async () => {
+		setLoading(true)
+		try {
+			const response = await axiosInstance.get('/publication')
+			setPublications(response.data)
+			setFilteredPublications(response.data)
+			console.log('Publications:', response.data)
+		} catch (error) {
+			if (error instanceof AxiosError) {
+				console.error('Error fetching publications:', error.message)
+			} else {
+				console.error('Unexpected error:', error)
+			}
+		} finally {
+			setLoading(false)
+		}
+	}
+
 	const handleFilter = async () => {
+		setLoading(true)
 		try {
 			const response = await axiosInstance.get('/topic/filter', {
 				params: { topicName: filterName, commentCount: filterNumber }
@@ -120,33 +133,22 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 					console.error('Unexpected error:', error)
 				}
 			}
+		} finally {
+			setLoading(false)
 		}
 	}
 
 	useEffect(() => {
-		const fetchPublications = async () => {
-			try {
-				const response = await axiosInstance.get('/publication')
-				setPublications(response.data)
-				setFilteredPublications(response.data)
-				console.log('Publications:', response.data)
-			} catch (error) {
-				if (error instanceof AxiosError) {
-					console.error('Error fetching publications:', error.message)
-				} else {
-					console.error('Unexpected error:', error)
-				}
-			} finally {
-				setLoading(false)
-			}
-		}
-
 		fetchPublications()
 	}, [])
 
-	useEffect(() => {
-		handleFilter()
-	}, [filterName, filterNumber, publications])
+	const handleFilterChange = () => {
+		if (!filterName && !filterNumber) {
+			fetchPublications()
+		} else {
+			handleFilter()
+		}
+	}
 
 	const handleViewPost = (id: number) => {
 		history.push(`/communities-details/${id}`)
@@ -291,13 +293,13 @@ const Communities: React.FC<{ name: string }> = ({ name }) => {
 									animation: 'pulse 1s infinite'
 								}
 							}}
-							onClick={handleFilter}>
+							onClick={handleFilterChange}>
 							<SearchIcon fontSize='large' />
 						</IconButton>
 					</Grid>
 					<Grid item xs={12} mt={2}>
 						<Divider style={{ backgroundColor: '#ffffff' }} />
-					</Grid>
+						</Grid>
 				</Grid>
 
 				<IonButton

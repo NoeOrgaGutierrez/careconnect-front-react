@@ -8,7 +8,6 @@ import {
 	IonMenuButton,
 	IonTitle,
 	IonToolbar,
-	IonItem,
 	IonInput,
 	IonButton,
 	IonIcon
@@ -17,13 +16,10 @@ import {
 	Card,
 	CardContent,
 	CardActions,
-	Button as MUIButton,
 	Typography,
 	CardMedia,
 	Grid,
-	TextField,
 	Divider,
-	Box,
 	IconButton,
 	Button
 } from '@mui/material'
@@ -55,23 +51,25 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 	const [associationName, setAssociationName] = useState<string>('')
 	const [memberCount, setMemberCount] = useState<string>('')
 
-	useEffect(() => {
-		const fetchAssociations = async () => {
-			setLoading(true)
-			try {
-				const response = await axiosInstance.get('/association')
-				console.log('Associations data:', response.data)
-				setAssociations(response.data)
-			} catch (error) {
-				if (error instanceof AxiosError) {
-					console.error('Error fetching associations', error.message)
-				} else {
-					console.error('Unexpected error', error)
-				}
-			} finally {
-				setLoading(false)
+	const fetchAssociations = async () => {
+		setLoading(true)
+		try {
+			const response = await axiosInstance.get('/association')
+			console.log('Associations data:', response.data)
+			setAssociations(response.data)
+		} catch (error) {
+			if (error instanceof AxiosError) {
+				console.error('Error fetching associations', error.message)
+			} else {
+				console.error('Unexpected error', error)
 			}
+		} finally {
+			setLoading(false)
 		}
+	}
+
+	useEffect(() => {
+		fetchAssociations()
 
 		const fetchUserAssociations = async () => {
 			try {
@@ -92,7 +90,6 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 			}
 		}
 
-		fetchAssociations()
 		fetchUserAssociations()
 	}, [])
 
@@ -104,14 +101,17 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 			if (name) params.associationName = name
 			if (count) params.memberCount = count
 
-			const response = await axiosInstance.get('/association/filter', {
-				params
-			})
+			const response = await axiosInstance.get('/association/filter', { params })
 			console.log('Filtered Associations data:', response.data)
 			setAssociations(response.data)
 		} catch (error) {
 			if (error instanceof AxiosError) {
-				console.error('Error fetching filtered associations', error.message)
+				if (error.response?.status === 404) {
+					console.log('No associations found, fetching all associations.')
+					fetchAssociations()
+				} else {
+					console.error('Error fetching filtered associations', error.message)
+				}
 			} else {
 				console.error('Unexpected error', error)
 			}
@@ -176,9 +176,20 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 		}
 	}
 
-	const handleFilterChange = () => {
+	useEffect(() => {
 		const count = parseInt(memberCount, 10)
-		fetchFilteredAssociations(associationName, isNaN(count) ? undefined : count)
+		if (!associationName && !memberCount) {
+			// Fetch all associations if both fields are empty
+			fetchAssociations()
+		} else {
+			fetchFilteredAssociations(associationName, isNaN(count) ? undefined : count)
+		}
+	}, [associationName, memberCount])
+
+	const handleFilterChange = () => {
+		// Trigger the useEffect by updating the state
+		setAssociationName(associationName)
+		setMemberCount(memberCount)
 	}
 
 	const handleMoreInfo = (associationId: number) => {
@@ -270,7 +281,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 
 				<Grid mt={2}>
 					<Divider />
-				</Grid>
+					</Grid>
 				<div style={{ height: '10px' }}></div>
 				{loading ? (
 					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />

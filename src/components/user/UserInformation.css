@@ -38,3 +38,20 @@
   .recent-activity :hover{
     background-color: #abb2ba !important;
   }
+  .no-hover-label:hover {
+    /* Anula cualquier estilo de hover aplicable */
+    background: none;
+    color: inherit; /* Hereda el color original */
+    text-decoration: none; /* Sin subrayado ni otros decorados */
+  }
+  
+  .no-hover-label {
+    pointer-events: none; /* Esto deshabilita todos los eventos del ratón en el elemento */
+  }
+  .no-hover-label h3,
+  .no-hover-label p {
+    /* Asegúrate de que estos estilos se mantengan al hover */
+    padding: 5px;
+    color: white;
+  }
+  
