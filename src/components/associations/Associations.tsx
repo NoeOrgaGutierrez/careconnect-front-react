@@ -281,7 +281,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 
 				<Grid mt={2}>
 					<Divider />
-					</Grid>
+				</Grid>
 				<div style={{ height: '10px' }}></div>
 				{loading ? (
 					<LoadingSpinner imageUrl='resources/Icono.png' isOpen={loading} />
