@@ -71,14 +71,14 @@ const Menu: React.FC = () => {
 							direction={'row'}
 							justifyContent={'flex-start'}
 							alignItems={'center'}>
-							<Grid item justifyContent={'center'} xs={12} md={3}>
+							<Grid item justifyContent={'flex-start'} xs={12} md={3}>
 								<Avatar
 									alt='CareConnect Logo'
 									src='./../../resources\Icono-Transparente-inverso.png'
 									sx={{ width: 120, height: 120 }}
 								/>
 							</Grid>
-							<Grid item xs={12} md={6}>
+							<Grid item xs={12} justifyContent={'flex-start'}>
 								<IonListHeader>CareConnect</IonListHeader>
 							</Grid>
 						</Grid>

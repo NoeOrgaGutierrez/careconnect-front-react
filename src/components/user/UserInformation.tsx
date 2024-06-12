@@ -316,8 +316,8 @@ const UserInformation: React.FC<{ name: string }> = ({ name }) => {
 																	<CardMedia
 																		component='img'
 																		style={{
-																			height: 'auto',
-																			objectFit: 'cover',
+																			height: '30%',
+																			objectFit: 'contain',
 																			backgroundColor: 'white',
 																			width: '100%'
 																		}}

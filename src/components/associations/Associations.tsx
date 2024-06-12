@@ -277,7 +277,7 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 				) : associations.length > 0 ? (
 					<Grid container spacing={2}>
 						{associations.map((association) => (
-							<Grid item xs={12} sm={4} md={4} key={association.id} height={'400px'}>
+							<Grid item xs={12} sm={4} md={4} key={association.id}>
 								<Card
 									style={{
 										marginBottom: '20px',
@@ -339,7 +339,9 @@ const Associations: React.FC<{ name: string }> = ({ name }) => {
 												size='small'
 												style={{ color: '#bb86fc', marginBottom: '2%' }}
 												onClick={() => handleAssociationToggle(association.id)}>
-												{isUserInAssociation(association.id) ? 'Abandonar Asociación' : 'Unirse'}
+												{isUserInAssociation(association.id)
+													? 'Abandonar Asociación'
+													: 'Unirse'}
 											</Button>
 											<Button
 												size='small'
